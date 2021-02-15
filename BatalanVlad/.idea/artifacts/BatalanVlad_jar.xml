@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact name="BatalanVlad:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/BatalanVlad_jar</output-path>
+    <root id="root">
+      <element id="archive" name="BatalanVlad.jar">
+        <element id="module-output" name="BatalanVlad" />
+      </element>
+      <element id="library" level="project" name="sqlite-jdbc-3.8.11.2" />
+    </root>
+  </artifact>
+</component>
