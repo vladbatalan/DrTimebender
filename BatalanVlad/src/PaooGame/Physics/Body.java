@@ -84,7 +84,11 @@ public class Body {
         PVector nextPosition = new PVector(position.add(resultantForce));//.scalarMultiply(Game.CURRENT_FRAME_TIME);
 
         //check if is out of map bounds
-        nextPosition = nextPosition.setInMapBounds(BODY_WIDTH,BODY_HEIGHT,currentMap);
+        nextPosition = nextPosition.setInMapBounds(
+                BODY_WIDTH,
+                BODY_HEIGHT,
+                currentMap.getMaxBounds()
+        );
         //apply corrections to resultantForce
         resultantForce = nextPosition.sub(position);
 
@@ -127,21 +131,18 @@ public class Body {
             resultantForce.setX(0);
         }
 
-        // System.out.println(resultantForce.toString());
         position = oldPosition.add(resultantForce);
-        //System.out.println(collisionState[0] + " " + collisionState[1] + " " + collisionState[2] + " " + collisionState[3] + " " + collisionState[4]);
-        //System.out.println("oldPosition: "+ oldPosition.toString() + " - newPosition: " + position.toString());
     }
 
     public void Stand(){
         //if only one command is running or none
-        if(actions[0] == false && actions[1] == false)
+        if(!actions[0] && !actions[1])
             velocity.setX(0);
     }
 
     public void MoveLeft(){
         if(isMobile) {
-            if (actions[0] == false) {
+            if (!actions[0]) {
                 velocity.setX(-speed );//* Game.CURRENT_FRAME_TIME);
                 actions[0] = true;
             }
@@ -150,7 +151,7 @@ public class Body {
 
     public void MoveRight(){
         if(isMobile) {
-            if (actions[1] == false) {
+            if (!actions[1]) {
                 velocity.setX(+speed );// * Game.CURRENT_FRAME_TIME);
                 actions[1] = true;
             }
@@ -160,7 +161,7 @@ public class Body {
     public void Jump(){
         if(isMobile) {
             //check if is on solid
-            if (actions[2] == false && (collisionState[2] || jumpPermission)) {
+            if (!actions[2] && (collisionState[2] || jumpPermission)) {
                 jumpPermission = false;
                 jumpTimer = 0;
                 jumpForce = new PVector(gravityForce.scalarMultiply(-JUMP_CONSTANT));

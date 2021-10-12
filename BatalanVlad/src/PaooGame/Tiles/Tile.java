@@ -1,10 +1,5 @@
 package PaooGame.Tiles;
 
-import PaooGame.Physics.PVector;
-import PaooGame.Tiles.MapTiles.NoTile;
-import PaooGame.Tiles.TileCollisionType.BottomHalfTile;
-import PaooGame.Tiles.TileCollisionType.TopHalfTile;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

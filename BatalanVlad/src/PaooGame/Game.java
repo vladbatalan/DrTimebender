@@ -15,26 +15,67 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
+
+/**
+ * The main instance of the game
+ */
 public class Game implements Runnable
 {
-    private GameWindow      wnd;        /*!< Fereastra in care se va desena tabla jocului*/
-    private boolean         runState;   /*!< Flag ce starea firului de executie.*/
+    /**
+     * The main window of the game.
+     */
+    private GameWindow      wnd;
+
+    /**
+     * The variable that describes the state of the game.
+     * true = The game is running
+     * false = The game is not running
+     */
+    private boolean         runState;
+
+    /**
+     * The main thread of the game
+     */
     private Thread          gameThread; /*!< Referinta catre thread-ul de update si draw al ferestrei*/
+
+    /**
+     * Reference to the mechanism that organises the complex memory for canvas
+     */
     private BufferStrategy  bs;         /*!< Referinta catre un mecanism cu care se organizeaza memoria complexa pentru un canvas.*/
 
-
+    /**
+     * A graphic context
+     */
     private Graphics g;          /*!< Referinta catre un context grafic.*/
 
-    // the database of the game
+    /**
+     * This is the singleton database object used to store levels.
+     */
     public static DatabaseSingleton database = DatabaseSingleton.getInstance();
 
-    // profile of player
+    /**
+     * I got no idee what this is for ... ##########################################################################
+     */
     public static int user_id;
 
+    /**
+     * The state of the game
+     */
     public static GameStates gameState = GameStates.MENU;
+
+    /**
+     * The width of the screen
+     */
     public static Integer GAME_WINDOW_WIDTH = 800;
+
+    /**
+     * The height of the screen
+     */
     public static Integer GAME_WINDOW_HEIGHT = 600;
 
+    /**
+     * The main screen.
+     */
     public static MainGameMenu mainMenu = new MainGameMenu();
     public static MapCreationMenu mapCreation = new MapCreationMenu();
     public static LevelMenu levelMenu = new LevelMenu();
@@ -85,7 +126,7 @@ public class Game implements Runnable
         final double timeFrame      = 1000000000 / framesPerSecond; /*!< Durata unui frame in nanosecunde.*/
 
             /// Atat timp timp cat threadul este pornit Update() & Draw()
-        while (runState == true)
+        while (runState)
         {
                 /// Se obtine timpul curent
             curentTime = System.nanoTime();
@@ -110,7 +151,7 @@ public class Game implements Runnable
      */
     public synchronized void StartGame()
     {
-        if(runState == false)
+        if(!runState)
         {
                 /// Se actualizeaza flagul de stare a threadului
             runState = true;
@@ -119,11 +160,6 @@ public class Game implements Runnable
             gameThread = new Thread(this);
                 /// Threadul creat este lansat in executie (va executa metoda run())
             gameThread.start();
-        }
-        else
-        {
-                /// Thread-ul este creat si pornit deja
-            return;
         }
     }
 
@@ -134,7 +170,7 @@ public class Game implements Runnable
      */
     public synchronized void StopGame()
     {
-        if(runState == true)
+        if(runState)
         {
                 /// Actualizare stare thread
             runState = false;
@@ -150,11 +186,6 @@ public class Game implements Runnable
                     /// In situatia in care apare o exceptie pe ecran vor fi afisate informatii utile pentru depanare.
                 ex.printStackTrace();
             }
-        }
-        else
-        {
-                /// Thread-ul este oprit deja.
-            return;
         }
     }
 
@@ -172,15 +203,13 @@ public class Game implements Runnable
             ToBeUpdatedConstantly update = updateList.get(index);
             update.Update();
         }
-        for(ToBeUpdatedConstantly update : removeFromUpdateList) {
-            //System.out.println("Removing " + update.toString());
+        for(ToBeUpdatedConstantly update : removeFromUpdateList)
             updateList.remove(update);
-        }
+
         removeFromUpdateList.clear();
 
-        if(gameState == GameStates.GAME) {
+        if(gameState == GameStates.GAME)
             currentLevel.Update();
-        }
     }
 
     private void Draw()

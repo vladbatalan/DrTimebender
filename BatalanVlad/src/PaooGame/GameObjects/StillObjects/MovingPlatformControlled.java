@@ -83,8 +83,16 @@ public class MovingPlatformControlled extends StillObject implements ISwitchable
 
        // System.out.println("Velocity = " + velocity.toString());
         PVector nextPosition = body.getPosition().add(velocity);
-        if(nextPosition.getY() < maxOnPlatformHeight) nextPosition.setY(maxOnPlatformHeight);
-        nextPosition = nextPosition.setInMapBounds(body.getBodyWidth(),body.getBodyHeight(), currentMap);
+
+        if(nextPosition.getY() < maxOnPlatformHeight)
+            nextPosition.setY(maxOnPlatformHeight);
+
+        nextPosition = nextPosition.setInMapBounds(
+                body.getBodyWidth(),
+                body.getBodyHeight(),
+                currentMap.getMaxBounds()
+        );
+
         PVector resultantForce = nextPosition.sub(body.getPosition());
         body.setResultantForce(resultantForce);
         body.setOldPosition(body.getPosition());

@@ -2,6 +2,8 @@ package PaooGame.Physics;
 
 import PaooGame.Tiles.Map;
 
+import java.awt.*;
+
 public class PVector {
     private float x;
     private float y;
@@ -34,9 +36,11 @@ public class PVector {
         this.y = y;
     }
 
-    public PVector clone(){
-        PVector p = new PVector(this);
-        return p;
+    @Override
+    public PVector clone() throws CloneNotSupportedException {
+        PVector clone = (PVector) super.clone();
+        PVector ret = new PVector(this);
+        return ret;
     }
 
     public PVector add(PVector v){
@@ -65,12 +69,14 @@ public class PVector {
         return new PVector(this.getX()*a, this.getY()*a);
     }
 
-    public PVector setInMapBounds(int width, int height, Map currentMap){
+    public PVector setInMapBounds(int width, int height, PVector bounds){
         PVector result = new PVector(this);
         if(this.getX() < 0) result.setX(0);
         if(this.getY() < 0) result.setY(0);
-        if(this.getX() + width > currentMap.getMaxBounds().getX()) result.setX(currentMap.getMaxBounds().getX() - width - 2);
-        if(this.getY() + height > currentMap.getMaxBounds().getY()) result.setY(currentMap.getMaxBounds().getY() - height - 2);
+        if(this.getX() + width > bounds.getX())
+            result.setX((bounds.getX() - width - 2));
+        if(this.getY() + height > bounds.getY())
+            result.setY(bounds.getY() - height - 2);
         return result;
     }
 
