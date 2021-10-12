@@ -6,15 +6,11 @@ import PaooGame.Graphics.ImageLoader;
 import PaooGame.Physics.Body;
 import PaooGame.Physics.PVector;
 import PaooGame.Tiles.Factory.TileFactory;
-import PaooGame.Tiles.TileCollisionType.TopHalfTile;
-import javafx.util.Pair;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -42,8 +38,6 @@ public class Map {
 
             map_width = width;
             map_height = height;
-
-            //System.out.println(height + " x " + width);
 
             //execut crearea hartii
             for( int index = 0; index < height; index ++) {
@@ -119,7 +113,7 @@ public class Map {
          */
     }
 
-    public void MapExtend(){
+    public void mapExtend(){
         if(map_height < MIN_HEIGHT){
             LinkedList<Tile> lastRow = tileMatrix.getLast();
             for(int heightIndex = tileMatrix.size(); heightIndex < MIN_HEIGHT; heightIndex++) {

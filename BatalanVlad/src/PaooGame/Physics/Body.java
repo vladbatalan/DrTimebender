@@ -1,10 +1,8 @@
 package PaooGame.Physics;
 
-import PaooGame.Game;
 import PaooGame.Tiles.Map;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 
 public class Body {
     private PVector oldPosition;
