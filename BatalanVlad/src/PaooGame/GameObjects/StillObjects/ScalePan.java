@@ -6,7 +6,7 @@ import PaooGame.GameObjects.MobileObjects.MobileObject;
 import PaooGame.GameObjects.ObjectID;
 import PaooGame.Graphics.Animations.AnimationCollections.ScalePanAnimationCollection;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 
 import java.awt.*;
@@ -29,15 +29,15 @@ public class ScalePan extends StillObject {
     // this array is used to comunicate which object is on the pan at a specific time
     private ArrayList<MobileObject> onPanObjects = new ArrayList<>();
 
-    public ScalePan(PVector position, int movingHeight, float panMass){
+    public ScalePan(PointVector position, int movingHeight, float panMass){
         initScalePan(position, movingHeight, panMass);
     }
-    public ScalePan(PVector position, int movingHeight, float panMass, Color bkColor){
+    public ScalePan(PointVector position, int movingHeight, float panMass, Color bkColor){
         this.backColor = bkColor;
         initScalePan(position, movingHeight, panMass);
     }
 
-    private void initScalePan(PVector position, int movingHeight, float panMass){
+    private void initScalePan(PointVector position, int movingHeight, float panMass){
         this.id = ObjectID.ScalePan;
         this.body = new Body(position, 60, 20, panMass);
         this.animation = new ScalePanAnimationCollection(backColor);
@@ -48,7 +48,7 @@ public class ScalePan extends StillObject {
         this.totalMass = this.body.getMass();
         this.targetedHeight = (this.minHeight + this.maxHeight)/2;
 
-        this.body.setPosition(new PVector(body.getPosition().getX(), targetedHeight));
+        this.body.setPosition(new PointVector(body.getPosition().getX(), targetedHeight));
 
         this.timeToPath = 60;
         this.speed = (float)(movingHeight)/timeToPath;
@@ -82,27 +82,27 @@ public class ScalePan extends StillObject {
         //                  we adjust the position accordingly
         float diffToTargetedHeight = body.getPosition().getY() - targetedHeight;
         float oldDistance = Math.abs(diffToTargetedHeight);
-        PVector oldPosition = body.getPosition();
+        PointVector oldPosition = body.getPosition();
 
         // we should here move the objects on the pans on the move, expecially when rising up the object
         if(diffToTargetedHeight < 0) // body move down
         {
-            body.setPosition(limitTheHeight(body.getPosition().add(new PVector(0, speed))));
+            body.setPosition(limitTheHeight(body.getPosition().add(new PointVector(0, speed))));
 
             for(int index = 0; index < onPanObjects.size(); index ++)
             {
                 MobileObject onPanMob = onPanObjects.get(index);
                 Body mobBody = onPanMob.getBody();
-                mobBody.setPosition(new PVector(mobBody.getPosition().getX(), body.getPosition().getY() - mobBody.getBodyHeight()));
+                mobBody.setPosition(new PointVector(mobBody.getPosition().getX(), body.getPosition().getY() - mobBody.getBodyHeight()));
             }
         }else if (diffToTargetedHeight > 0) // body move up
         {
-            body.setPosition(limitTheHeight(body.getPosition().sub(new PVector(0, speed))));
+            body.setPosition(limitTheHeight(body.getPosition().sub(new PointVector(0, speed))));
             for (int index = 0; index < onPanObjects.size(); index++) {
                 MobileObject onPanMob = onPanObjects.get(index);
                 Body mobBody = onPanMob.getBody();
 
-                mobBody.setPosition(new PVector(mobBody.getPosition().getX(), body.getPosition().getY() - mobBody.getBodyHeight()));
+                mobBody.setPosition(new PointVector(mobBody.getPosition().getX(), body.getPosition().getY() - mobBody.getBodyHeight()));
             }
         }
 
@@ -164,10 +164,10 @@ public class ScalePan extends StillObject {
     }
 
     // limit the height to be between min and max
-    private PVector limitTheHeight(PVector myPVector){
-        PVector newHeight = new PVector(myPVector);
-        if(myPVector.getY() > minHeight) newHeight.setY(minHeight);
-        if(myPVector.getY() < maxHeight) newHeight.setY(maxHeight);
+    private PointVector limitTheHeight(PointVector myPointVector){
+        PointVector newHeight = new PointVector(myPointVector);
+        if(myPointVector.getY() > minHeight) newHeight.setY(minHeight);
+        if(myPointVector.getY() < maxHeight) newHeight.setY(maxHeight);
         return newHeight;
     }
 
@@ -179,7 +179,7 @@ public class ScalePan extends StillObject {
 
     public Rectangle getSupportHitBox(){
         int thickness = 5;
-        PVector topPosition = new PVector();
+        PointVector topPosition = new PointVector();
         topPosition.setY(body.getPosition().getY() + body.getBodyHeight());
         topPosition.setX(body.getPosition().getX() + (float)body.getBodyWidth()/2 - thickness);
         return new Rectangle((int)topPosition.getX(), (int)topPosition.getY(), 2*thickness, (int)(minHeight - body.getPosition().getY()));

@@ -4,7 +4,7 @@ import PaooGame.ActionTimers.ITimerInterupter;
 import PaooGame.Game;
 import PaooGame.GameObjects.ToBeUpdatedConstantly;
 import PaooGame.GameWindow.Camera.GameCamera;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class ScreenTag implements ToBeUpdatedConstantly {
 
 
 
-    private PVector centerPosition;
+    private PointVector centerPosition;
 
     public ScreenTag(String content, int fontSize, int fadeInTime, int displayTime, int fadeOutTime){
         this.content = content;
@@ -83,7 +83,7 @@ public class ScreenTag implements ToBeUpdatedConstantly {
     public void showScreenTag(int x, int y){
         onShow = true;
         timer = 0;
-        centerPosition = new PVector(x, y);
+        centerPosition = new PointVector(x, y);
         Game.updateList.add(this);
         //System.out.println("Screen tag added to game");
     }
@@ -154,7 +154,7 @@ public class ScreenTag implements ToBeUpdatedConstantly {
             int fontHeight = size.height;
 
             //System.out.println("Screen tag drawn at time = " + timer);
-            PVector drawPosition = new PVector(centerPosition);
+            PointVector drawPosition = new PointVector(centerPosition);
             if(camera != null) {
                 drawPosition = drawPosition.add(camera.getCameraCoordonates());
             }

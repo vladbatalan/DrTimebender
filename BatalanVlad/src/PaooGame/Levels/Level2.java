@@ -1,7 +1,7 @@
 package PaooGame.Levels;
 
 import PaooGame.GameObjects.StillObjects.*;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 import PaooGame.Tiles.Tile;
 
@@ -23,53 +23,53 @@ public class Level2 extends Level {
         currentMap.setBackground("/backgrounds/background1.jpg");
 
         // Create the existing objects except the Player that is loaded at the start of a level Phase
-        startTimeMachine = new TimeMachine(new PVector(Tile.TILE_WIDTH * 3, Tile.TILE_HEIGHT * 17 - 100));
-        gameObjective = new Objective(new PVector(Tile.TILE_WIDTH * 51, Tile.TILE_HEIGHT * 20 - 80), false);
+        startTimeMachine = new TimeMachine(new PointVector(Tile.TILE_WIDTH * 3, Tile.TILE_HEIGHT * 17 - 100));
+        gameObjective = new Objective(new PointVector(Tile.TILE_WIDTH * 51, Tile.TILE_HEIGHT * 20 - 80), false);
 
         // Balace
-        ScalePan scalePan1 = new ScalePan(new PVector(Tile.TILE_WIDTH * 15 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 20 - 20), Tile.TILE_HEIGHT * 9, 31);
-        ScalePan scalePan2 = new ScalePan(new PVector(Tile.TILE_WIDTH * 9 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 20 - 20), 30, 20);
+        ScalePan scalePan1 = new ScalePan(new PointVector(Tile.TILE_WIDTH * 15 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 20 - 20), Tile.TILE_HEIGHT * 9, 31);
+        ScalePan scalePan2 = new ScalePan(new PointVector(Tile.TILE_WIDTH * 9 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 20 - 20), 30, 20);
         TwoPanScale twoPanScale = new TwoPanScale(scalePan1, scalePan2, new Color(0x0056D6));
         twoPanScale.setMoveCompleteTime(120);
 
 
         // adding moving platform
-        PVector startPoint1 = new PVector(Tile.TILE_WIDTH * 17 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 11 - 20);
-        PVector endPoint1 = new PVector(Tile.TILE_WIDTH * 24 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 11 - 20 );
+        PointVector startPoint1 = new PointVector(Tile.TILE_WIDTH * 17 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 11 - 20);
+        PointVector endPoint1 = new PointVector(Tile.TILE_WIDTH * 24 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 11 - 20 );
         MovingPlatform platform1 = new MovingPlatform(startPoint1, endPoint1, new Color(0xD61C23));
         platform1.setTimeToFinish(120);
 
         // adding moving platform
-        PVector startPoint2 = new PVector(Tile.TILE_WIDTH * 17, Tile.TILE_HEIGHT * 21 - 20);
-        PVector endPoint2 = new PVector(Tile.TILE_WIDTH * 30 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 21 - 20 );
+        PointVector startPoint2 = new PointVector(Tile.TILE_WIDTH * 17, Tile.TILE_HEIGHT * 21 - 20);
+        PointVector endPoint2 = new PointVector(Tile.TILE_WIDTH * 30 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 21 - 20 );
         MovingPlatformSwitchable platform2 = new MovingPlatformSwitchable(startPoint2, endPoint2, new Color(0xD66A23));
         platform2.setTimeToFinish(180);
 
         // adding moving platform
-        PVector startPoint3 = new PVector(Tile.TILE_WIDTH * 29, Tile.TILE_HEIGHT * 12 - 20);
-        PVector endPoint3 = new PVector(Tile.TILE_WIDTH * 48 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 6 - 20 );
+        PointVector startPoint3 = new PointVector(Tile.TILE_WIDTH * 29, Tile.TILE_HEIGHT * 12 - 20);
+        PointVector endPoint3 = new PointVector(Tile.TILE_WIDTH * 48 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 6 - 20 );
         MovingPlatformSwitchable platform3 = new MovingPlatformSwitchable(startPoint3, endPoint3, new Color(0x79D632));
         platform3.setTimeToFinish(200);
 
         // adding moving platform
-        PVector startPoint4 = new PVector(Tile.TILE_WIDTH * 34, Tile.TILE_HEIGHT * 21 - 20);
-        PVector endPoint4 = new PVector(Tile.TILE_WIDTH * 47 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 21 - 20 );
+        PointVector startPoint4 = new PointVector(Tile.TILE_WIDTH * 34, Tile.TILE_HEIGHT * 21 - 20);
+        PointVector endPoint4 = new PointVector(Tile.TILE_WIDTH * 47 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 21 - 20 );
         MovingPlatformSwitchable platform4 = new MovingPlatformSwitchable(startPoint4, endPoint4, new Color(0x00D679));
         platform1.setTimeToFinish(180);
 
         // the timed gates
-        TimedGate timeGate1 = new TimedGate(new PVector(Tile.TILE_WIDTH * 49 + 6, Tile.TILE_HEIGHT * 20 - 4),3*Tile.TILE_HEIGHT - 4, true, new Color(0xDC5040));
+        TimedGate timeGate1 = new TimedGate(new PointVector(Tile.TILE_WIDTH * 49 + 6, Tile.TILE_HEIGHT * 20 - 4),3*Tile.TILE_HEIGHT - 4, true, new Color(0xDC5040));
 
         //Lever
-        Lever myLever1 = new Lever(new PVector(Tile.TILE_WIDTH * 27, Tile.TILE_HEIGHT * 11 - 60));
+        Lever myLever1 = new Lever(new PointVector(Tile.TILE_WIDTH * 27, Tile.TILE_HEIGHT * 11 - 60));
         myLever1.addAffectedObject(platform2);
 
         //Lever
-        Lever myLever2 = new Lever(new PVector(Tile.TILE_WIDTH * 32, Tile.TILE_HEIGHT * 20 - 60));
+        Lever myLever2 = new Lever(new PointVector(Tile.TILE_WIDTH * 32, Tile.TILE_HEIGHT * 20 - 60));
         myLever2.addAffectedObject(platform3);
 
         //Lever
-        Lever myLever3 = new Lever(new PVector(Tile.TILE_WIDTH * 51, Tile.TILE_HEIGHT * 5 - 60));
+        Lever myLever3 = new Lever(new PointVector(Tile.TILE_WIDTH * 51, Tile.TILE_HEIGHT * 5 - 60));
         myLever3.addAffectedObject(platform4);
         myLever3.addAffectedObject(gameObjective);
         myLever3.addAffectedObject(timeGate1);

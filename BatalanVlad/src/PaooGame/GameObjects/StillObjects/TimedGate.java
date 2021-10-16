@@ -2,9 +2,8 @@ package PaooGame.GameObjects.StillObjects;
 
 import PaooGame.GameObjects.ISwitchable;
 import PaooGame.GameObjects.ObjectID;
-import PaooGame.Graphics.Animations.AnimationCollections.ObjectiveAnimationCollection;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 
 import java.awt.*;
@@ -25,16 +24,16 @@ public class TimedGate extends StillObject implements ISwitchable {
 
     private int currentHeight;
 
-    public TimedGate(PVector position, int gateMovingHeight, boolean isInitiallyActive, Color backColor){
+    public TimedGate(PointVector position, int gateMovingHeight, boolean isInitiallyActive, Color backColor){
         this.backColor = backColor;
         initTimedGate(position, gateMovingHeight, isInitiallyActive);
     }
 
-    public TimedGate(PVector position, int gateMovingHeight, boolean isInitiallyActive){
+    public TimedGate(PointVector position, int gateMovingHeight, boolean isInitiallyActive){
         initTimedGate(position, gateMovingHeight, isInitiallyActive);
     }
 
-    private void initTimedGate(PVector position, int gateMovingHeight, boolean isInitiallyActive){
+    private void initTimedGate(PointVector position, int gateMovingHeight, boolean isInitiallyActive){
         this.id = ObjectID.TimedGate;
         this.body = new Body(position, 20, 4, 50);
         this.body.setMobility(false);
@@ -102,7 +101,7 @@ public class TimedGate extends StillObject implements ISwitchable {
         targetHeight = getMaxTarget();
     }
 
-    public PVector getSwitchablePosition(){
+    public PointVector getSwitchablePosition(){
         return body.getPosition();
     }
     public void setTimeToFinish(int timeToFinish) {

@@ -4,7 +4,7 @@ import PaooGame.Game;
 import PaooGame.GameObjects.ObjectID;
 import PaooGame.GameObjects.StillObjects.StillObject;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 
 import java.awt.*;
@@ -14,11 +14,11 @@ import java.awt.*;
 //                                                 in timeUntilDissapear ticks over the destination (endPosition)
 
 public class TurnOffObjectEffect extends StillObject {
-    private PVector velocity;
-    private PVector endPosition;
+    private PointVector velocity;
+    private PointVector endPosition;
     private int timeUntilDisappear = 30;
 
-    public TurnOffObjectEffect(PVector startPosition, PVector endPosition){
+    public TurnOffObjectEffect(PointVector startPosition, PointVector endPosition){
         this.id = ObjectID.TurnOffObjectEffect;
         this.body = new Body(startPosition, 5, 5, 50);
         this.body.setMobility(false);
@@ -37,7 +37,7 @@ public class TurnOffObjectEffect extends StillObject {
     }
 
     public void Update(Map currentMap) {
-        PVector oldPosition = body.getPosition();
+        PointVector oldPosition = body.getPosition();
         float oldDistance = oldPosition.distanceTo(endPosition);
 
         // evaluate new position

@@ -4,12 +4,12 @@ import PaooGame.Game;
 import PaooGame.GameObjects.ToBeUpdatedConstantly;
 import PaooGame.GameWindow.Camera.GameCamera;
 import PaooGame.GameWindow.StringDisplay.ScreenTag;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 
 import java.awt.*;
 
 public class Timer implements ToBeUpdatedConstantly {
-    private PVector positionOnScreen;
+    private PointVector positionOnScreen;
     private String content = "Time: ";
 
     private ScreenTag timerDisplay;
@@ -19,7 +19,7 @@ public class Timer implements ToBeUpdatedConstantly {
     public boolean isTimerOn = false;
     public boolean isTimerVisible = false;
 
-    public Timer(PVector positionOnScreen, GameCamera camera){
+    public Timer(PointVector positionOnScreen, GameCamera camera){
         timerDisplay = new ScreenTag(content, 15, camera);
         this.positionOnScreen = positionOnScreen;
     }

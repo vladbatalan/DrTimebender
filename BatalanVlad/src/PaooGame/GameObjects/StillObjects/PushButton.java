@@ -15,9 +15,8 @@ import PaooGame.GameObjects.ISwitchable;
 import PaooGame.GameObjects.MobileObjects.MobileObject;
 import PaooGame.GameObjects.ObjectID;
 import PaooGame.Graphics.Animations.AnimationCollections.*;
-import PaooGame.Graphics.Animations.AnimationList.PushButton.PushBlueButtonTurnOnType1;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 
 import java.awt.*;
@@ -41,7 +40,7 @@ public class PushButton extends StillObject implements ISwitch {
     }
 
 
-    public PushButton(PVector position){
+    public PushButton(PointVector position){
         this.id = ObjectID.PushButton;
         this.body = new Body(position, 32, 20, 50);
         this.body.setMobility(false);
@@ -86,7 +85,7 @@ public class PushButton extends StillObject implements ISwitch {
             int fontWidth = size.width;
             int fontHeight = size.height;
 
-            PVector centered = new PVector(body.getPosition().getX() + body.getBodyWidth()/2 - fontWidth/3, body.getPosition().getY()+body.getBodyHeight()+20);
+            PointVector centered = new PointVector(body.getPosition().getX() + body.getBodyWidth()/2 - fontWidth/3, body.getPosition().getY()+body.getBodyHeight()+20);
             g.setColor(Color.white);
             g.drawString(descriptionString, (int)centered.getX(), (int)centered.getY());
             //g.setColor(Color.black);

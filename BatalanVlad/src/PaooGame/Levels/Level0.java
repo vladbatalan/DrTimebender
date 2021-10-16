@@ -1,11 +1,9 @@
 package PaooGame.Levels;
 
 import PaooGame.GameObjects.StillObjects.*;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 import PaooGame.Tiles.Tile;
-
-import java.awt.*;
 
 public class Level0 extends Level {
 
@@ -22,15 +20,15 @@ public class Level0 extends Level {
         currentMap.setBackground("/backgrounds/nightBackground.jpg");
 
         // Create the existing objects except the Player that is loaded at the start of a level Phase
-        startTimeMachine = new TimeMachine(new PVector(Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 13 - 100));
-        gameObjective = new Objective(new PVector(Tile.TILE_WIDTH * 7, Tile.TILE_HEIGHT * 13 - 80), false);
+        startTimeMachine = new TimeMachine(new PointVector(Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 13 - 100));
+        gameObjective = new Objective(new PointVector(Tile.TILE_WIDTH * 7, Tile.TILE_HEIGHT * 13 - 80), false);
 
         //the timed gate
-        TimedGate myGate = new TimedGate(new PVector(Tile.TILE_WIDTH * 17 + 12, Tile.TILE_HEIGHT * 13 - 4),3*Tile.TILE_HEIGHT - 4, true);
+        TimedGate myGate = new TimedGate(new PointVector(Tile.TILE_WIDTH * 17 + 12, Tile.TILE_HEIGHT * 13 - 4),3*Tile.TILE_HEIGHT - 4, true);
 
         // a switch for opening and closing the gameObjective
-        Lever gateLever = new Lever(new PVector(Tile.TILE_WIDTH * 14, Tile.TILE_HEIGHT * 13 - 60));
-        Lever objectiveLever = new Lever(new PVector(Tile.TILE_WIDTH * 3, Tile.TILE_HEIGHT * 21 - 60));
+        Lever gateLever = new Lever(new PointVector(Tile.TILE_WIDTH * 14, Tile.TILE_HEIGHT * 13 - 60));
+        Lever objectiveLever = new Lever(new PointVector(Tile.TILE_WIDTH * 3, Tile.TILE_HEIGHT * 21 - 60));
 
         // the lever affects the objective state
         gateLever.addAffectedObject(myGate);

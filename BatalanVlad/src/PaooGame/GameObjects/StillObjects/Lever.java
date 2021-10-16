@@ -12,11 +12,9 @@ import PaooGame.GameObjects.EffectObjects.TurnOffObjectEffect;
 import PaooGame.GameObjects.EffectObjects.TurnOnObjectEffect;
 import PaooGame.GameObjects.MobileObjects.MobileObject;
 import PaooGame.Graphics.Animations.AnimationCollections.LeverAnimationColection;
-import PaooGame.Graphics.Animations.AnimationCollections.ObjectiveAnimationCollection;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
-import javafx.util.Pair;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -38,7 +36,7 @@ public class Lever extends StillObject implements ISwitch {
     }
 
 
-    public Lever(PVector position){
+    public Lever(PointVector position){
         this.id = ObjectID.Lever;
         this.body = new Body(position, 30, 60, 50);
         this.body.setMobility(false);

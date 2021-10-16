@@ -6,7 +6,7 @@ import PaooGame.GameObjects.ISwitchable;
 import PaooGame.GameObjects.MobileObjects.MobileObject;
 import PaooGame.GameObjects.ObjectID;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 import javafx.util.Pair;
 
@@ -17,24 +17,24 @@ import java.util.Arrays;
 public class MovingPlatformControlled extends StillObject implements ISwitchable {
 
     private Color backColor = new Color(0x090D58);
-    private PVector startPosition;
-    private PVector velocity;
+    private PointVector startPosition;
+    private PointVector velocity;
     private float speed;
 
 
     private boolean[] directions;
 
 
-    public MovingPlatformControlled(PVector positionStart, Color backColor){
+    public MovingPlatformControlled(PointVector positionStart, Color backColor){
         this.backColor = backColor;
         initMovingPlatform(positionStart);
     }
 
-    public MovingPlatformControlled(PVector positionStart){
+    public MovingPlatformControlled(PointVector positionStart){
         initMovingPlatform(positionStart);
     }
 
-    private void initMovingPlatform(PVector positionStart){
+    private void initMovingPlatform(PointVector positionStart){
         this.id = ObjectID.MovingPlatformControlled;
         this.body = new Body(positionStart, 60, 15, 50);
         this.body.setMobility(false);
@@ -57,7 +57,7 @@ public class MovingPlatformControlled extends StillObject implements ISwitchable
 
     @Override
     public void Update(Map currentMap) {
-        velocity = new PVector();
+        velocity = new PointVector();
         if(directions[0] && !directions[2]) velocity.setY(-speed); // Up
         if(directions[1] && !directions[3]) velocity.setX(speed); // Right
         if(directions[2] && !directions[0]) velocity.setY(speed); // Down
@@ -82,7 +82,7 @@ public class MovingPlatformControlled extends StillObject implements ISwitchable
 
 
        // System.out.println("Velocity = " + velocity.toString());
-        PVector nextPosition = body.getPosition().add(velocity);
+        PointVector nextPosition = body.getPosition().add(velocity);
 
         if(nextPosition.getY() < maxOnPlatformHeight)
             nextPosition.setY(maxOnPlatformHeight);
@@ -93,7 +93,7 @@ public class MovingPlatformControlled extends StillObject implements ISwitchable
                 currentMap.getMaxBounds()
         );
 
-        PVector resultantForce = nextPosition.sub(body.getPosition());
+        PointVector resultantForce = nextPosition.sub(body.getPosition());
         body.setResultantForce(resultantForce);
         body.setOldPosition(body.getPosition());
         body.setCollisionState( currentMap.checkCollision(nextPosition.getX(), nextPosition.getY() - maxOnPlatformHeight, body.getBodyWidth(), body.getBodyHeight() + maxOnPlatformHeight) );
@@ -102,14 +102,14 @@ public class MovingPlatformControlled extends StillObject implements ISwitchable
         for(Pair<MobileObject, Float> myPair : interacting){
             MobileObject mobile = myPair.getKey();
             float displacement = myPair.getValue();
-            mobile.getBody().setPosition(new PVector(body.getPosition().getX() + displacement, body.getPosition().getY() - mobile.getBody().getBodyHeight()));
+            mobile.getBody().setPosition(new PointVector(body.getPosition().getX() + displacement, body.getPosition().getY() - mobile.getBody().getBodyHeight()));
         }
     }
 
     public void resetToInitialState() {
         body.setPosition(startPosition);
         Arrays.fill(directions, false);
-        velocity = new PVector();
+        velocity = new PointVector();
     }
 
     @Override
@@ -144,7 +144,7 @@ public class MovingPlatformControlled extends StillObject implements ISwitchable
     }
 
     @Override
-    public PVector getSwitchablePosition() {
+    public PointVector getSwitchablePosition() {
         return body.getPosition();
     }
     public void setSpeed(float speed) {

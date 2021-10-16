@@ -2,11 +2,10 @@ package PaooGame.GameObjects.StillObjects;
 
 import PaooGame.Game;
 import PaooGame.GameObjects.GameObjectHandler;
-import PaooGame.GameObjects.ISwitchable;
 import PaooGame.GameObjects.MobileObjects.MobileObject;
 import PaooGame.GameObjects.ObjectID;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 import javafx.util.Pair;
 
@@ -19,23 +18,23 @@ public class MovingPlatform extends StillObject {
     protected Color backColor= new Color(0x090D58);
     protected int timeToFinish = 60;
 
-    protected PVector velocity;
-    protected PVector startPosition;
-    protected PVector endPosition;
-    protected PVector targetPosition;
+    protected PointVector velocity;
+    protected PointVector startPosition;
+    protected PointVector endPosition;
+    protected PointVector targetPosition;
 
     protected MovingPlatform(){}
 
-    public MovingPlatform(PVector positionStart, PVector positionEnd, Color backColor){
+    public MovingPlatform(PointVector positionStart, PointVector positionEnd, Color backColor){
         this.backColor = backColor;
         initMovingPlatform(positionStart, positionEnd);
     }
 
-    public MovingPlatform(PVector positionStart, PVector positionEnd){
+    public MovingPlatform(PointVector positionStart, PointVector positionEnd){
         initMovingPlatform(positionStart, positionEnd);
     }
 
-    private void initMovingPlatform(PVector positionStart, PVector positionEnd){
+    private void initMovingPlatform(PointVector positionStart, PointVector positionEnd){
         this.id = ObjectID.MovingPlatform;
         this.body = new Body(positionStart, 60, 15, 50);
         this.body.setMobility(false);
@@ -77,7 +76,7 @@ public class MovingPlatform extends StillObject {
 
         }
 
-        PVector newPosition = body.getPosition().add(this.velocity);
+        PointVector newPosition = body.getPosition().add(this.velocity);
 
         // test if we got to the end
         float newDiff = newPosition.sub(targetPosition).abs();
@@ -91,7 +90,7 @@ public class MovingPlatform extends StillObject {
         for(Pair<MobileObject, Float> myPair : interacting){
             MobileObject mobile = myPair.getKey();
             float displacement = myPair.getValue();
-            mobile.getBody().setPosition(new PVector(newPosition.getX() + displacement, newPosition.getY() - mobile.getBody().getBodyHeight()));
+            mobile.getBody().setPosition(new PointVector(newPosition.getX() + displacement, newPosition.getY() - mobile.getBody().getBodyHeight()));
         }
         body.setPosition(newPosition);
     }

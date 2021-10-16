@@ -2,12 +2,12 @@ package PaooGame.GameWindow.Camera;
 
 import PaooGame.Game;
 import PaooGame.GameObjects.GameObject;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 
 import java.awt.*;
 
 public class GameCamera {
-    private PVector cameraCoordonates;
+    private PointVector cameraCoordonates;
 
     private int maxCameraCoordWidth;
     private int maxCameraCoordHeight;
@@ -20,7 +20,7 @@ public class GameCamera {
     public GameCamera(int mapSizeWidth, int mapSizeHeight){
         this.maxCameraCoordWidth = Math.max(mapSizeWidth - Game.GAME_WINDOW_WIDTH, 0);
         this.maxCameraCoordHeight = Math.max(mapSizeHeight - Game.GAME_WINDOW_HEIGHT, 0);
-        cameraCoordonates = new PVector();
+        cameraCoordonates = new PointVector();
     }
 
 
@@ -30,7 +30,7 @@ public class GameCamera {
 
         //daca urmareste un obiect
         if(followedObject != null){
-            PVector newCameraCoords = new PVector();
+            PointVector newCameraCoords = new PointVector();
             newCameraCoords.setX(followedObject.getBody().getPosition().getX() - (float)Game.GAME_WINDOW_WIDTH/2);
             newCameraCoords.setY(followedObject.getBody().getPosition().getY() - (float)Game.GAME_WINDOW_HEIGHT*2/3);
 
@@ -66,7 +66,7 @@ public class GameCamera {
         cameraOn = false;
     }
 
-    public void setCameraCoordonates(PVector cameraPvector){
+    public void setCameraCoordonates(PointVector cameraPvector){
         //no negative coordonates
         if(cameraPvector.getX() < 0)
             cameraPvector.setX(0);
@@ -79,10 +79,10 @@ public class GameCamera {
     }
 
     public void resetCamera(){
-        cameraCoordonates = new PVector();
+        cameraCoordonates = new PointVector();
     }
 
-    public PVector getCameraCoordonates() {
+    public PointVector getCameraCoordonates() {
         return cameraCoordonates;
     }
 }

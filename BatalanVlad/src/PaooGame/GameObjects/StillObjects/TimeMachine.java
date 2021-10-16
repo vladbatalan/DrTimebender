@@ -7,7 +7,7 @@ import PaooGame.GameWindow.StringDisplay.ScreenTag;
 import PaooGame.Graphics.Animations.AnimationCollections.TimeMachineAnimationCollection;
 import PaooGame.Levels.LevelFlagsSystem;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 
 import java.awt.*;
@@ -19,7 +19,7 @@ public class TimeMachine extends StillObject {
     private ScreenTag helpOnInteractionShadowTop;
     private ScreenTag helpOnInteractionShadowBottom;
 
-    public TimeMachine(PVector position, int BODY_WIDTH, int BODY_HEIGHT, float mass){
+    public TimeMachine(PointVector position, int BODY_WIDTH, int BODY_HEIGHT, float mass){
         this.id = ObjectID.TimeMachine;
         this.body = new Body(position, BODY_WIDTH, BODY_HEIGHT, mass);
         this.body.setMobility(false);
@@ -28,7 +28,7 @@ public class TimeMachine extends StillObject {
         helpStringDisplayInitiate();
     }
 
-    public TimeMachine(PVector position){
+    public TimeMachine(PointVector position){
         this.id = ObjectID.TimeMachine;
         this.body = new Body(position, 50, 100, 50);
         this.body.setMobility(false);

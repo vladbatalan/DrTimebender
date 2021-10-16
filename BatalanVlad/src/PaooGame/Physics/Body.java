@@ -5,13 +5,13 @@ import PaooGame.Tiles.Map;
 import java.awt.*;
 
 public class Body {
-    private PVector oldPosition;
-    private PVector position;
-    private PVector velocity;
-    private PVector jumpForce;
-    private PVector externalForce;
-    public static PVector gravityForce = new PVector(0, 0.098f);
-    private PVector resultantForce = new PVector();
+    private PointVector oldPosition;
+    private PointVector position;
+    private PointVector velocity;
+    private PointVector jumpForce;
+    private PointVector externalForce;
+    public static PointVector gravityForce = new PointVector(0, 0.098f);
+    private PointVector resultantForce = new PointVector();
     private int BODY_WIDTH;
     private int BODY_HEIGHT;
     private float mass;
@@ -24,14 +24,14 @@ public class Body {
 
     private boolean[] actions = new boolean[3]; // [0] -> MoveLeft; [1] -> MoveRight; [2] -> Jump;
 
-    public Body(PVector position, int BODY_WIDTH, int BODY_HEIGHT, float mass){
+    public Body(PointVector position, int BODY_WIDTH, int BODY_HEIGHT, float mass){
         this.position = position;
         this.BODY_WIDTH = BODY_WIDTH;
         this.BODY_HEIGHT = BODY_HEIGHT;
         this.mass = mass;
-        this.velocity = new PVector();
-        this.jumpForce = new PVector();
-        this.externalForce = new PVector();
+        this.velocity = new PointVector();
+        this.jumpForce = new PointVector();
+        this.externalForce = new PointVector();
         this.oldPosition = position;
     }
 
@@ -46,7 +46,7 @@ public class Body {
         //In case of a jump, decrease jumpForce by a bit
         if(actions[2]){
             jumpTimer ++;
-            jumpForce = jumpForce.add(new PVector(0, gravityForce.getY()));// * Game.CURRENT_FRAME_TIME));
+            jumpForce = jumpForce.add(new PointVector(0, gravityForce.getY()));// * Game.CURRENT_FRAME_TIME));
             if(jumpTimer > 10 && collisionState[2]){
                 jumpOnCollisionTime++;
             }
@@ -56,30 +56,30 @@ public class Body {
 
             if(jumpForce.getY() > 0 || (jumpTimer > 10 && collisionState[2] && jumpOnCollisionTime > 5)){
                 actions[2] = false;
-                jumpForce = new PVector();
+                jumpForce = new PointVector();
             }
         }
         else{
             // emulating the stop of a jump by the player
             jumpForce = jumpForce.scalarMultiply(0.65f);
             if(jumpForce.abs() < 0.1)
-                jumpForce = new PVector();
+                jumpForce = new PointVector();
         }
 
         //Calculate next position and check for collision
-        resultantForce = new PVector();
+        resultantForce = new PointVector();
         resultantForce = resultantForce.add(velocity);
         resultantForce = resultantForce.add(gravityForce.scalarMultiply(mass));
         resultantForce = resultantForce.add(jumpForce);
-        if(!externalForce.equals(new PVector(0,0))){
+        if(!externalForce.equals(new PointVector(0,0))){
             resultantForce = resultantForce.add(externalForce);
             //externalForce = externalForce.scalarMultiply(0.95f);
             //if(externalForce.abs() < 0.1)
-            externalForce = new PVector();
+            externalForce = new PointVector();
         }
 
         // #################################### added here scalar multiply ################################
-        PVector nextPosition = new PVector(position.add(resultantForce));//.scalarMultiply(Game.CURRENT_FRAME_TIME);
+        PointVector nextPosition = new PointVector(position.add(resultantForce));//.scalarMultiply(Game.CURRENT_FRAME_TIME);
 
         //check if is out of map bounds
         nextPosition = nextPosition.setInMapBounds(
@@ -112,6 +112,7 @@ public class Body {
     //                       and the current Collision state which is modified by interaction with the map, or base on
     //                                                  a obj obj interaction that sops the player from moving
     public void ajustPositionOnCollision(){
+
         //top Collision
         if(collisionState[0] && resultantForce.getY() < 0){
             resultantForce.setY(0);
@@ -133,9 +134,11 @@ public class Body {
     }
 
     public void Stand(){
+
         //if only one command is running or none
         if(!actions[0] && !actions[1])
             velocity.setX(0);
+
     }
 
     public void MoveLeft(){
@@ -162,7 +165,7 @@ public class Body {
             if (!actions[2] && (collisionState[2] || jumpPermission)) {
                 jumpPermission = false;
                 jumpTimer = 0;
-                jumpForce = new PVector(gravityForce.scalarMultiply(-JUMP_CONSTANT));
+                jumpForce = new PointVector(gravityForce.scalarMultiply(-JUMP_CONSTANT));
                 actions[2] = true;
             }
         }
@@ -176,7 +179,7 @@ public class Body {
     //      - right
     //      - bottom
     //      - left
-    public static PVector[] getSideCollisionPoints(Rectangle rect){
+    public static PointVector[] getSideCollisionPoints(Rectangle rect){
 
         //consider the following points on the side of the square
         /*           __  -> deltaX
@@ -199,16 +202,16 @@ public class Body {
         int totalPoints = 4*nrTestPoints + 4;
 
         //points to be verified
-        PVector[] checkingPoints = new PVector[totalPoints];
+        PointVector[] checkingPoints = new PointVector[totalPoints];
         for(int index = 0; index < nrTestPoints + 1; index ++){
             //top
-            checkingPoints[index] = new PVector(rect.x + deltaX + index * topStep, rect.y);
+            checkingPoints[index] = new PointVector(rect.x + deltaX + index * topStep, rect.y);
             //right
-            checkingPoints[index + nrTestPoints + 1] = new PVector(rect.x + rect.width, rect.y + deltaY + index * sideStep);
+            checkingPoints[index + nrTestPoints + 1] = new PointVector(rect.x + rect.width, rect.y + deltaY + index * sideStep);
             //bottom
-            checkingPoints[index + 2*(nrTestPoints + 1)] = new PVector(rect.x + deltaX + index * topStep,rect.y+rect.height);
+            checkingPoints[index + 2*(nrTestPoints + 1)] = new PointVector(rect.x + deltaX + index * topStep,rect.y+rect.height);
             //left
-            checkingPoints[index + 3*(nrTestPoints + 1)] = new PVector(rect.x, rect.y+ deltaY + index * sideStep);
+            checkingPoints[index + 3*(nrTestPoints + 1)] = new PointVector(rect.x, rect.y+ deltaY + index * sideStep);
         }
 
         return checkingPoints;
@@ -228,17 +231,17 @@ public class Body {
 
 
 
-    public void setPosition(PVector position) {
+    public void setPosition(PointVector position) {
         //this.oldPosition = this.position;
         this.position = position;
     }
-    public void setExternalForce(PVector externalForce){
+    public void setExternalForce(PointVector externalForce){
         this.externalForce = externalForce;
     }
-    public PVector getPosition(){
+    public PointVector getPosition(){
         return position;
     }
-    public PVector getVelocity(){
+    public PointVector getVelocity(){
         return velocity;
     }
 
@@ -259,7 +262,7 @@ public class Body {
     public int getBodyHeight(){
         return BODY_HEIGHT;
     }
-    public PVector getResultantForce(){
+    public PointVector getResultantForce(){
         return resultantForce;
     }
     public Rectangle getHitBox(){
@@ -272,7 +275,7 @@ public class Body {
     public float getMass() {
         return mass;
     }
-    public PVector getOldPosition(){
+    public PointVector getOldPosition(){
         return oldPosition;
     }
     public void setCollisionState(boolean[] collisionState){
@@ -283,11 +286,11 @@ public class Body {
         this.speed = speed;
     }
 
-    public void setOldPosition(PVector oldPosition) {
+    public void setOldPosition(PointVector oldPosition) {
         this.oldPosition = oldPosition;
     }
 
-    public void setResultantForce(PVector resultantForce) {
+    public void setResultantForce(PointVector resultantForce) {
         this.resultantForce = resultantForce;
     }
 

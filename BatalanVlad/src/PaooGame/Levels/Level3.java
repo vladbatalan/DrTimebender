@@ -1,7 +1,7 @@
 package PaooGame.Levels;
 
 import PaooGame.GameObjects.StillObjects.*;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 import PaooGame.Tiles.Tile;
 
@@ -22,51 +22,51 @@ public class Level3 extends Level {
         currentMap.setBackground("/backgrounds/nightBackground.jpg");
 
         // Create the existing objects except the Player that is loaded at the start of a level Phase
-        startTimeMachine = new TimeMachine(new PVector(Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 47 - 100));
-        gameObjective = new Objective(new PVector(Tile.TILE_WIDTH * 36, Tile.TILE_HEIGHT * 7 - 80), true);
+        startTimeMachine = new TimeMachine(new PointVector(Tile.TILE_WIDTH * 10, Tile.TILE_HEIGHT * 47 - 100));
+        gameObjective = new Objective(new PointVector(Tile.TILE_WIDTH * 36, Tile.TILE_HEIGHT * 7 - 80), true);
 
-        MovingPlatformControlled upDownPlatform = new MovingPlatformControlled(new PVector(Tile.TILE_WIDTH * 50, Tile.TILE_HEIGHT * 46 - 15), new Color(0xFF0002));
+        MovingPlatformControlled upDownPlatform = new MovingPlatformControlled(new PointVector(Tile.TILE_WIDTH * 50, Tile.TILE_HEIGHT * 46 - 15), new Color(0xFF0002));
         upDownPlatform.setSpeed(6);
 
-        MovingPlatformControlled spacePlatform = new MovingPlatformControlled(new PVector(Tile.TILE_WIDTH * 17, Tile.TILE_HEIGHT * 47 - 15), new Color(0x00D679));
+        MovingPlatformControlled spacePlatform = new MovingPlatformControlled(new PointVector(Tile.TILE_WIDTH * 17, Tile.TILE_HEIGHT * 47 - 15), new Color(0x00D679));
         spacePlatform.setSpeed(5);
 
-        PushButton upRightPlatformButton = new PushButton(new PVector(Tile.TILE_WIDTH * 40, Tile.TILE_HEIGHT * 47 - 15));
+        PushButton upRightPlatformButton = new PushButton(new PointVector(Tile.TILE_WIDTH * 40, Tile.TILE_HEIGHT * 47 - 15));
         upRightPlatformButton.setDescriptionString("Up");
         upRightPlatformButton.addAffectedObject(upDownPlatform, true, "Up");
 
-        PushButton downRightPlatformButton = new PushButton(new PVector(Tile.TILE_WIDTH * 43, Tile.TILE_HEIGHT * 47 - 15));
+        PushButton downRightPlatformButton = new PushButton(new PointVector(Tile.TILE_WIDTH * 43, Tile.TILE_HEIGHT * 47 - 15));
         downRightPlatformButton.addAffectedObject(upDownPlatform, true, "Down");
         downRightPlatformButton.setDescriptionString("Down");
         downRightPlatformButton.changeButtonType(0, 2);
 
-        PushButton upSpaceButton = new PushButton(new PVector(Tile.TILE_WIDTH * 44, Tile.TILE_HEIGHT * 32 - 15));
+        PushButton upSpaceButton = new PushButton(new PointVector(Tile.TILE_WIDTH * 44, Tile.TILE_HEIGHT * 32 - 15));
         upSpaceButton.setDescriptionString("Up");
         upSpaceButton.addAffectedObject(spacePlatform, true, "Up");
 
-        PushButton downSpaceButton = new PushButton(new PVector(Tile.TILE_WIDTH * 44, Tile.TILE_HEIGHT * 26 - 15));
+        PushButton downSpaceButton = new PushButton(new PointVector(Tile.TILE_WIDTH * 44, Tile.TILE_HEIGHT * 26 - 15));
         downSpaceButton.setDescriptionString("Down");
         downSpaceButton.changeButtonType(0, 1);
         downSpaceButton.addAffectedObject(spacePlatform, true, "Down");
 
-        PushButton leftSpaceButton = new PushButton(new PVector(Tile.TILE_WIDTH * 44, Tile.TILE_HEIGHT * 20 - 15));
+        PushButton leftSpaceButton = new PushButton(new PointVector(Tile.TILE_WIDTH * 44, Tile.TILE_HEIGHT * 20 - 15));
         leftSpaceButton.setDescriptionString("Left");
         leftSpaceButton.addAffectedObject(spacePlatform, true, "Left");
 
-        PushButton rightSpaceButton = new PushButton(new PVector(Tile.TILE_WIDTH * 44, Tile.TILE_HEIGHT * 14 - 15));
+        PushButton rightSpaceButton = new PushButton(new PointVector(Tile.TILE_WIDTH * 44, Tile.TILE_HEIGHT * 14 - 15));
         rightSpaceButton.setDescriptionString("Right");
         rightSpaceButton.changeButtonType(0, 3);
         rightSpaceButton.addAffectedObject(spacePlatform, true, "Right");
 
 
-        TimedGate topGate = new TimedGate(new PVector(Tile.TILE_WIDTH * 30, Tile.TILE_HEIGHT * 7 - 4), 4*Tile.TILE_HEIGHT - 4, true, new Color(0xDC5040));
+        TimedGate topGate = new TimedGate(new PointVector(Tile.TILE_WIDTH * 30, Tile.TILE_HEIGHT * 7 - 4), 4*Tile.TILE_HEIGHT - 4, true, new Color(0xDC5040));
 
-        Lever topGateLever = new Lever(new PVector(Tile.TILE_WIDTH * 44, Tile.TILE_HEIGHT * 38 - 60));
+        Lever topGateLever = new Lever(new PointVector(Tile.TILE_WIDTH * 44, Tile.TILE_HEIGHT * 38 - 60));
         topGateLever.addAffectedObject(topGate);
 
-        TimedGate downGate = new TimedGate(new PVector(Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 20 - 4), 4*Tile.TILE_HEIGHT - 4, true, new Color(0x57C5D6));
+        TimedGate downGate = new TimedGate(new PointVector(Tile.TILE_WIDTH * 28, Tile.TILE_HEIGHT * 20 - 4), 4*Tile.TILE_HEIGHT - 4, true, new Color(0x57C5D6));
 
-        Lever downGateLever = new Lever(new PVector(Tile.TILE_WIDTH * 44, Tile.TILE_HEIGHT * 8 - 60));
+        Lever downGateLever = new Lever(new PointVector(Tile.TILE_WIDTH * 44, Tile.TILE_HEIGHT * 8 - 60));
         downGateLever.addAffectedObject(downGate);
 
         // Adding Objects to Handler

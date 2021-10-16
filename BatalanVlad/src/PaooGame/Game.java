@@ -9,7 +9,6 @@ import PaooGame.Input.KeyInput;
 import PaooGame.Input.MouseInput;
 import PaooGame.Levels.Level;
 import PaooGame.Menu.*;
-import PaooGame.Menu.Menu;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -17,14 +16,14 @@ import java.util.ArrayList;
 
 
 /**
- * The main instance of the game
+ * Class responsible for running the instance of the game.
  */
 public class Game implements Runnable
 {
     /**
      * The main window of the game.
      */
-    private GameWindow      wnd;
+    private GameWindow gameWindow;
 
     /**
      * The variable that describes the state of the game.
@@ -92,22 +91,22 @@ public class Game implements Runnable
 
     public Game(String title, int width, int height)
     {
-        wnd = new GameWindow(title, width, height);
+        gameWindow = new GameWindow(title, width, height);
         runState = false;
     }
 
 
     private void InitGame()
     {
-        wnd = new GameWindow("Dr. TimeBender", GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
+        gameWindow = new GameWindow("Dr. TimeBender", GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
             /// Este construita fereastra grafica.
-        wnd.BuildGameWindow();
+        gameWindow.BuildGameWindow();
             /// Se incarca toate elementele grafice (dale)
         Assets.Init();
 
-        wnd.GetCanvas().addMouseListener(new MouseInput(this));
-        wnd.GetCanvas().addMouseMotionListener(new MouseInput(this));
-        wnd.GetJFrame().addKeyListener(new KeyInput(this));
+        gameWindow.GetCanvas().addMouseListener(new MouseInput(this));
+        gameWindow.GetCanvas().addMouseMotionListener(new MouseInput(this));
+        gameWindow.GetJFrame().addKeyListener(new KeyInput(this));
     }
 
     public static float CURRENT_FRAME_TIME = 0;
@@ -197,7 +196,7 @@ public class Game implements Runnable
 
     private void Update()
     {
-        wnd.GetJFrame().requestFocus();
+        gameWindow.GetJFrame().requestFocus();
 
         for(int index = 0; index < updateList.size(); index ++){
             ToBeUpdatedConstantly update = updateList.get(index);
@@ -215,7 +214,7 @@ public class Game implements Runnable
     private void Draw()
     {
         /// Returnez bufferStrategy pentru canvasul existent
-        bs = wnd.GetCanvas().getBufferStrategy();
+        bs = gameWindow.GetCanvas().getBufferStrategy();
             /// Verific daca buffer strategy a fost construit sau nu
         if(bs == null)
         {
@@ -223,7 +222,7 @@ public class Game implements Runnable
             try
             {
                     /// Se construieste tripul buffer
-                wnd.GetCanvas().createBufferStrategy(3);
+                gameWindow.GetCanvas().createBufferStrategy(3);
                 return;
             }
             catch (Exception e)
@@ -236,9 +235,9 @@ public class Game implements Runnable
         g = bs.getDrawGraphics();
             /// Se sterge ce era
 
-        g.clearRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
+        g.clearRect(0, 0, gameWindow.GetWndWidth(), gameWindow.GetWndHeight());
         g.setColor(new Color(30, 31, 41));
-        g.fillRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
+        g.fillRect(0, 0, gameWindow.GetWndWidth(), gameWindow.GetWndHeight());
 
         if(gameState != GameStates.VICTORY_MENU)
             victoryMenu.setFirstTimeAccessed(true);
