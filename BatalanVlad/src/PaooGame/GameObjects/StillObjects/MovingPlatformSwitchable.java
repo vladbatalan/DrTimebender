@@ -3,23 +3,23 @@ package PaooGame.GameObjects.StillObjects;
 import PaooGame.GameObjects.ISwitchable;
 import PaooGame.GameObjects.ObjectID;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 
 import java.awt.*;
 
 public class MovingPlatformSwitchable extends MovingPlatform implements ISwitchable {
 
     private boolean isActive;
-    public MovingPlatformSwitchable(PVector positionStart, PVector positionEnd, Color backColor){
+    public MovingPlatformSwitchable(PointVector positionStart, PointVector positionEnd, Color backColor){
         this.backColor = backColor;
         initMovingPlatform(positionStart, positionEnd);
     }
 
-    public MovingPlatformSwitchable(PVector positionStart, PVector positionEnd){
+    public MovingPlatformSwitchable(PointVector positionStart, PointVector positionEnd){
         initMovingPlatform(positionStart, positionEnd);
     }
 
-    private void initMovingPlatform(PVector positionStart, PVector positionEnd){
+    private void initMovingPlatform(PointVector positionStart, PointVector positionEnd){
         this.id = ObjectID.MovingPlatform;
         this.body = new Body(positionStart, 60, 15, 50);
         this.body.setMobility(false);
@@ -62,7 +62,7 @@ public class MovingPlatformSwitchable extends MovingPlatform implements ISwitcha
     }
 
     @Override
-    public PVector getSwitchablePosition() {
+    public PointVector getSwitchablePosition() {
         return body.getPosition();
     }
 }

@@ -22,7 +22,7 @@ import PaooGame.GameWindow.Button.ButtonTypes.ReturnFromGameToMainMenuButton;
 import PaooGame.GameWindow.Button.MyButton;
 import PaooGame.GameWindow.StringDisplay.ScreenTag;
 import PaooGame.GameWindow.Timer.Timer;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 
 import java.awt.*;
@@ -109,7 +109,7 @@ public abstract class Level {
         mainScreenTag.addTimerIntreruptor(new GameStateGameIntrerupter());
 
         //adding a Timmer on the screen
-        gameTimer = new Timer(new PVector(400, Game.GAME_WINDOW_HEIGHT - 30), camera);
+        gameTimer = new Timer(new PointVector(400, Game.GAME_WINDOW_HEIGHT - 30), camera);
         //gameTimer.setBackground(new Color(0xB3DAFF), 5);
         gameTimer.setDisplayColor(new Color(0xFFE332));
     }
@@ -217,13 +217,13 @@ public abstract class Level {
 
     protected void spawnMobileAtStartingPoint(){
         //Player
-        PVector displacement1 = new PVector((float)Player.body_width/2, startTimeMachine.getBody().getBodyHeight() - Player.body_height);
+        PointVector displacement1 = new PointVector((float)Player.body_width/2, startTimeMachine.getBody().getBodyHeight() - Player.body_height);
         Player player = new Player(startTimeMachine.getBody().getPosition().add(displacement1));
         handler.setPlayer(player);
 
         //OldInstances
-        PVector displacement2 = new PVector((float)OldPlayerInstance.body_width/2, startTimeMachine.getBody().getBodyHeight() - (float)OldPlayerInstance.body_height);
-        PVector startingPosition = startTimeMachine.getBody().getPosition().add(displacement2);
+        PointVector displacement2 = new PointVector((float)OldPlayerInstance.body_width/2, startTimeMachine.getBody().getBodyHeight() - (float)OldPlayerInstance.body_height);
+        PointVector startingPosition = startTimeMachine.getBody().getPosition().add(displacement2);
 
         for(OldPlayerInstance instance:handler.getOldInstances()){
             instance.getBody().setPosition(startingPosition);
@@ -233,7 +233,7 @@ public abstract class Level {
 
     public void addOldInstance(){
         myControllerBuilder.finishControllerBuild(gameTimer.getCurrentTime());
-        OldPlayerInstance instance = new OldPlayerInstance(new PVector(), myControllerBuilder.getMyController());
+        OldPlayerInstance instance = new OldPlayerInstance(new PointVector(), myControllerBuilder.getMyController());
         handler.addOldInstance(instance);
     }
 

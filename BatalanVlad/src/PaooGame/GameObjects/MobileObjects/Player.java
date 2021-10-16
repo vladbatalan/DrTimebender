@@ -3,7 +3,7 @@ package PaooGame.GameObjects.MobileObjects;
 import PaooGame.GameObjects.ObjectID;
 import PaooGame.Graphics.Animations.AnimationCollections.PlayerAnimationCollection;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 
 import java.awt.*;
@@ -14,7 +14,7 @@ public class Player extends MobileObject {
     public static int body_height = 40;
 
 
-    public Player(PVector position, int BODY_WIDTH, int BODY_HEIGHT, float mass) {
+    public Player(PointVector position, int BODY_WIDTH, int BODY_HEIGHT, float mass) {
         this.id = ObjectID.Player;
         this.body = new Body(position, BODY_WIDTH, BODY_HEIGHT, mass);
         this.body.setMobility(true);
@@ -22,7 +22,7 @@ public class Player extends MobileObject {
         this.animation = new PlayerAnimationCollection();
     }
 
-    public Player(PVector position) {
+    public Player(PointVector position) {
         this.id = ObjectID.Player;
         this.body = new Body(position, 20, 40, 47);
         this.body.setMobility(true);

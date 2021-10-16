@@ -1,10 +1,5 @@
 package PaooGame.Tiles;
 
-import PaooGame.Physics.PVector;
-import PaooGame.Tiles.MapTiles.NoTile;
-import PaooGame.Tiles.TileCollisionType.BottomHalfTile;
-import PaooGame.Tiles.TileCollisionType.TopHalfTile;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -69,7 +64,7 @@ public class Tile
     }
     public boolean onCollision(float relativeX, float relativeY){
        // System.out.println("\t" + tileType.toString());
-        //System.out.print("\t" + new PVector(relativeX, relativeY).toString());
+        //System.out.print("\t" + new PointVector(relativeX, relativeY).toString());
         //System.out.println("\t" + this.collisionBox.toString());
         if(collisionBox.getX() <= relativeX && relativeX <= collisionBox.getX() + collisionBox.getWidth())
             if(collisionBox.getY() <= relativeY && relativeY <= collisionBox.getY() + collisionBox.getHeight()) {

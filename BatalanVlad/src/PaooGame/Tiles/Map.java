@@ -4,17 +4,13 @@ import PaooGame.Game;
 import PaooGame.GameWindow.Camera.GameCamera;
 import PaooGame.Graphics.ImageLoader;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Factory.TileFactory;
-import PaooGame.Tiles.TileCollisionType.TopHalfTile;
-import javafx.util.Pair;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -42,8 +38,6 @@ public class Map {
 
             map_width = width;
             map_height = height;
-
-            //System.out.println(height + " x " + width);
 
             //execut crearea hartii
             for( int index = 0; index < height; index ++) {
@@ -86,7 +80,7 @@ public class Map {
 
     }
 
-    private PVector[] testP;
+    private PointVector[] testP;
 
     public void Draw(Graphics g){
         if(background != null) {
@@ -110,7 +104,7 @@ public class Map {
         }
         /*
         if(testP!=null){
-            for(PVector pv:testP)
+            for(PointVector pv:testP)
             {
                 g.setColor(Color.green);
                 g.fillRect((int)pv.getX()-1, (int)pv.getY()-1,2,2);
@@ -119,7 +113,7 @@ public class Map {
          */
     }
 
-    public void MapExtend(){
+    public void mapExtend(){
         if(map_height < MIN_HEIGHT){
             LinkedList<Tile> lastRow = tileMatrix.getLast();
             for(int heightIndex = tileMatrix.size(); heightIndex < MIN_HEIGHT; heightIndex++) {
@@ -148,20 +142,20 @@ public class Map {
         boolean[] collision = new boolean[5];
 
         // points where we will check the collisions with the tiles on the map
-        PVector[] checkingPoints = Body.getSideCollisionPoints(new Rectangle((int)x, (int)y, width, height));
+        PointVector[] checkingPoints = Body.getSideCollisionPoints(new Rectangle((int)x, (int)y, width, height));
         int totalPoints = checkingPoints.length;
         int nrTestPoints = totalPoints/4;
 
         Tile[] checkingTiles = new Tile[totalPoints];
         for(int index = 0; index < checkingPoints.length; index ++){
-           PVector coords = getMatrixIndexes(checkingPoints[index].getX(), checkingPoints[index].getY());
+           PointVector coords = getMatrixIndexes(checkingPoints[index].getX(), checkingPoints[index].getY());
             checkingTiles[index] = getTileByIndex((int)coords.getX(), (int)coords.getY());
         }
 
-        //System.out.println("Collision test: " + new PVector(x, y).toString());
+        //System.out.println("Collision test: " + new PointVector(x, y).toString());
         for(int index = 0; index < checkingTiles.length; index ++){
             //este un pas in plus pe care l pot integra sigur nu am nev de relative poz mai incolo?
-            PVector relativePosition = getPointRelativeToTile(checkingPoints[index]);
+            PointVector relativePosition = getPointRelativeToTile(checkingPoints[index]);
             if(checkingTiles[index].onCollision(relativePosition.getX(), relativePosition.getY())) {
                 if (checkingTiles[index].IsDeadly())
                     collision[4] = true;
@@ -174,27 +168,27 @@ public class Map {
 
     // gets a location on map
     // returns the indexes of the tile located in the matrix that contains x and y
-    public PVector getMatrixIndexes(float x, float y){
-        return new PVector((int)(x / Tile.TILE_WIDTH), (int)(y / Tile.TILE_HEIGHT));
+    public PointVector getMatrixIndexes(float x, float y){
+        return new PointVector((int)(x / Tile.TILE_WIDTH), (int)(y / Tile.TILE_HEIGHT));
     }
 
     public Tile getTileByIndex(int x, int y){
         return tileMatrix.get(y).get(x);
     }
 
-    public PVector getMaxBounds(){
-        PVector bounds = new PVector();
+    public PointVector getMaxBounds(){
+        PointVector bounds = new PointVector();
         bounds.setX(tileMatrix.get(0).size() * Tile.TILE_HEIGHT);
         bounds.setY(tileMatrix.size() * Tile.TILE_WIDTH);
         return bounds;
     }
 
-    public PVector getPointRelativeToTile(PVector point){
+    public PointVector getPointRelativeToTile(PointVector point){
         float x, y;
-        PVector indexes = getMatrixIndexes(point.getX(), point.getY());
+        PointVector indexes = getMatrixIndexes(point.getX(), point.getY());
         x = point.getX() - indexes.getX() * Tile.TILE_WIDTH;
         y = point.getY() - indexes.getY() * Tile.TILE_HEIGHT;
-        return new PVector(x, y);
+        return new PointVector(x, y);
     }
 
     public void setCamera(GameCamera camera) {

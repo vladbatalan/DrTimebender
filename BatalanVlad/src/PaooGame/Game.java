@@ -9,31 +9,57 @@ import PaooGame.Input.KeyInput;
 import PaooGame.Input.MouseInput;
 import PaooGame.Levels.Level;
 import PaooGame.Menu.*;
-import PaooGame.Menu.Menu;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
+
+/**
+ * Class responsible for running the instance of the game.
+ */
 public class Game implements Runnable
 {
-    private GameWindow      wnd;        /*!< Fereastra in care se va desena tabla jocului*/
-    private boolean         runState;   /*!< Flag ce starea firului de executie.*/
-    private Thread          gameThread; /*!< Referinta catre thread-ul de update si draw al ferestrei*/
-    private BufferStrategy  bs;         /*!< Referinta catre un mecanism cu care se organizeaza memoria complexa pentru un canvas.*/
+    /**
+     * The main window of the game.
+     */
+    private GameWindow gameWindow;
 
+    /**
+     * The variable that describes the state of the game.
+     */
+    private boolean         runState;
 
-    private Graphics g;          /*!< Referinta catre un context grafic.*/
+    /**
+     * The main thread of the game
+     */
+    private Thread          gameThread;
 
-    // the database of the game
+    /**
+     * This is the singleton database object used to store levels.
+     */
     public static DatabaseSingleton database = DatabaseSingleton.getInstance();
 
-    // profile of player
-    public static int user_id;
+    /**
+     * I got no idee what this is for ... ##########################################################################
+     */
+    public static int userId;
 
+    /**
+     * The state of the game
+     */
     public static GameStates gameState = GameStates.MENU;
+
+    /**
+     * The width of the screen
+     */
     public static Integer GAME_WINDOW_WIDTH = 800;
+
+    /**
+     * The height of the screen
+     */
     public static Integer GAME_WINDOW_HEIGHT = 600;
+
 
     public static MainGameMenu mainMenu = new MainGameMenu();
     public static MapCreationMenu mapCreation = new MapCreationMenu();
@@ -51,22 +77,22 @@ public class Game implements Runnable
 
     public Game(String title, int width, int height)
     {
-        wnd = new GameWindow(title, width, height);
+        gameWindow = new GameWindow(title, width, height);
         runState = false;
     }
 
 
     private void InitGame()
     {
-        wnd = new GameWindow("Dr. TimeBender", GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
+        gameWindow = new GameWindow("Dr. TimeBender", GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
             /// Este construita fereastra grafica.
-        wnd.BuildGameWindow();
+        gameWindow.BuildGameWindow();
             /// Se incarca toate elementele grafice (dale)
         Assets.Init();
 
-        wnd.GetCanvas().addMouseListener(new MouseInput(this));
-        wnd.GetCanvas().addMouseMotionListener(new MouseInput(this));
-        wnd.GetJFrame().addKeyListener(new KeyInput(this));
+        gameWindow.GetCanvas().addMouseListener(new MouseInput(this));
+        gameWindow.GetCanvas().addMouseMotionListener(new MouseInput(this));
+        gameWindow.GetJFrame().addKeyListener(new KeyInput(this));
     }
 
     public static float CURRENT_FRAME_TIME = 0;
@@ -82,10 +108,10 @@ public class Game implements Runnable
             /// sau mai bine spus de 60 ori pe secunda.
 
         final int framesPerSecond   = 60; /*!< Constanta intreaga initializata cu numarul de frame-uri pe secunda.*/
-        final double timeFrame      = 1000000000 / framesPerSecond; /*!< Durata unui frame in nanosecunde.*/
+        final double timeFrame      = 1000000000.0 / framesPerSecond; /*!< Durata unui frame in nanosecunde.*/
 
             /// Atat timp timp cat threadul este pornit Update() & Draw()
-        while (runState == true)
+        while (runState)
         {
                 /// Se obtine timpul curent
             curentTime = System.nanoTime();
@@ -110,7 +136,7 @@ public class Game implements Runnable
      */
     public synchronized void StartGame()
     {
-        if(runState == false)
+        if(!runState)
         {
                 /// Se actualizeaza flagul de stare a threadului
             runState = true;
@@ -119,11 +145,6 @@ public class Game implements Runnable
             gameThread = new Thread(this);
                 /// Threadul creat este lansat in executie (va executa metoda run())
             gameThread.start();
-        }
-        else
-        {
-                /// Thread-ul este creat si pornit deja
-            return;
         }
     }
 
@@ -134,7 +155,7 @@ public class Game implements Runnable
      */
     public synchronized void StopGame()
     {
-        if(runState == true)
+        if(runState)
         {
                 /// Actualizare stare thread
             runState = false;
@@ -151,11 +172,6 @@ public class Game implements Runnable
                 ex.printStackTrace();
             }
         }
-        else
-        {
-                /// Thread-ul este oprit deja.
-            return;
-        }
     }
 
     /*! \fn private void Update()
@@ -166,35 +182,33 @@ public class Game implements Runnable
 
     private void Update()
     {
-        wnd.GetJFrame().requestFocus();
+        gameWindow.GetJFrame().requestFocus();
 
         for(int index = 0; index < updateList.size(); index ++){
             ToBeUpdatedConstantly update = updateList.get(index);
             update.Update();
         }
-        for(ToBeUpdatedConstantly update : removeFromUpdateList) {
-            //System.out.println("Removing " + update.toString());
+        for(ToBeUpdatedConstantly update : removeFromUpdateList)
             updateList.remove(update);
-        }
+
         removeFromUpdateList.clear();
 
-        if(gameState == GameStates.GAME) {
+        if(gameState == GameStates.GAME)
             currentLevel.Update();
-        }
     }
 
     private void Draw()
     {
-        /// Returnez bufferStrategy pentru canvasul existent
-        bs = wnd.GetCanvas().getBufferStrategy();
+        BufferStrategy bufferStrategy = gameWindow.GetCanvas().getBufferStrategy();
+
             /// Verific daca buffer strategy a fost construit sau nu
-        if(bs == null)
+        if(bufferStrategy == null)
         {
                 /// Se executa doar la primul apel al metodei Draw()
             try
             {
                     /// Se construieste tripul buffer
-                wnd.GetCanvas().createBufferStrategy(3);
+                gameWindow.GetCanvas().createBufferStrategy(3);
                 return;
             }
             catch (Exception e)
@@ -204,12 +218,14 @@ public class Game implements Runnable
             }
         }
             /// Se obtine contextul grafic curent in care se poate desena.
-        g = bs.getDrawGraphics();
+
+        assert bufferStrategy != null;
+        Graphics g = bufferStrategy.getDrawGraphics();
             /// Se sterge ce era
 
-        g.clearRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
+        g.clearRect(0, 0, gameWindow.GetWndWidth(), gameWindow.GetWndHeight());
         g.setColor(new Color(30, 31, 41));
-        g.fillRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
+        g.fillRect(0, 0, gameWindow.GetWndWidth(), gameWindow.GetWndHeight());
 
         if(gameState != GameStates.VICTORY_MENU)
             victoryMenu.setFirstTimeAccessed(true);
@@ -245,11 +261,12 @@ public class Game implements Runnable
         }
 
         for(int index = 0; index < updateList.size(); index ++){
+
             ToBeUpdatedConstantly update = updateList.get(index);
             update.Draw(g);
         }
 
-        bs.show();
+        bufferStrategy.show();
 
             /// Elibereaza resursele de memorie aferente contextului grafic curent (zonele de memorie ocupate de
             /// elementele grafice ce au fost desenate pe canvas).

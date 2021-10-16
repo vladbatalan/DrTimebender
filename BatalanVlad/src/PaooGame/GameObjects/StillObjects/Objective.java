@@ -4,7 +4,7 @@ import PaooGame.GameObjects.ISwitchable;
 import PaooGame.GameObjects.ObjectID;
 import PaooGame.Graphics.Animations.AnimationCollections.ObjectiveAnimationCollection;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 
 import java.awt.*;
@@ -14,7 +14,7 @@ public class Objective extends StillObject implements ISwitchable {
     // tells if the door to the next level is open or not
     private boolean isActive;
 
-    public Objective(PVector position, boolean isInitiallyActive){
+    public Objective(PointVector position, boolean isInitiallyActive){
         this.id = ObjectID.Objective;
         this.body = new Body(position, 40, 80, 50);
         this.body.setMobility(false);
@@ -49,7 +49,7 @@ public class Objective extends StillObject implements ISwitchable {
     public boolean getActiveState(){
         return isActive;
     }
-    public PVector getSwitchablePosition(){
+    public PointVector getSwitchablePosition(){
         return body.getPosition();
     }
 }

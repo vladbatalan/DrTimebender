@@ -3,10 +3,9 @@ package PaooGame.GameObjects.ObjectCollisionHandler;
 import PaooGame.GameObjects.GameObject;
 import PaooGame.GameObjects.MobileObjects.MobileObject;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 
 import java.awt.*;
-import java.sql.Array;
 import java.util.ArrayList;
 
 
@@ -36,7 +35,7 @@ public class ObjectCollisionHandler {
 
                     // requesting the list of points that need to be checked in order to verify which sides are
                     //                                                          in contact with obj2
-                    PVector[] listOfPoints = Body.getSideCollisionPoints(mobile.getBody().getHitBox());
+                    PointVector[] listOfPoints = Body.getSideCollisionPoints(mobile.getBody().getHitBox());
 
                     int totalPoints = listOfPoints.length;
                     int noSidePoints = totalPoints/4;
@@ -47,7 +46,7 @@ public class ObjectCollisionHandler {
 
                         // foreach point of check
                         for(int index = 0; index < totalPoints; index ++){
-                            PVector currentPoint = listOfPoints[index];
+                            PointVector currentPoint = listOfPoints[index];
 
                             // check if point is inside box
                             if(hitBox.x <= currentPoint.getX() && currentPoint.getX() <= hitBox.x + hitBox.width &&
@@ -61,7 +60,7 @@ public class ObjectCollisionHandler {
                         }
                     }
                     // update the position of the mobile, based on the previous calculated interactions
-                    mobile.getBody().ajustPositionOnCollision();
+                    mobile.getBody().adjustPositionOnCollision();
                     //System.out.println(obj1.getId() + " have ajusted it's position based on the interraction with " + obj2.getId());
                     // ############################# condition if obj2 is deadly to make mobile dead ###################
 

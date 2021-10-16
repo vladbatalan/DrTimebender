@@ -28,7 +28,6 @@ public class QuitButton extends MyButton {
 
 
     public void ButtonPressed() {
-        Game.database.Close();
         System.exit(0);
     }
 }

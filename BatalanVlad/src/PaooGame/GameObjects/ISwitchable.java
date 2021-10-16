@@ -1,9 +1,9 @@
 package PaooGame.GameObjects;
 
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 
 public interface ISwitchable {
     void turnOn(String command);
     void turnOff(String command);
-    PVector getSwitchablePosition();
+    PointVector getSwitchablePosition();
 }

@@ -1,10 +1,9 @@
 package PaooGame.Levels;
 
 import PaooGame.GameObjects.StillObjects.*;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 import PaooGame.Tiles.Tile;
-import PaooGame.Tiles.TileType;
 
 import java.awt.*;
 
@@ -23,20 +22,20 @@ public class Level1 extends Level {
         currentMap.setBackground("/backgrounds/plainBackground3.png");
 
         // Create the existing objects except the Player that is loaded at the start of a level Phase
-        startTimeMachine = new TimeMachine(new PVector(Tile.TILE_WIDTH * 4, Tile.TILE_HEIGHT * 18 - 100));
-        gameObjective = new Objective(new PVector(Tile.TILE_WIDTH * 46, Tile.TILE_HEIGHT * 18 - 80), false);
+        startTimeMachine = new TimeMachine(new PointVector(Tile.TILE_WIDTH * 4, Tile.TILE_HEIGHT * 18 - 100));
+        gameObjective = new Objective(new PointVector(Tile.TILE_WIDTH * 46, Tile.TILE_HEIGHT * 18 - 80), false);
 
         // the timed gates
-        TimedGate timeGate1 = new TimedGate(new PVector(Tile.TILE_WIDTH * 22 + 6, Tile.TILE_HEIGHT * 18 - 4),4*Tile.TILE_HEIGHT - 4, true, new Color(0xDC5040));
-        TimedGate timeGate2 = new TimedGate(new PVector(Tile.TILE_WIDTH * 27 + 6, Tile.TILE_HEIGHT * 18 - 4),4*Tile.TILE_HEIGHT - 4, true, new Color(0xDC882E));
-        TimedGate timeGate3 = new TimedGate(new PVector(Tile.TILE_WIDTH * 33 + 6, Tile.TILE_HEIGHT * 18 - 4),4*Tile.TILE_HEIGHT - 4, true, new Color(0xDCD134));
-        TimedGate timeGate4 = new TimedGate(new PVector(Tile.TILE_WIDTH * 38 + 6, Tile.TILE_HEIGHT * 18 - 4),4*Tile.TILE_HEIGHT - 4, true, new Color(0x9CDC16));
+        TimedGate timeGate1 = new TimedGate(new PointVector(Tile.TILE_WIDTH * 22 + 6, Tile.TILE_HEIGHT * 18 - 4),4*Tile.TILE_HEIGHT - 4, true, new Color(0xDC5040));
+        TimedGate timeGate2 = new TimedGate(new PointVector(Tile.TILE_WIDTH * 27 + 6, Tile.TILE_HEIGHT * 18 - 4),4*Tile.TILE_HEIGHT - 4, true, new Color(0xDC882E));
+        TimedGate timeGate3 = new TimedGate(new PointVector(Tile.TILE_WIDTH * 33 + 6, Tile.TILE_HEIGHT * 18 - 4),4*Tile.TILE_HEIGHT - 4, true, new Color(0xDCD134));
+        TimedGate timeGate4 = new TimedGate(new PointVector(Tile.TILE_WIDTH * 38 + 6, Tile.TILE_HEIGHT * 18 - 4),4*Tile.TILE_HEIGHT - 4, true, new Color(0x9CDC16));
 
         // a switch for opening and closing the gameObjective
-        Lever left1Lever = new Lever(new PVector(Tile.TILE_WIDTH * 8, Tile.TILE_HEIGHT * 5 - 60));
-        Lever left2Lever = new Lever(new PVector(Tile.TILE_WIDTH * 8, Tile.TILE_HEIGHT * 10 - 60));
-        Lever right1Lever = new Lever(new PVector(Tile.TILE_WIDTH * 17, Tile.TILE_HEIGHT * 5 - 60));
-        Lever right2Lever = new Lever(new PVector(Tile.TILE_WIDTH * 17, Tile.TILE_HEIGHT * 10 - 60));
+        Lever left1Lever = new Lever(new PointVector(Tile.TILE_WIDTH * 8, Tile.TILE_HEIGHT * 5 - 60));
+        Lever left2Lever = new Lever(new PointVector(Tile.TILE_WIDTH * 8, Tile.TILE_HEIGHT * 10 - 60));
+        Lever right1Lever = new Lever(new PointVector(Tile.TILE_WIDTH * 17, Tile.TILE_HEIGHT * 5 - 60));
+        Lever right2Lever = new Lever(new PointVector(Tile.TILE_WIDTH * 17, Tile.TILE_HEIGHT * 10 - 60));
 
         // the lever affects the objective state
         right2Lever.addAffectedObject(timeGate4);
@@ -49,8 +48,8 @@ public class Level1 extends Level {
         //objectiveLever.addAffectedObject(gameObjective);
         //objectiveLever.addAffectedObject(myGate, true);
 
-        ScalePan scalePan1 = new ScalePan(new PVector(Tile.TILE_WIDTH * 9 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 18 - 20), 30, 25);
-        ScalePan scalePan2 = new ScalePan(new PVector(Tile.TILE_WIDTH * 13 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 18 - 20), 350, 30);
+        ScalePan scalePan1 = new ScalePan(new PointVector(Tile.TILE_WIDTH * 9 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 18 - 20), 30, 25);
+        ScalePan scalePan2 = new ScalePan(new PointVector(Tile.TILE_WIDTH * 13 - Tile.TILE_WIDTH/2, Tile.TILE_HEIGHT * 18 - 20), 350, 30);
         StillObject twoPanScale = new TwoPanScale(scalePan1, scalePan2, new Color(0x57C5D6));
 
         // Adding Objects to Handler

@@ -5,9 +5,8 @@ import PaooGame.GameObjects.Controller.Controller;
 import PaooGame.GameObjects.ObjectID;
 import PaooGame.GameStates;
 import PaooGame.Graphics.Animations.AnimationCollections.OldPlayerAnimationCollection;
-import PaooGame.Graphics.Animations.AnimationCollections.PlayerAnimationCollection;
 import PaooGame.Physics.Body;
-import PaooGame.Physics.PVector;
+import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Map;
 
 import java.awt.*;
@@ -19,7 +18,7 @@ public class OldPlayerInstance extends MobileObject {
     public static int body_height = 40;
 
 
-    public OldPlayerInstance(PVector position, int BODY_WIDTH, int BODY_HEIGHT, float mass, Controller controller) {
+    public OldPlayerInstance(PointVector position, int BODY_WIDTH, int BODY_HEIGHT, float mass, Controller controller) {
         this.controller = controller;
         this.id = ObjectID.OldPlayerInstance;
         this.body = new Body(position, BODY_WIDTH, BODY_HEIGHT, mass);
@@ -28,7 +27,7 @@ public class OldPlayerInstance extends MobileObject {
         this.animation = new OldPlayerAnimationCollection();
     }
 
-    public OldPlayerInstance(PVector position, Controller controller) {
+    public OldPlayerInstance(PointVector position, Controller controller) {
         this.controller = controller;
         this.id = ObjectID.OldPlayerInstance;
         this.body = new Body(position, 20, 40, 47);

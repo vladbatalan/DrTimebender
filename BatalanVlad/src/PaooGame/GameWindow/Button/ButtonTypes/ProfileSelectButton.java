@@ -33,7 +33,7 @@ public class ProfileSelectButton extends MyButton {
     }
 
     public void ButtonPressed() {
-        Game.user_id = userId;
+        Game.userId = userId;
         Game.levelMenu.setMaxAvailableLevels(Game.database.CheckLevelsCompleted(userId));
         Game.gameState = GameStates.LEVEL_MENU;
         MouseInput.mouseInputPause = true;
