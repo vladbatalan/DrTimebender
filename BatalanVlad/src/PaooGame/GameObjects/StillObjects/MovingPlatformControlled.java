@@ -97,7 +97,7 @@ public class MovingPlatformControlled extends StillObject implements ISwitchable
         body.setResultantForce(resultantForce);
         body.setOldPosition(body.getPosition());
         body.setCollisionState( currentMap.checkCollision(nextPosition.getX(), nextPosition.getY() - maxOnPlatformHeight, body.getBodyWidth(), body.getBodyHeight() + maxOnPlatformHeight) );
-        body.ajustPositionOnCollision();
+        body.adjustPositionOnCollision();
 
         for(Pair<MobileObject, Float> myPair : interacting){
             MobileObject mobile = myPair.getKey();

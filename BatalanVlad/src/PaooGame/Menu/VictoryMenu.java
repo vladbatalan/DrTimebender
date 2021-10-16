@@ -30,7 +30,7 @@ public class VictoryMenu extends Menu{
         if(firstTimeAccessed == true)
         {
             firstTimeAccessed = false;
-            int totalScore = Game.database.GetTotalScore(Game.user_id);
+            int totalScore = Game.database.GetTotalScore(Game.userId);
             totalScoreString = scoreToString(totalScore);
         }
 

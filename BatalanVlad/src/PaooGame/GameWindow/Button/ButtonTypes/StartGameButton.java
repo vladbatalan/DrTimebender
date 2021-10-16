@@ -45,7 +45,7 @@ public class StartGameButton extends MyButton {
             return;
         }
 
-        Game.user_id = user_id;
+        Game.userId = user_id;
         Game.newProfileMenu.setErrorString("");
         Game.setCurrentLevel(new Level0());
         Game.gameState = GameStates.GAME;

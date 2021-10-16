@@ -40,40 +40,46 @@ public class Timer implements ToBeUpdatedConstantly {
 
 
     public void showTimer(){
-        if(isTimerVisible == false) {
+
+        if(!isTimerVisible) {
             timerDisplay.showScreenTag((int) positionOnScreen.getX(), (int) positionOnScreen.getY());
             timerDisplay.setColor(displayColor);
             isTimerVisible = true;
         }
     }
     public void hideTimer(){
-        if(isTimerVisible == true)
+
+        if(isTimerVisible)
             timerDisplay.hideScreenTag();
         isTimerVisible = false;
+
     }
 
     public void restartTimer(){
-        if(isTimerOn){
+
+        if(isTimerOn)
             Game.removeFromUpdateList.add(this);
-        }
         countTimeTicks = 0;
         isTimerOn = true;
         Game.updateList.add(this);
+
     }
 
     public void startTimer(){
-        if(isTimerOn){
+
+        if(isTimerOn)
             Game.removeFromUpdateList.add(this);
-        }
         isTimerOn = true;
         Game.updateList.add(this);
+
     }
 
     public void stopTimer(){
-        if(isTimerOn){
+
+        if(isTimerOn)
             Game.removeFromUpdateList.add(this);
-        }
         isTimerOn = false;
+
     }
 
     public void updateTimeContent(){
@@ -84,7 +90,7 @@ public class Timer implements ToBeUpdatedConstantly {
         String minutesString = "" + minutes;
         if(secondsString.length() < 2)
             secondsString = "0" + secondsString;
-        if(minutesString.length() < 0)
+        if(minutesString.length() < 2)
             minutesString = "0" + minutesString;
 
         content = "Time: " + minutesString + " : " + secondsString;

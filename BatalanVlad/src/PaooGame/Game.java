@@ -27,25 +27,13 @@ public class Game implements Runnable
 
     /**
      * The variable that describes the state of the game.
-     * true = The game is running
-     * false = The game is not running
      */
     private boolean         runState;
 
     /**
      * The main thread of the game
      */
-    private Thread          gameThread; /*!< Referinta catre thread-ul de update si draw al ferestrei*/
-
-    /**
-     * Reference to the mechanism that organises the complex memory for canvas
-     */
-    private BufferStrategy  bs;         /*!< Referinta catre un mecanism cu care se organizeaza memoria complexa pentru un canvas.*/
-
-    /**
-     * A graphic context
-     */
-    private Graphics g;          /*!< Referinta catre un context grafic.*/
+    private Thread          gameThread;
 
     /**
      * This is the singleton database object used to store levels.
@@ -55,7 +43,7 @@ public class Game implements Runnable
     /**
      * I got no idee what this is for ... ##########################################################################
      */
-    public static int user_id;
+    public static int userId;
 
     /**
      * The state of the game
@@ -72,9 +60,7 @@ public class Game implements Runnable
      */
     public static Integer GAME_WINDOW_HEIGHT = 600;
 
-    /**
-     * The main screen.
-     */
+
     public static MainGameMenu mainMenu = new MainGameMenu();
     public static MapCreationMenu mapCreation = new MapCreationMenu();
     public static LevelMenu levelMenu = new LevelMenu();
@@ -122,7 +108,7 @@ public class Game implements Runnable
             /// sau mai bine spus de 60 ori pe secunda.
 
         final int framesPerSecond   = 60; /*!< Constanta intreaga initializata cu numarul de frame-uri pe secunda.*/
-        final double timeFrame      = 1000000000 / framesPerSecond; /*!< Durata unui frame in nanosecunde.*/
+        final double timeFrame      = 1000000000.0 / framesPerSecond; /*!< Durata unui frame in nanosecunde.*/
 
             /// Atat timp timp cat threadul este pornit Update() & Draw()
         while (runState)
@@ -213,10 +199,10 @@ public class Game implements Runnable
 
     private void Draw()
     {
-        /// Returnez bufferStrategy pentru canvasul existent
-        bs = gameWindow.GetCanvas().getBufferStrategy();
+        BufferStrategy bufferStrategy = gameWindow.GetCanvas().getBufferStrategy();
+
             /// Verific daca buffer strategy a fost construit sau nu
-        if(bs == null)
+        if(bufferStrategy == null)
         {
                 /// Se executa doar la primul apel al metodei Draw()
             try
@@ -232,7 +218,9 @@ public class Game implements Runnable
             }
         }
             /// Se obtine contextul grafic curent in care se poate desena.
-        g = bs.getDrawGraphics();
+
+        assert bufferStrategy != null;
+        Graphics g = bufferStrategy.getDrawGraphics();
             /// Se sterge ce era
 
         g.clearRect(0, 0, gameWindow.GetWndWidth(), gameWindow.GetWndHeight());
@@ -273,11 +261,12 @@ public class Game implements Runnable
         }
 
         for(int index = 0; index < updateList.size(); index ++){
+
             ToBeUpdatedConstantly update = updateList.get(index);
             update.Draw(g);
         }
 
-        bs.show();
+        bufferStrategy.show();
 
             /// Elibereaza resursele de memorie aferente contextului grafic curent (zonele de memorie ocupate de
             /// elementele grafice ce au fost desenate pe canvas).

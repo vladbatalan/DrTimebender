@@ -12,8 +12,8 @@ public class Body {
     private PointVector externalForce;
     public static PointVector gravityForce = new PointVector(0, 0.098f);
     private PointVector resultantForce = new PointVector();
-    private int BODY_WIDTH;
-    private int BODY_HEIGHT;
+    private int bodyWidth;
+    private int bodyHeight;
     private float mass;
     private Color bodyColor = new Color(0,0,0,0);
     private int speed = 4;
@@ -26,8 +26,8 @@ public class Body {
 
     public Body(PointVector position, int BODY_WIDTH, int BODY_HEIGHT, float mass){
         this.position = position;
-        this.BODY_WIDTH = BODY_WIDTH;
-        this.BODY_HEIGHT = BODY_HEIGHT;
+        this.bodyWidth = BODY_WIDTH;
+        this.bodyHeight = BODY_HEIGHT;
         this.mass = mass;
         this.velocity = new PointVector();
         this.jumpForce = new PointVector();
@@ -83,8 +83,8 @@ public class Body {
 
         //check if is out of map bounds
         nextPosition = nextPosition.setInMapBounds(
-                BODY_WIDTH,
-                BODY_HEIGHT,
+                bodyWidth,
+                bodyHeight,
                 currentMap.getMaxBounds()
         );
         //apply corrections to resultantForce
@@ -97,21 +97,21 @@ public class Body {
         //4 - deadly collision
 
         // request the collision statye from the interaction with the map
-        collisionState = currentMap.checkCollision(nextPosition.getX(), nextPosition.getY(), BODY_WIDTH, BODY_HEIGHT);
+        collisionState = currentMap.checkCollision(nextPosition.getX(), nextPosition.getY(), bodyWidth, bodyHeight);
 
         // now we ajust the resultant force based on these collisionStates
-        ajustPositionOnCollision();
+        adjustPositionOnCollision();
     }
 
     public void Draw(Graphics g){
         g.setColor(bodyColor);
-        g.fillRect((int)position.getX(),(int)position.getY(),BODY_WIDTH, BODY_HEIGHT);
+        g.fillRect((int)position.getX(),(int)position.getY(), bodyWidth, bodyHeight);
     }
 
     // this function takes into consideration the current resultant force
     //                       and the current Collision state which is modified by interaction with the map, or base on
     //                                                  a obj obj interaction that sops the player from moving
-    public void ajustPositionOnCollision(){
+    public void adjustPositionOnCollision(){
 
         //top Collision
         if(collisionState[0] && resultantForce.getY() < 0){
@@ -257,16 +257,16 @@ public class Body {
     }
 
     public int getBodyWidth() {
-        return BODY_WIDTH;
+        return bodyWidth;
     }
     public int getBodyHeight(){
-        return BODY_HEIGHT;
+        return bodyHeight;
     }
     public PointVector getResultantForce(){
         return resultantForce;
     }
     public Rectangle getHitBox(){
-        return new Rectangle((int)position.getX(), (int)position.getY(), BODY_WIDTH, BODY_HEIGHT);
+        return new Rectangle((int)position.getX(), (int)position.getY(), bodyWidth, bodyHeight);
     }
 
     public boolean[] getCollisionState() {
