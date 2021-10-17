@@ -7,7 +7,7 @@ import PaooGame.GameWindow.Button.MyButton;
 import javafx.util.Pair;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileSelectionMenu extends Menu{
     public ProfileSelectionMenu(){
@@ -20,7 +20,7 @@ public class ProfileSelectionMenu extends Menu{
         Integer buttonHeight = 40;
         Integer buttonSpacer = 50;
 
-        ArrayList<Pair<Integer, String>> databaseUsers = Game.database.GetAllUsers();
+        List<Pair<Integer, String>> databaseUsers = Game.database.GetAllUsers();
 
 
         MyButton returnMenu = new ReturnMainMenuButton(

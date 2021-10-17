@@ -1,10 +1,9 @@
 package PaooGame.Database;
-import PaooGame.Game;
 import javafx.util.Pair;
 
-import java.security.spec.RSAOtherPrimeInfo;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseSingleton {
     private volatile static DatabaseSingleton instance = null;
@@ -27,7 +26,7 @@ public class DatabaseSingleton {
      * @return
      *  An instance of the database
      */
-    public static DatabaseSingleton getInstance(){
+    public synchronized static DatabaseSingleton getInstance(){
 
         if(instance == null)
             instance = new DatabaseSingleton();
@@ -86,6 +85,14 @@ public class DatabaseSingleton {
         }
     }
 
+    /**
+     * Method responsible for inserting a new user profile in the database
+     *
+     * @param profileName
+     *  The name of the new user
+     * @return
+     *  A code resembling the id of the created user or -1 if any exception occured
+     */
     public int InsertNewProfile(String profileName){
         int id_player;
 
@@ -132,6 +139,16 @@ public class DatabaseSingleton {
         return id_player;
     }
 
+    /**
+     * Method responsible for inserting a completed level in database
+     *
+     * @param level_code
+     *  The code of the inserted level
+     * @param user_id
+     *  The id of the user that completed the level
+     * @param score
+     *  The score of the user
+     */
     public void InsertCompletedLevel(int level_code, int user_id, int score){
         try{
             Connection connection = ConnectToDatabase();
@@ -161,6 +178,14 @@ public class DatabaseSingleton {
     }
 
 
+    /**
+     * Method responsible for returning the number of completed levels of a user
+     *
+     * @param userId
+     *  The id of the user
+     * @return
+     *  The number of completed levels
+     */
     public int CheckLevelsCompleted(int userId){
 
         try {
@@ -195,14 +220,24 @@ public class DatabaseSingleton {
 
     }
 
-    public int GetHighScore(int level_code, int user_id){
+    /**
+     * Method that returns the highest score obtained by a user for a specific level
+     *
+     * @param levelCode
+     *  The code of the level
+     * @param userId
+     *  The id of the user
+     * @return
+     *  The highest score obtained by user
+     */
+    public int GetHighScore(int levelCode, int userId){
 
         try {
 
             Connection connection = ConnectToDatabase();
             Statement statement = connection.createStatement();
 
-            String sql = "SELECT score FROM completed_levels WHERE id_player = "+ user_id +" and level_code = "+ level_code +" ORDER BY score ASC;";
+            String sql = "SELECT score FROM completed_levels WHERE id_player = "+ userId +" and level_code = "+ levelCode +" ORDER BY score ASC;";
             ResultSet myResult = statement.executeQuery(sql);
             connection.commit();
 
@@ -229,12 +264,20 @@ public class DatabaseSingleton {
         return -1;
     }
 
-    public int GetTotalScore(int user_id){
+    /**
+     * Method responsible with returning the total score won by a user.
+     *
+     * @param userId
+     *  The id of the user.
+     * @return
+     *  The total score obtained by the user.
+     */
+    public int GetTotalScore(int userId){
         int final_score = 0;
         try{
 
             for(int level_code = 0; level_code < NUMBER_OF_LEVELS; level_code ++){
-                int current_level_score = GetHighScore(level_code, user_id);
+                int current_level_score = GetHighScore(level_code, userId);
 
                 if(current_level_score == -1){
                     throw new Exception("A problem with the computation of the total score occoured!");
@@ -251,8 +294,13 @@ public class DatabaseSingleton {
         return final_score;
     }
 
-
-    public ArrayList<Pair<Integer, String>> GetAllUsers(){
+    /**
+     * Method responsible for returning all the users.
+     *
+     * @return
+     *  A list of pairs of id and name of the user.
+     */
+    public List<Pair<Integer, String>> GetAllUsers(){
         ArrayList<Pair<Integer, String>> listOfSaves = new ArrayList<>();
 
         try {
@@ -265,7 +313,7 @@ public class DatabaseSingleton {
             connection.commit();
 
             while(myResult.next()){
-                listOfSaves.add(new Pair<Integer, String>(myResult.getInt("id_player"), myResult.getString("name")));
+                listOfSaves.add(new Pair<>(myResult.getInt("id_player"), myResult.getString("name")));
             }
 
             statement.close();
