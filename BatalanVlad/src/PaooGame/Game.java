@@ -54,10 +54,6 @@ public class Game implements Runnable
      * The width of the screen
      */
     public static Integer GAME_WINDOW_WIDTH = 800;
-
-    /**
-     * The height of the screen
-     */
     public static Integer GAME_WINDOW_HEIGHT = 600;
 
 
@@ -81,13 +77,14 @@ public class Game implements Runnable
         runState = false;
     }
 
-
+    /**
+     * Method responsable for configuring the initialisation parameters of the Game
+     */
     private void InitGame()
     {
+
         gameWindow = new GameWindow("Dr. TimeBender", GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
-            /// Este construita fereastra grafica.
         gameWindow.BuildGameWindow();
-            /// Se incarca toate elementele grafice (dale)
         Assets.Init();
 
         gameWindow.GetCanvas().addMouseListener(new MouseInput(this));
@@ -96,100 +93,99 @@ public class Game implements Runnable
     }
 
     public static float CURRENT_FRAME_TIME = 0;
+
+    /**
+     * Method responsible with the main loop of the game.
+     */
     public void run()
     {
-            /// Initializeaza obiectul game
+        // Initialise the game object
         InitGame();
-        long oldTime = System.nanoTime();   /*!< Retine timpul in nanosecunde aferent frame-ului anterior.*/
-        long curentTime;                    /*!< Retine timpul curent de executie.*/
 
+        // The previous time
+        long oldTime = System.nanoTime();
 
-            /// Apelul functiilor Update() & Draw() trebuie realizat la fiecare 16.7 ms
-            /// sau mai bine spus de 60 ori pe secunda.
+        // The current time
+        long curentTime;
 
-        final int framesPerSecond   = 60; /*!< Constanta intreaga initializata cu numarul de frame-uri pe secunda.*/
-        final double timeFrame      = 1000000000.0 / framesPerSecond; /*!< Durata unui frame in nanosecunde.*/
+        final int framesPerSecond   = 60;
+        final double timeFrame      = 1000000000.0 / framesPerSecond;
 
-            /// Atat timp timp cat threadul este pornit Update() & Draw()
+        // As long as the thread is running, do the Update() and Draw() methods
         while (runState)
         {
-                /// Se obtine timpul curent
+
             curentTime = System.nanoTime();
             CURRENT_FRAME_TIME = (float)((curentTime - oldTime)/timeFrame);
-                /// Daca diferenta de timp dintre curentTime si oldTime mai mare decat 16.6 ms
+
             if((curentTime - oldTime) > timeFrame)
             {
-                /// Actualizeaza pozitiile elementelor
+
                 Update();
-                /// Deseneaza elementele grafica in fereastra.
                 Draw();
                 oldTime = curentTime;
+
             }
+
         }
 
     }
 
-    /*! \fn public synchronized void start()
-        \brief Creaza si starteaza firul separat de executie (thread).
 
-        Metoda trebuie sa fie declarata synchronized pentru ca apelul acesteia sa fie semaforizat.
+
+    /**
+     * Method responsable for creating the main thread of the game and running it.
      */
     public synchronized void StartGame()
     {
         if(!runState)
         {
-                /// Se actualizeaza flagul de stare a threadului
+
             runState = true;
-                /// Se construieste threadul avand ca parametru obiectul Game. De retinut faptul ca Game class
-                /// implementeaza interfata Runnable. Threadul creat va executa functia run() suprascrisa in clasa Game.
             gameThread = new Thread(this);
-                /// Threadul creat este lansat in executie (va executa metoda run())
             gameThread.start();
+
         }
     }
 
-    /*! \fn public synchronized void stop()
-        \brief Opreste executie thread-ului.
-
-        Metoda trebuie sa fie declarata synchronized pentru ca apelul acesteia sa fie semaforizat.
+    /**
+     * Method responsable for stopping the main thread.
      */
     public synchronized void StopGame()
     {
         if(runState)
         {
-                /// Actualizare stare thread
             runState = false;
-                /// Metoda join() arunca exceptii motiv pentru care trebuie incadrata intr-un block try - catch.
             try
             {
-                    /// Metoda join() pune un thread in asteptare panca cand un altul isi termina executie.
-                    /// Totusi, in situatia de fata efectul apelului este de oprire a threadului.
                 gameThread.join();
             }
             catch(InterruptedException ex)
             {
-                    /// In situatia in care apare o exceptie pe ecran vor fi afisate informatii utile pentru depanare.
                 ex.printStackTrace();
             }
         }
     }
 
-    /*! \fn private void Update()
-        \brief Actualizeaza starea elementelor din joc.
-
-        Metoda este declarata privat deoarece trebuie apelata doar in metoda run()
+    /**
+     * Method responsible for actualising the state of the game elements.
      */
-
     private void Update()
     {
         gameWindow.GetJFrame().requestFocus();
 
+        // This instruction must not be changed due to concurrency problems
+        // During the execution, the updateList changes it's size
         for(int index = 0; index < updateList.size(); index ++){
+
             ToBeUpdatedConstantly update = updateList.get(index);
             update.Update();
+
         }
-        for(ToBeUpdatedConstantly update : removeFromUpdateList)
+
+        for(ToBeUpdatedConstantly update : removeFromUpdateList) {
             updateList.remove(update);
+        }
 
         removeFromUpdateList.clear();
 
@@ -197,31 +193,28 @@ public class Game implements Runnable
             currentLevel.Update();
     }
 
+    /**
+     * Method responsible for rendering the graphic elements.
+     */
     private void Draw()
     {
         BufferStrategy bufferStrategy = gameWindow.GetCanvas().getBufferStrategy();
 
-            /// Verific daca buffer strategy a fost construit sau nu
         if(bufferStrategy == null)
         {
-                /// Se executa doar la primul apel al metodei Draw()
             try
             {
-                    /// Se construieste tripul buffer
                 gameWindow.GetCanvas().createBufferStrategy(3);
                 return;
             }
             catch (Exception e)
             {
-                    /// Afisez informatii despre problema aparuta pentru depanare.
                 e.printStackTrace();
             }
         }
-            /// Se obtine contextul grafic curent in care se poate desena.
 
         assert bufferStrategy != null;
         Graphics g = bufferStrategy.getDrawGraphics();
-            /// Se sterge ce era
 
         g.clearRect(0, 0, gameWindow.GetWndWidth(), gameWindow.GetWndHeight());
         g.setColor(new Color(30, 31, 41));
@@ -260,6 +253,8 @@ public class Game implements Runnable
                 break;
         }
 
+        // This instruction must not be changed due to concurrency problems
+        // During the execution, the updateList changes it's size
         for(int index = 0; index < updateList.size(); index ++){
 
             ToBeUpdatedConstantly update = updateList.get(index);
@@ -267,9 +262,6 @@ public class Game implements Runnable
         }
 
         bufferStrategy.show();
-
-            /// Elibereaza resursele de memorie aferente contextului grafic curent (zonele de memorie ocupate de
-            /// elementele grafice ce au fost desenate pe canvas).
         g.dispose();
     }
 

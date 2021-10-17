@@ -1,6 +1,8 @@
 package PaooGame.Physics;
 
+import PaooGame.Physics.Enums.ColliusionTypes;
 import PaooGame.Tiles.Map;
+import PaooGame.Physics.Enums.Actions;
 
 import java.awt.*;
 
@@ -22,7 +24,7 @@ public class Body {
     private boolean isMobile = true;
     private boolean jumpPermission = false;
 
-    private boolean[] actions = new boolean[3]; // [0] -> MoveLeft; [1] -> MoveRight; [2] -> Jump;
+    private final boolean[] actions = new boolean[3]; // [0] -> MoveLeft; [1] -> MoveRight; [2] -> Jump;
 
     public Body(PointVector position, int BODY_WIDTH, int BODY_HEIGHT, float mass){
         this.position = position;
@@ -35,27 +37,43 @@ public class Body {
         this.oldPosition = position;
     }
 
-    private int jumpTimer = 0; //masoara cand ar trebui sa puna contitia StopJumpWhenOnPlatform
-    private int jumpOnCollisionTime = 0; //masoare dupa cate secunde se pune valida oprirea
+    //masoara cand ar trebui sa puna contitia StopJumpWhenOnPlatform
+    private int jumpTimer = 0;
+
+    //masoare dupa cate secunde se pune valida oprirea
+    private int jumpOnCollisionTime = 0;
+
+    /**
+     * Method resposible for updating the state of the object
+     *
+     * @param currentMap
+     *  The map for providing environmental details.
+     */
     public void Update(Map currentMap){
+
         this.oldPosition = this.position;
         if(!isMobile) {
+
             Stand();
             return;
+
         }
+
         //In case of a jump, decrease jumpForce by a bit
-        if(actions[2]){
+        if(actions[Actions.JUMP.getValue()]){
+
             jumpTimer ++;
-            jumpForce = jumpForce.add(new PointVector(0, gravityForce.getY()));// * Game.CURRENT_FRAME_TIME));
-            if(jumpTimer > 10 && collisionState[2]){
+            jumpForce = jumpForce.add(new PointVector(0, gravityForce.getY()));
+
+            if(jumpTimer > 10 && collisionState[ColliusionTypes.BOTTOM.getValue()]){
                 jumpOnCollisionTime++;
             }
             else{
                 jumpOnCollisionTime = 0;
             }
 
-            if(jumpForce.getY() > 0 || (jumpTimer > 10 && collisionState[2] && jumpOnCollisionTime > 5)){
-                actions[2] = false;
+            if(jumpForce.getY() > 0 || (jumpTimer > 10 && collisionState[ColliusionTypes.BOTTOM.getValue()] && jumpOnCollisionTime > 5)){
+                actions[Actions.JUMP.getValue()] = false;
                 jumpForce = new PointVector();
             }
         }
@@ -71,15 +89,18 @@ public class Body {
         resultantForce = resultantForce.add(velocity);
         resultantForce = resultantForce.add(gravityForce.scalarMultiply(mass));
         resultantForce = resultantForce.add(jumpForce);
-        if(!externalForce.equals(new PointVector(0,0))){
+
+        // The external force is not used
+        if(!externalForce.equals(new PointVector())){
+
             resultantForce = resultantForce.add(externalForce);
             //externalForce = externalForce.scalarMultiply(0.95f);
             //if(externalForce.abs() < 0.1)
             externalForce = new PointVector();
+
         }
 
-        // #################################### added here scalar multiply ################################
-        PointVector nextPosition = new PointVector(position.add(resultantForce));//.scalarMultiply(Game.CURRENT_FRAME_TIME);
+        PointVector nextPosition = new PointVector(position.add(resultantForce));
 
         //check if is out of map bounds
         nextPosition = nextPosition.setInMapBounds(
@@ -87,6 +108,7 @@ public class Body {
                 bodyHeight,
                 currentMap.getMaxBounds()
         );
+
         //apply corrections to resultantForce
         resultantForce = nextPosition.sub(position);
 
@@ -96,7 +118,7 @@ public class Body {
         //3 - left collision
         //4 - deadly collision
 
-        // request the collision statye from the interaction with the map
+        // request the collision state from the interaction with the map
         collisionState = currentMap.checkCollision(nextPosition.getX(), nextPosition.getY(), bodyWidth, bodyHeight);
 
         // now we ajust the resultant force based on these collisionStates
@@ -114,19 +136,19 @@ public class Body {
     public void adjustPositionOnCollision(){
 
         //top Collision
-        if(collisionState[0] && resultantForce.getY() < 0){
+        if(collisionState[ColliusionTypes.TOP.getValue()] && resultantForce.getY() < 0){
             resultantForce.setY(0);
         }
         //bottom Collision
-        if(collisionState[2] &&  resultantForce.getY() > 0) {
+        if(collisionState[ColliusionTypes.BOTTOM.getValue()] &&  resultantForce.getY() > 0) {
             resultantForce.setY(0);
         }
         //right Collision
-        if(collisionState[1] && resultantForce.getX() > 0){
+        if(collisionState[ColliusionTypes.RIGHT.getValue()] && resultantForce.getX() > 0){
             resultantForce.setX(0);
         }
         //left Collision
-        if(collisionState[3] && resultantForce.getX() < 0) {
+        if(collisionState[ColliusionTypes.LEFT.getValue()] && resultantForce.getX() < 0) {
             resultantForce.setX(0);
         }
 
@@ -136,25 +158,29 @@ public class Body {
     public void Stand(){
 
         //if only one command is running or none
-        if(!actions[0] && !actions[1])
+        if(!actions[Actions.MOVE_RIGHT.getValue()] && !actions[Actions.MOVE_LEFT.getValue()])
             velocity.setX(0);
 
     }
 
     public void MoveLeft(){
         if(isMobile) {
-            if (!actions[0]) {
-                velocity.setX(-speed );//* Game.CURRENT_FRAME_TIME);
-                actions[0] = true;
+            if (!actions[Actions.MOVE_LEFT.getValue()]) {
+
+                velocity.setX(-speed );
+                actions[Actions.MOVE_LEFT.getValue()] = true;
+
             }
         }
     }
 
     public void MoveRight(){
         if(isMobile) {
-            if (!actions[1]) {
+            if (!actions[Actions.MOVE_RIGHT.getValue()]) {
+
                 velocity.setX(+speed );// * Game.CURRENT_FRAME_TIME);
-                actions[1] = true;
+                actions[Actions.MOVE_RIGHT.getValue()] = true;
+
             }
         }
     }
@@ -162,11 +188,13 @@ public class Body {
     public void Jump(){
         if(isMobile) {
             //check if is on solid
-            if (!actions[2] && (collisionState[2] || jumpPermission)) {
+            if (!actions[Actions.JUMP.getValue()] && (collisionState[2] || jumpPermission)) {
+
                 jumpPermission = false;
                 jumpTimer = 0;
                 jumpForce = new PointVector(gravityForce.scalarMultiply(-JUMP_CONSTANT));
-                actions[2] = true;
+                actions[Actions.JUMP.getValue()] = true;
+
             }
         }
     }

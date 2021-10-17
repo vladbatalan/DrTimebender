@@ -2,10 +2,8 @@ package PaooGame.Graphics;
 
 import java.awt.image.BufferedImage;
 
-/*! \class public class Assets
-    \brief Clasa incarca fiecare element grafic necesar jocului.
-
-    Game assets include tot ce este folosit intr-un joc: imagini, sunete, harti etc.
+/**
+ * The class responsible for loading all the graphic elements of the game.
  */
 public class Assets
 {
@@ -20,11 +18,9 @@ public class Assets
     public static BufferedImage noTile;
     public static BufferedImage[] tunnelTile;
 
-    /*! \fn public static void Init()
-        \brief Functia initializaza referintele catre elementele grafice utilizate.
 
-        Aceasta functie poate fi rescrisa astfel incat elementele grafice incarcate/utilizate
-        sa fie parametrizate. Din acest motiv referintele nu sunt finale.
+    /**
+     * Method responsable for initialising the references to the graphic elements.
      */
     public static void Init()
     {

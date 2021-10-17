@@ -13,14 +13,18 @@ import java.util.ArrayList;
 // the collision between objects, though, it is much trikier and must be dealt separately
 // the job of  ObjectCollisionHandler is to take care of the collsions
 
+/**
+ * Class responsible for collision between objects on a map.
+ */
 public class ObjectCollisionHandler {
 
     public static void manageObjectsCollision(GameObject obj1, GameObject obj2){
         if( isCollisionNecessary(obj1, obj2) ){
+
             //System.out.println("Test collision between (" + obj1.getId() + "("+obj1.isCollisional()+"), " + obj2.getId() + "("+obj2.isCollisional()+"))");
+
             if( isThereCollisionBetween(obj1, obj2)){
                 //System.out.println("We got necessary collision between (" + obj1.getId() + ", " + obj2.getId() + ")");
-
 
                 // we got saveral cases of interactions:
                 // 1) mobile to still that prevents the mobile from advancing
@@ -34,7 +38,7 @@ public class ObjectCollisionHandler {
                     MobileObject mobile = (MobileObject)obj1;
 
                     // requesting the list of points that need to be checked in order to verify which sides are
-                    //                                                          in contact with obj2
+                    // in contact with obj2
                     PointVector[] listOfPoints = Body.getSideCollisionPoints(mobile.getBody().getHitBox());
 
                     int totalPoints = listOfPoints.length;
@@ -74,11 +78,10 @@ public class ObjectCollisionHandler {
 
     // verify based on the type of the objects that are interacting if the collision is necesary to be handled or not
     private static boolean isCollisionNecessary(GameObject obj1, GameObject obj2){
-        if (obj1.isMobile() && obj2.isMobile())
+        if (obj1.isMobile() && obj2.isMobile()) {
             return false;
-        if(!obj1.isCollisional() || !obj2.isCollisional())
-            return false;
-        return true;
+        }
+        return obj1.isCollisional() && obj2.isCollisional();
     }
 
     // checks the existing of a collision
@@ -87,11 +90,15 @@ public class ObjectCollisionHandler {
         ArrayList<Rectangle> obj2HitBoxes = obj2.getHitBoxCollection();
 
         for(int index1 = 0; index1 < obj1HitBoxes.size(); index1++){
+
             Rectangle r1 = obj1HitBoxes.get(index1);
+
             for(int index2 = 0; index2 < obj2HitBoxes.size(); index2++){
+
                 Rectangle r2 = obj2HitBoxes.get(index2);
-                if(r1.intersects(r2))
+                if(r1.intersects(r2)) {
                     return true;
+                }
             }
         }
 

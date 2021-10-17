@@ -27,7 +27,7 @@ public class VictoryMenu extends Menu{
     }
 
     public void Draw(Graphics g){
-        if(firstTimeAccessed == true)
+        if(firstTimeAccessed)
         {
             firstTimeAccessed = false;
             int totalScore = Game.database.GetTotalScore(Game.userId);
@@ -90,7 +90,7 @@ public class VictoryMenu extends Menu{
         }
         if(secondsString.length() < 2)
             secondsString = "0" + secondsString;
-        if(minutesString.length() < 0)
+        if(minutesString.length() < 2)
             minutesString = "0" + minutesString;
 
         return minutesString + ":" + secondsString + ":" + milisecondsString;
