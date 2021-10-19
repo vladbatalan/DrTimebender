@@ -3,7 +3,6 @@ package PaooGame.Tiles;
 import PaooGame.Game;
 import PaooGame.GameWindow.Camera.GameCamera;
 import PaooGame.Graphics.ImageLoader;
-import PaooGame.Physics.Body;
 import PaooGame.Physics.PointVector;
 import PaooGame.Tiles.Factory.TileFactory;
 
@@ -13,6 +12,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Scanner;
+
+import static PaooGame.Physics.Utils.CollisionUtils.getSideCollisionPoints;
 
 public class Map {
     private int MIN_WIDTH = 28;
@@ -133,7 +134,7 @@ public class Map {
         }
     }
 
-    public boolean[] checkCollision(float x, float y, int width, int height){
+    public boolean[] checkCollision(float x, float y, int width, int height) {
         //0 - top collision
         //1 - right collision
         //2 - bottom collision
@@ -142,21 +143,22 @@ public class Map {
         boolean[] collision = new boolean[5];
 
         // points where we will check the collisions with the tiles on the map
-        PointVector[] checkingPoints = Body.getSideCollisionPoints(new Rectangle((int)x, (int)y, width, height));
+        PointVector[] checkingPoints = getSideCollisionPoints(new Rectangle((int) x, (int) y, width, height));
+
         int totalPoints = checkingPoints.length;
-        int nrTestPoints = totalPoints/4;
+        int nrTestPoints = totalPoints / 4;
 
         Tile[] checkingTiles = new Tile[totalPoints];
-        for(int index = 0; index < checkingPoints.length; index ++){
-           PointVector coords = getMatrixIndexes(checkingPoints[index].getX(), checkingPoints[index].getY());
-            checkingTiles[index] = getTileByIndex((int)coords.getX(), (int)coords.getY());
+        for (int index = 0; index < checkingPoints.length; index++) {
+            PointVector coords = getMatrixIndexes(checkingPoints[index].getX(), checkingPoints[index].getY());
+            checkingTiles[index] = getTileByIndex((int) coords.getX(), (int) coords.getY());
         }
 
         //System.out.println("Collision test: " + new PointVector(x, y).toString());
-        for(int index = 0; index < checkingTiles.length; index ++){
+        for (int index = 0; index < checkingTiles.length; index++) {
             //este un pas in plus pe care l pot integra sigur nu am nev de relative poz mai incolo?
             PointVector relativePosition = getPointRelativeToTile(checkingPoints[index]);
-            if(checkingTiles[index].onCollision(relativePosition.getX(), relativePosition.getY())) {
+            if (checkingTiles[index].onCollision(relativePosition.getX(), relativePosition.getY())) {
                 if (checkingTiles[index].IsDeadly())
                     collision[4] = true;
                 if (checkingTiles[index].IsSolid())

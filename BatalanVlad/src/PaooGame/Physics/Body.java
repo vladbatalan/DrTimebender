@@ -1,8 +1,8 @@
 package PaooGame.Physics;
 
+import PaooGame.Physics.Enums.Actions;
 import PaooGame.Physics.Enums.ColliusionTypes;
 import PaooGame.Tiles.Map;
-import PaooGame.Physics.Enums.Actions;
 
 import java.awt.*;
 
@@ -119,131 +119,132 @@ public class Body {
         //4 - deadly collision
 
         // request the collision state from the interaction with the map
-        collisionState = currentMap.checkCollision(nextPosition.getX(), nextPosition.getY(), bodyWidth, bodyHeight);
+        collisionState = currentMap.checkCollision(
+                nextPosition.getX(),
+                nextPosition.getY(),
+                bodyWidth,
+                bodyHeight
+        );
 
         // now we ajust the resultant force based on these collisionStates
         adjustPositionOnCollision();
     }
 
-    public void Draw(Graphics g){
+    /**
+     * Method responsible for drawing the Body of the character.
+     *
+     * @param g The graphic element used for drawing.
+     */
+    public void Draw(Graphics g) {
         g.setColor(bodyColor);
-        g.fillRect((int)position.getX(),(int)position.getY(), bodyWidth, bodyHeight);
+        g.fillRect((int) position.getX(), (int) position.getY(), bodyWidth, bodyHeight);
     }
 
-    // this function takes into consideration the current resultant force
-    //                       and the current Collision state which is modified by interaction with the map, or base on
-    //                                                  a obj obj interaction that sops the player from moving
-    public void adjustPositionOnCollision(){
+
+    /**
+     * Method responsible for changing the coordinates according to the interaction with other objects.
+     */
+    public void adjustPositionOnCollision() {
+
+        // This function takes into consideration the current resultant force
+        // and the current Collision state which is modified by interaction with the map, or base on
+        // a obj-obj interaction that stops the player from moving
 
         //top Collision
-        if(collisionState[ColliusionTypes.TOP.getValue()] && resultantForce.getY() < 0){
-            resultantForce.setY(0);
+        if (collisionState[ColliusionTypes.TOP.getValue()]) {
+            if (resultantForce.getY() < 0) {
+                resultantForce.setY(0);
+            }
         }
         //bottom Collision
-        if(collisionState[ColliusionTypes.BOTTOM.getValue()] &&  resultantForce.getY() > 0) {
-            resultantForce.setY(0);
+        if (collisionState[ColliusionTypes.BOTTOM.getValue()]) {
+            if (resultantForce.getY() > 0) {
+                resultantForce.setY(0);
+            }
         }
         //right Collision
-        if(collisionState[ColliusionTypes.RIGHT.getValue()] && resultantForce.getX() > 0){
-            resultantForce.setX(0);
+        if (collisionState[ColliusionTypes.RIGHT.getValue()]) {
+            if (resultantForce.getX() > 0) {
+                resultantForce.setX(0);
+            }
         }
         //left Collision
-        if(collisionState[ColliusionTypes.LEFT.getValue()] && resultantForce.getX() < 0) {
-            resultantForce.setX(0);
+        if (collisionState[ColliusionTypes.LEFT.getValue()]) {
+            if (resultantForce.getX() < 0) {
+                resultantForce.setX(0);
+            }
         }
 
+        // Ajust new position
         position = oldPosition.add(resultantForce);
     }
 
-    public void Stand(){
+    /**
+     * Method responsible for the standing state of the body.
+     */
+    public void Stand() {
 
         //if only one command is running or none
-        if(!actions[Actions.MOVE_RIGHT.getValue()] && !actions[Actions.MOVE_LEFT.getValue()])
-            velocity.setX(0);
+        if (!actions[Actions.MOVE_RIGHT.getValue()]) {
+
+            if (!actions[Actions.MOVE_LEFT.getValue()]) {
+                velocity.setX(0);
+            }
+        }
 
     }
 
-    public void MoveLeft(){
-        if(isMobile) {
+    /**
+     * Method responsible for the left move action of the body.
+     */
+    public void MoveLeft() {
+        if (isMobile) {
             if (!actions[Actions.MOVE_LEFT.getValue()]) {
 
-                velocity.setX(-speed );
+                velocity.setX(-speed);
                 actions[Actions.MOVE_LEFT.getValue()] = true;
 
             }
         }
     }
 
-    public void MoveRight(){
-        if(isMobile) {
+    /**
+     * Method responsible for the right move action of the body.
+     */
+    public void MoveRight() {
+        if (isMobile) {
             if (!actions[Actions.MOVE_RIGHT.getValue()]) {
 
-                velocity.setX(+speed );// * Game.CURRENT_FRAME_TIME);
+                velocity.setX(+speed);
                 actions[Actions.MOVE_RIGHT.getValue()] = true;
 
             }
         }
     }
 
-    public void Jump(){
-        if(isMobile) {
-            //check if is on solid
-            if (!actions[Actions.JUMP.getValue()] && (collisionState[2] || jumpPermission)) {
 
-                jumpPermission = false;
-                jumpTimer = 0;
-                jumpForce = new PointVector(gravityForce.scalarMultiply(-JUMP_CONSTANT));
-                actions[Actions.JUMP.getValue()] = true;
+    /**
+     * Method responsible for the jump action of the body.
+     */
+    public void Jump() {
+        if (isMobile) {
+            // Check if it is not jumping
+            if (!actions[Actions.JUMP.getValue()]) {
+
+                // Check if it is colliding with the floor or it has jump permission
+                if (collisionState[ColliusionTypes.BOTTOM.getValue()] || jumpPermission) {
+
+                    jumpPermission = false;
+                    jumpTimer = 0;
+                    jumpForce = new PointVector(gravityForce.scalarMultiply(-JUMP_CONSTANT));
+                    actions[Actions.JUMP.getValue()] = true;
+                }
 
             }
         }
     }
 
-    // for side collision purposes, this function creates based on several parameters of an array of points
-    // the returning vector of points is organised like this:
-    // -> it has length/4 points for each side
-    // -> the sides are in the following order:
-    //      - top
-    //      - right
-    //      - bottom
-    //      - left
-    public static PointVector[] getSideCollisionPoints(Rectangle rect){
 
-        //consider the following points on the side of the square
-        /*           __  -> deltaX
-        __#____#____#__
-        |             | -> Body
-        #             # -> Point to check collision
-        |             |
-        #             #
-        |             |
-        #             # -> Point to check collision
-        |             |     | -> deltaY
-        |_#____#____#_|     |
-        */
-        float deltaX = (float)rect.width/4;
-        float deltaY = (float)rect.height/8;
-
-        int nrTestPoints = 10;
-        float topStep = (rect.width - 2*deltaX)/nrTestPoints;
-        float sideStep = (rect.height - 2*deltaY)/nrTestPoints;
-        int totalPoints = 4*nrTestPoints + 4;
-
-        //points to be verified
-        PointVector[] checkingPoints = new PointVector[totalPoints];
-        for(int index = 0; index < nrTestPoints + 1; index ++){
-            //top
-            checkingPoints[index] = new PointVector(rect.x + deltaX + index * topStep, rect.y);
-            //right
-            checkingPoints[index + nrTestPoints + 1] = new PointVector(rect.x + rect.width, rect.y + deltaY + index * sideStep);
-            //bottom
-            checkingPoints[index + 2*(nrTestPoints + 1)] = new PointVector(rect.x + deltaX + index * topStep,rect.y+rect.height);
-            //left
-            checkingPoints[index + 3*(nrTestPoints + 1)] = new PointVector(rect.x, rect.y+ deltaY + index * sideStep);
-        }
-
-        return checkingPoints;
-    }
 
 
 

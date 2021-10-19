@@ -2,11 +2,12 @@ package PaooGame.GameObjects.ObjectCollisionHandler;
 
 import PaooGame.GameObjects.GameObject;
 import PaooGame.GameObjects.MobileObjects.MobileObject;
-import PaooGame.Physics.Body;
 import PaooGame.Physics.PointVector;
 
 import java.awt.*;
 import java.util.ArrayList;
+
+import static PaooGame.Physics.Utils.CollisionUtils.getSideCollisionPoints;
 
 
 // every GameObject has a way to comunicate with the map and decide if there is any kind of collision
@@ -39,7 +40,7 @@ public class ObjectCollisionHandler {
 
                     // requesting the list of points that need to be checked in order to verify which sides are
                     // in contact with obj2
-                    PointVector[] listOfPoints = Body.getSideCollisionPoints(mobile.getBody().getHitBox());
+                    PointVector[] listOfPoints = getSideCollisionPoints(mobile.getBody().getHitBox());
 
                     int totalPoints = listOfPoints.length;
                     int noSidePoints = totalPoints/4;
@@ -89,14 +90,11 @@ public class ObjectCollisionHandler {
         ArrayList<Rectangle> obj1HitBoxes = obj1.getHitBoxCollection();
         ArrayList<Rectangle> obj2HitBoxes = obj2.getHitBoxCollection();
 
-        for(int index1 = 0; index1 < obj1HitBoxes.size(); index1++){
+        for (Rectangle r1 : obj1HitBoxes) {
 
-            Rectangle r1 = obj1HitBoxes.get(index1);
+            for (Rectangle r2 : obj2HitBoxes) {
 
-            for(int index2 = 0; index2 < obj2HitBoxes.size(); index2++){
-
-                Rectangle r2 = obj2HitBoxes.get(index2);
-                if(r1.intersects(r2)) {
+                if (r1.intersects(r2)) {
                     return true;
                 }
             }

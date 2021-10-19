@@ -41,7 +41,7 @@ public abstract class GameObject {
     // every gameoObject got a hit box or a group of hitboxes
     // this is the general type of hitbox
     public ArrayList<Rectangle> getHitBoxCollection(){
-        ArrayList<Rectangle> myHitBoxCollection = new ArrayList<Rectangle>();
+        ArrayList<Rectangle> myHitBoxCollection = new ArrayList<>();
         myHitBoxCollection.add(body.getHitBox());
         return myHitBoxCollection;
     }
