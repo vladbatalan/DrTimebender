@@ -1,14 +1,14 @@
 package PaooGame;
 
-import PaooGame.Database.DatabaseSingleton;
-import PaooGame.GameObjects.MobileObjects.Player;
-import PaooGame.GameObjects.ToBeUpdatedConstantly;
-import PaooGame.GameWindow.GameWindow;
-import PaooGame.Graphics.Assets;
-import PaooGame.Input.KeyInput;
-import PaooGame.Input.MouseInput;
-import PaooGame.Levels.Level;
-import PaooGame.Menu.*;
+import PaooGame.database.DatabaseSingleton;
+import PaooGame.gameObjects.ToBeUpdatedConstantly;
+import PaooGame.gameObjects.mobileObjects.Player;
+import PaooGame.gameWindow.GameWindow;
+import PaooGame.graphics.Assets;
+import PaooGame.input.KeyInput;
+import PaooGame.input.MouseInput;
+import PaooGame.levels.Level;
+import PaooGame.menu.*;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
