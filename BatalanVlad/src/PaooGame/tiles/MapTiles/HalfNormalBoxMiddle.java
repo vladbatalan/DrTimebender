@@ -1,0 +1,15 @@
+package PaooGame.tiles.MapTiles;
+
+import PaooGame.graphics.Assets;
+import PaooGame.tiles.TileCollisionType.TopHalfTile;
+import PaooGame.tiles.TileType;
+
+public class HalfNormalBoxMiddle extends TopHalfTile {
+    public HalfNormalBoxMiddle() {
+        super(Assets.halfNormalBox[1], TileType.HalfNormalBoxMiddle);
+    }
+    public boolean IsSolid()
+    {
+        return true;
+    }
+}
