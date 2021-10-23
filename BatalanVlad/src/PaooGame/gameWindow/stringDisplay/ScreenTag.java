@@ -157,7 +157,7 @@ public class ScreenTag implements ToBeUpdatedConstantly {
             //System.out.println("Screen tag drawn at time = " + timer);
             PointVector drawPosition = new PointVector(centerPosition);
             if (camera != null) {
-                drawPosition = drawPosition.add(camera.getCameraCoordonates());
+                drawPosition = drawPosition.add(camera.getCameraCoordinates());
             }
             g.setColor(backgroundColor);
             g.fillRect((int) (drawPosition.getX() - fontWidth / 2) - padding, (int) (drawPosition.getY()) - 2 * fontHeight / 3 - padding, fontWidth + 2 * padding, fontHeight + 2 * padding);

@@ -124,7 +124,6 @@ public class Game implements Runnable
                 Update();
                 Draw();
                 oldTime = curentTime;
-
             }
 
         }

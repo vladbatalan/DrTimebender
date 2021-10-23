@@ -25,11 +25,11 @@ public class Tile {
 
     }
 
-    public void Draw(Graphics g, int x, int y) {
+    public void Draw(Graphics g, int widthCoord, int heightCoord) {
         /// Desenare dala
         g.setColor(backcolor);
-        g.fillRect(x, y, TILE_WIDTH, TILE_HEIGHT);
-        g.drawImage(img, x, y, TILE_WIDTH, TILE_HEIGHT, null);
+        g.fillRect(widthCoord, heightCoord, TILE_WIDTH, TILE_HEIGHT);
+        g.drawImage(img, widthCoord, heightCoord, TILE_WIDTH, TILE_HEIGHT, null);
 
         /*########## Green collision rect draw ############
         if(!(this instanceof NoTile)) {
@@ -62,13 +62,8 @@ public class Tile {
     }
 
     public boolean onCollision(float relativeX, float relativeY) {
-        // System.out.println("\t" + tileType.toString());
-        //System.out.print("\t" + new PointVector(relativeX, relativeY).toString());
-        //System.out.println("\t" + this.collisionBox.toString());
-        //System.out.println("\ttrue");
         if (collisionBox.getX() <= relativeX && relativeX <= collisionBox.getX() + collisionBox.getWidth())
             return collisionBox.getY() <= relativeY && relativeY <= collisionBox.getY() + collisionBox.getHeight();
-        // System.out.println("\tfalse");
         return false;
     }
 

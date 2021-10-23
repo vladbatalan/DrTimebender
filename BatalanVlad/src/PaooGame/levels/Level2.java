@@ -19,7 +19,6 @@ public class Level2 extends Level {
 
         // The current Map
         currentMap = new Map("res/maps/map2.txt");
-        currentMap.mapExtend();
         currentMap.setBackground("/backgrounds/background1.jpg");
 
         // Create the existing objects except the Player that is loaded at the start of a level Phase

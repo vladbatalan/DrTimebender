@@ -54,8 +54,8 @@ public abstract class MyButton {
 
         //the button can follow a camera
         if(camera!=null){
-            newButtonX += (int)camera.getCameraCoordonates().getX();
-            newButtonY += (int)camera.getCameraCoordonates().getY();
+            newButtonX += (int) camera.getCameraCoordinates().getX();
+            newButtonY += (int) camera.getCameraCoordinates().getY();
         }
 
         //background of a button

@@ -54,7 +54,6 @@ public class ControllerBuilder {
 
     public void finishControllerBuild(int currentTime){
         // Show remaining actions that are introduced at the end
-        System.out.println("\t\tREMAINING COMMANDS:");
         for(ICommand myCommand : onGoingCommands){
             System.out.println(myCommand.toString());
         }

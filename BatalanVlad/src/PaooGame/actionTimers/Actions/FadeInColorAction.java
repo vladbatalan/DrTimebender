@@ -37,8 +37,8 @@ public class FadeInColorAction implements IAction {
         int coordX = 0;
         int coordY = 0;
         if(camera != null){
-            coordX += (int)camera.getCameraCoordonates().getX();
-            coordY += (int)camera.getCameraCoordonates().getY();
+            coordX += (int) camera.getCameraCoordinates().getX();
+            coordY += (int) camera.getCameraCoordinates().getY();
         }
 
         g.setColor(fadeInColor);

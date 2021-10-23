@@ -77,12 +77,18 @@ public abstract class Level {
             }
         }
     }
+
+
     public void Draw(Graphics g){
+
         //sort of background color for map
+        /*
         g.setColor(new Color(0x6ED1C5));
         g.setColor(new Color(0xF8F77F));
         g.fillRect(0, 0, (int)currentMap.getMaxBounds().getX(), (int)currentMap.getMaxBounds().getY());
+        */
 
+        // Assert camera != null
         camera.UpdateCamera(g);
         currentMap.Draw(g);
         handler.Draw(g);
@@ -215,17 +221,19 @@ public abstract class Level {
         }
     }
 
-    protected void spawnMobileAtStartingPoint(){
+    protected void spawnMobileAtStartingPoint() {
         //Player
-        PointVector displacement1 = new PointVector((float)Player.body_width/2, startTimeMachine.getBody().getBodyHeight() - Player.body_height);
+        PointVector displacement1 = new PointVector((float) Player.body_width / 2,
+                startTimeMachine.getBody().getBodyHeight() - Player.body_height);
+
         Player player = new Player(startTimeMachine.getBody().getPosition().add(displacement1));
         handler.setPlayer(player);
 
         //OldInstances
-        PointVector displacement2 = new PointVector((float)OldPlayerInstance.body_width/2, startTimeMachine.getBody().getBodyHeight() - (float)OldPlayerInstance.body_height);
+        PointVector displacement2 = new PointVector((float) OldPlayerInstance.body_width / 2, startTimeMachine.getBody().getBodyHeight() - (float) OldPlayerInstance.body_height);
         PointVector startingPosition = startTimeMachine.getBody().getPosition().add(displacement2);
 
-        for(OldPlayerInstance instance:handler.getOldInstances()){
+        for (OldPlayerInstance instance : handler.getOldInstances()) {
             instance.getBody().setPosition(startingPosition);
             instance.getController().resetController();
         }
