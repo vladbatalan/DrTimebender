@@ -1,7 +1,7 @@
 package PaooGame.actionTimers;
 
 import PaooGame.Game;
-import PaooGame.actionTimers.Actions.IAction;
+import PaooGame.actionTimers.actions.IAction;
 import PaooGame.gameObjects.ToBeUpdatedConstantly;
 
 import java.awt.*;

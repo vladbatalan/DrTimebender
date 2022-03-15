@@ -2,7 +2,7 @@ package PaooGame.gameWindow.button.buttonTypes;
 
 import PaooGame.Game;
 import PaooGame.GameStates;
-import PaooGame.actionTimers.Actions.MouseInputPauseFlagOn;
+import PaooGame.actionTimers.actions.MouseInputPauseFlagOn;
 import PaooGame.actionTimers.DelayedActionTimer;
 import PaooGame.gameWindow.button.ButtonType;
 import PaooGame.gameWindow.button.MyButton;

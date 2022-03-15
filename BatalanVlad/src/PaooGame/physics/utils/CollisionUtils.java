@@ -1,8 +1,13 @@
 package PaooGame.physics.utils;
 
 import PaooGame.physics.PointVector;
+import PaooGame.tiles.Map;
+import PaooGame.tiles.Tile;
 
 import java.awt.*;
+
+import static PaooGame.tiles.Tile.TILE_HEIGHT;
+import static PaooGame.tiles.Tile.TILE_WIDTH;
 
 public class CollisionUtils {
 
@@ -65,6 +70,7 @@ public class CollisionUtils {
 
         return checkingPoints;
     }
+
 
 
 }

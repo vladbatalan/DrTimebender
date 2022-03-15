@@ -12,12 +12,11 @@ public class Body {
     private PointVector position;
     private PointVector velocity = new PointVector();
     private PointVector jumpForce = new PointVector();
-    private PointVector externalForce = new PointVector();
     public static PointVector gravityForce = new PointVector(0, 0.098f);
     private PointVector resultantForce = new PointVector();
-    private int bodyWidth;
-    private int bodyHeight;
-    private float mass;
+    private final int bodyWidth;
+    private final int bodyHeight;
+    private final float mass;
     private Color bodyColor = new Color(0, 0, 0, 0);
     private int speed = 4;
     private final float JUMP_CONSTANT = 90f;
@@ -87,16 +86,6 @@ public class Body {
         resultantForce = resultantForce.add(velocity);
         resultantForce = resultantForce.add(gravityForce.scalarMultiply(mass));
         resultantForce = resultantForce.add(jumpForce);
-
-        // The external force is not used
-        if (!externalForce.equals(new PointVector())) {
-
-            resultantForce = resultantForce.add(externalForce);
-            //externalForce = externalForce.scalarMultiply(0.95f);
-            //if(externalForce.abs() < 0.1)
-            externalForce = new PointVector();
-
-        }
 
         PointVector nextPosition = new PointVector(position.add(resultantForce));
 
@@ -169,7 +158,7 @@ public class Body {
             }
         }
 
-        // Ajust new position
+        // Adjust new position
         position = oldPosition.add(resultantForce);
     }
 
@@ -238,24 +227,9 @@ public class Body {
         }
     }
 
-
-    public void collisionModifier(Body body) {
-        if (position.add(resultantForce).distanceTo(body.getPosition()) < position.distanceTo(body.getPosition())) {
-            //this object get s close to the other strictly
-            //this object will modify the extern force of the other if possible
-            if (body.getMobility())
-                body.setExternalForce(resultantForce);
-        }
-    }
-
-
     public void setPosition(PointVector position) {
         //this.oldPosition = this.position;
         this.position = position;
-    }
-
-    public void setExternalForce(PointVector externalForce) {
-        this.externalForce = externalForce;
     }
 
     public PointVector getPosition() {

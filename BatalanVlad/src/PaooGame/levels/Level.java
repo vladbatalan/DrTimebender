@@ -1,11 +1,11 @@
 package PaooGame.levels;
 
 import PaooGame.Game;
-import PaooGame.actionTimers.Actions.*;
+import PaooGame.actionTimers.actions.*;
 import PaooGame.actionTimers.DelayedActionTimer;
 import PaooGame.actionTimers.IActionTimer;
 import PaooGame.actionTimers.PeriodicFiniteActionTimer;
-import PaooGame.actionTimers.TimeInterupters.GameStateGameIntrerupter;
+import PaooGame.actionTimers.timeInterupters.GameStateGameIntrerupter;
 import PaooGame.gameObjects.GameObject;
 import PaooGame.gameObjects.GameObjectHandler;
 import PaooGame.gameObjects.ObjectID;

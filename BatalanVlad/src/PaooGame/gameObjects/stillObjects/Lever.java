@@ -1,12 +1,12 @@
 package PaooGame.gameObjects.stillObjects;
 
 import PaooGame.Game;
-import PaooGame.actionTimers.Actions.DelayTurnOff;
-import PaooGame.actionTimers.Actions.DelayTurnOn;
-import PaooGame.actionTimers.Actions.IAction;
+import PaooGame.actionTimers.actions.DelayTurnOff;
+import PaooGame.actionTimers.actions.DelayTurnOn;
+import PaooGame.actionTimers.actions.IAction;
 import PaooGame.actionTimers.DelayedActionTimer;
 import PaooGame.actionTimers.IActionTimer;
-import PaooGame.actionTimers.TimeInterupters.GameStateGameIntrerupter;
+import PaooGame.actionTimers.timeInterupters.GameStateGameIntrerupter;
 import PaooGame.gameObjects.GameObjectHandler;
 import PaooGame.gameObjects.ISwitch;
 import PaooGame.gameObjects.ISwitchable;

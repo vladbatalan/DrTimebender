@@ -1,7 +1,7 @@
 package PaooGame.gameObjects.stillObjects;
 
-import PaooGame.actionTimers.TimeInterupters.GameStateGameIntrerupter;
-import PaooGame.actionTimers.TimeInterupters.PlayerStopsInteractingWithTimeMachine;
+import PaooGame.actionTimers.timeInterupters.GameStateGameIntrerupter;
+import PaooGame.actionTimers.timeInterupters.PlayerStopsInteractingWithTimeMachine;
 import PaooGame.gameObjects.ObjectID;
 import PaooGame.gameWindow.stringDisplay.ScreenTag;
 import PaooGame.graphics.animations.animationCollections.TimeMachineAnimationCollection;

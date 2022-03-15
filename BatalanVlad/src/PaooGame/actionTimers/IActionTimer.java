@@ -1,6 +1,6 @@
 package PaooGame.actionTimers;
 
-import PaooGame.actionTimers.Actions.IAction;
+import PaooGame.actionTimers.actions.IAction;
 
 public interface IActionTimer {
     void startTimer();

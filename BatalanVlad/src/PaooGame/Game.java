@@ -28,7 +28,7 @@ public class Game implements Runnable
     /**
      * The variable that describes the state of the game.
      */
-    private boolean         runState;
+    private boolean        runState;
 
     /**
      * The main thread of the game
@@ -139,11 +139,9 @@ public class Game implements Runnable
     {
         if(!runState)
         {
-
             runState = true;
             gameThread = new Thread(this);
             gameThread.start();
-
         }
     }
 

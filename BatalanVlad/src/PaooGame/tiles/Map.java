@@ -4,7 +4,8 @@ import PaooGame.Game;
 import PaooGame.gameWindow.camera.GameCamera;
 import PaooGame.graphics.ImageLoader;
 import PaooGame.physics.PointVector;
-import PaooGame.tiles.Factory.TileFactory;
+import PaooGame.tiles.factory.TileFactory;
+import PaooGame.tiles.utils.MapUtils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -146,6 +147,7 @@ public class Map {
 
         // Not optimized enough
         // Draw only visible tiles
+
         for (int row = 0; row < mapHeight; row++) {
             for (int column = 0; column < mapWidth; column++) {
 
@@ -218,13 +220,13 @@ public class Map {
 
         for (int i = 0; i < totalPoints; i++) {
 
-            PointVector coords = getMatrixIndexes(checkingPoints[i].getX(), checkingPoints[i].getY());
-            Tile currentTile = getTileByIndex((int) coords.getX(), (int) coords.getY());
+            PointVector currentPointToCheck = checkingPoints[i];
 
-            PointVector relativePosition = getPointRelativeToTile(checkingPoints[i]);
+            Tile currentTile = getTileByCoordinates(currentPointToCheck);
+
             int sideCode = i / totalSidePoints;
 
-            if (currentTile.onCollision(relativePosition.getX(), relativePosition.getY())) {
+            if (MapUtils.checkIfPointInTile(currentPointToCheck, currentTile)) {
 
                 if (currentTile.IsDeadly()) {
                     collision[DEADLY.getValue()] = true;
@@ -237,14 +239,19 @@ public class Map {
         return collision;
     }
 
-    // gets a location on map
-    // returns the indexes of the tile located in the matrix that contains x and y
-    public PointVector getMatrixIndexes(float x, float y) {
-        return new PointVector((int) (x / TILE_WIDTH), (int) (y / TILE_HEIGHT));
-    }
 
     public Tile getTileByIndex(int column, int row) {
         return tileMatrix.get(row).get(column);
+    }
+
+    public Tile getTileByCoordinates(PointVector coordinates) {
+
+        PointVector indexedCoordinates = MapUtils.getTileIndexedCoordinates(coordinates);
+
+        int indexWidth = (int) indexedCoordinates.getX();
+        int indexHeight = (int) indexedCoordinates.getY();
+
+        return getTileByIndex(indexWidth, indexHeight);
     }
 
     public PointVector getMaxBounds() {
@@ -252,14 +259,6 @@ public class Map {
         bounds.setX(tileMatrix.get(0).size() * TILE_HEIGHT);
         bounds.setY(tileMatrix.size() * TILE_WIDTH);
         return bounds;
-    }
-
-    public PointVector getPointRelativeToTile(PointVector point) {
-        float x, y;
-        PointVector indexes = getMatrixIndexes(point.getX(), point.getY());
-        x = point.getX() - indexes.getX() * TILE_WIDTH;
-        y = point.getY() - indexes.getY() * TILE_HEIGHT;
-        return new PointVector(x, y);
     }
 
     public void setCamera(GameCamera camera) {

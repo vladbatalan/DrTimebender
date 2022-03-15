@@ -20,7 +20,6 @@ public class GameCamera {
 
     private GameObject followedObject;
 
-    // Specify if camera is on
     private boolean cameraOn = false;
 
     public GameCamera(int mapSizeWidth, int mapSizeHeight) {
@@ -35,10 +34,10 @@ public class GameCamera {
      * @param g The graphic context needed for translating the drawing axes to camera position
      */
     public void UpdateCamera(Graphics g) {
-        //camera must be turned on
+        // Camera must be turned on
         if (!cameraOn) return;
 
-        //daca urmareste un obiect
+        // If there is an object to follow
         if (followedObject != null) {
 
             PointVector newCameraCoords = new PointVector();
@@ -89,6 +88,16 @@ public class GameCamera {
         cameraOn = false;
     }
 
+    /**
+     * Method responsible for resetting the coordonates of the camera to initial
+     */
+    public void resetCamera() {
+        cameraCoordinates = new PointVector();
+    }
+
+    public PointVector getCameraCoordinates() {
+        return cameraCoordinates;
+    }
 
     public void setCameraCoordinates(PointVector cameraPvector) {
         //no negative coordonates
@@ -102,16 +111,5 @@ public class GameCamera {
         //set camera to maximum coords possible
         cameraCoordinates.setX(min(cameraPvector.getX(), maxCameraCoordWidth));
         cameraCoordinates.setY(min(cameraPvector.getY(), maxCameraCoordHeight));
-    }
-
-    /**
-     * Method responsible for resetting the coordonates of the camera to initial
-     */
-    public void resetCamera() {
-        cameraCoordinates = new PointVector();
-    }
-
-    public PointVector getCameraCoordinates() {
-        return cameraCoordinates;
     }
 }
