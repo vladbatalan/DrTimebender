@@ -2,6 +2,7 @@ package PaooGame.input;
 
 import PaooGame.Game;
 import PaooGame.GameStates;
+import PaooGame.menu.Menu;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -22,30 +23,9 @@ public class MouseInput implements MouseListener, MouseMotionListener {
         int mousePositionY = e.getY();
 
         if(!mouseInputPause) {
-            switch (Game.gameState) {
-                case MENU:
-                    Game.mainMenu.getButtons().CheckMousePress(new Point(mousePositionX, mousePositionY));
-                    break;
-                case MAP_CREATION:
-                    break;
-                case LEVEL_MENU:
-                    Game.levelMenu.getButtons().CheckMousePress(new Point(mousePositionX, mousePositionY));
-                    break;
-                case WIN_MENU:
-                    Game.winMenu.getButtons().CheckMousePress(new Point(mousePositionX, mousePositionY));
-                    break;
-                case NEW_PROFILE_MENU:
-                    Game.newProfileMenu.getButtons().CheckMousePress(new Point(mousePositionX, mousePositionY));
-                    break;
-                case PROFILE_SELECTION_MENU:
-                    Game.profileSelectionMenu.getButtons().CheckMousePress(new Point(mousePositionX, mousePositionY));
-                    break;
-                case HELP_MENU:
-                    Game.helpMenu.getButtons().CheckMousePress(new Point(mousePositionX, mousePositionY));
-                    break;
-                case VICTORY_MENU:
-                    Game.victoryMenu.getButtons().CheckMousePress(new Point(mousePositionX, mousePositionY));
-                    break;
+            Menu currentMenu = Game.getCurrentMenu();
+            if(currentMenu != null){
+                currentMenu.getButtons().CheckMousePress(new Point(mousePositionX, mousePositionY));
             }
         }
 

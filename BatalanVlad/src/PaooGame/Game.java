@@ -9,6 +9,7 @@ import PaooGame.input.KeyInput;
 import PaooGame.input.MouseInput;
 import PaooGame.levels.Level;
 import PaooGame.menu.*;
+import PaooGame.menu.Menu;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -41,7 +42,7 @@ public class Game implements Runnable
     public static DatabaseSingleton database = DatabaseSingleton.getInstance();
 
     /**
-     * I got no idee what this is for ... ##########################################################################
+     * The id of the current player
      */
     public static int userId;
 
@@ -220,34 +221,12 @@ public class Game implements Runnable
         if(gameState != GameStates.VICTORY_MENU)
             victoryMenu.setFirstTimeAccessed(true);
 
-        switch (gameState) {
-            case GAME:
-                currentLevel.Draw(g);
-                break;
-            case MENU:
-                mainMenu.Draw(g);
-                break;
-            case MAP_CREATION:
-                mapCreation.Draw(g);
-                break;
-            case LEVEL_MENU:
-                levelMenu.Draw(g);
-                break;
-            case WIN_MENU:
-                winMenu.Draw(g);
-                break;
-            case NEW_PROFILE_MENU:
-                newProfileMenu.Draw(g);
-                break;
-            case PROFILE_SELECTION_MENU:
-                profileSelectionMenu.Draw(g);
-                break;
-            case HELP_MENU:
-                helpMenu.Draw(g);
-                break;
-            case VICTORY_MENU:
-                victoryMenu.Draw(g);
-                break;
+        if(gameState == GameStates.GAME){
+            currentLevel.Draw(g);
+        }
+        Menu currentMenu = getCurrentMenu();
+        if(currentMenu != null) {
+            currentMenu.Draw(g);
         }
 
         // This instruction must not be changed due to concurrency problems
@@ -269,6 +248,28 @@ public class Game implements Runnable
     public static void setCurrentLevel(Level newLevel){
         currentLevel = newLevel;
         currentLevel.InitLevel(); // this is going to start the level
+    }
+
+    public static Menu getCurrentMenu(){
+        switch (gameState){
+            case MENU:
+                return mainMenu;
+            case MAP_CREATION:
+                return mapCreation;
+            case LEVEL_MENU:
+                return levelMenu;
+            case WIN_MENU:
+                return winMenu;
+            case NEW_PROFILE_MENU:
+                return newProfileMenu;
+            case PROFILE_SELECTION_MENU:
+                return profileSelectionMenu;
+            case HELP_MENU:
+                return helpMenu;
+            case VICTORY_MENU:
+                return victoryMenu;
+        }
+        return null;
     }
 
 }
