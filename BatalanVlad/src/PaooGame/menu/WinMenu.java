@@ -6,6 +6,8 @@ import PaooGame.gameWindow.button.MyButton;
 import PaooGame.gameWindow.button.buttonTypes.NextLevelButton;
 import PaooGame.gameWindow.button.buttonTypes.ResetLevelOnWinButton;
 import PaooGame.gameWindow.button.buttonTypes.ReturnMainMenuButton;
+import PaooGame.gameWindow.utils.FontUtils;
+import PaooGame.gameWindow.utils.ScoreUtils;
 import PaooGame.graphics.ImageLoader;
 import javafx.util.Pair;
 
@@ -75,7 +77,7 @@ public class WinMenu extends Menu {
 
         Font usedFont = new Font("arial", Font.BOLD, 50);
         g.setFont(usedFont);
-        Pair<Integer, Integer> fontSizePair = this.getFontSize(g, usedFont, "You did it!");
+        Pair<Integer, Integer> fontSizePair =  FontUtils.getFontSize(usedFont, g, "You did it!");
         g.setColor(Color.black);
         g.drawString("You did it!", Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2 + 2, 170 + 2);
         g.setColor(new Color(0xFFFFFF));
@@ -84,31 +86,31 @@ public class WinMenu extends Menu {
 
         usedFont = new Font("arial", Font.PLAIN, 30);
         g.setFont(usedFont);
-        fontSizePair = this.getFontSize(g, usedFont, "Time: " + scoreToString(score));
+        fontSizePair =  FontUtils.getFontSize(usedFont, g, "Time: " + ScoreUtils.scoreToString(score));
         g.setColor(Color.black);
-        g.drawString("Time: " + scoreToString(score), Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2 + 2, 270 + 2);
+        g.drawString("Time: " +  ScoreUtils.scoreToString(score), Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2 + 2, 270 + 2);
         g.setColor(new Color(0xFFFFFF));
-        g.drawString("Time: " + scoreToString(score), Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2, 270);
+        g.drawString("Time: " +  ScoreUtils.scoreToString(score), Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2, 270);
 
         // a new highscore has been settled!
         if (highScore == -1 || highScore > score) {
             usedFont = new Font("arial", Font.PLAIN, 35);
             g.setFont(usedFont);
-            fontSizePair = this.getFontSize(g, usedFont, "New Highscore: " + scoreToString(score));
+            fontSizePair =  FontUtils.getFontSize(usedFont, g, "New Highscore: " +  ScoreUtils.scoreToString(score));
             g.setColor(Color.black);
-            g.drawString("New Highscore: " + scoreToString(score), Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2 + 1, 350 + 1);
+            g.drawString("New Highscore: " +  ScoreUtils.scoreToString(score), Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2 + 1, 350 + 1);
             g.setColor(new Color(0x79D632));
-            g.drawString("New Highscore: " + scoreToString(score), Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2, 350);
+            g.drawString("New Highscore: " +  ScoreUtils.scoreToString(score), Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2, 350);
 
         } else {
 
             usedFont = new Font("arial", Font.PLAIN, 35);
             g.setFont(usedFont);
-            fontSizePair = this.getFontSize(g, usedFont, "Best Time: " + scoreToString(score));
+            fontSizePair =  FontUtils.getFontSize(usedFont, g, "Best Time: " +  ScoreUtils.scoreToString(score));
             g.setColor(Color.black);
-            g.drawString("Best Time: " + scoreToString(highScore), Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2 + 1, 350 + 1);
+            g.drawString("Best Time: " +  ScoreUtils.scoreToString(highScore), Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2 + 1, 350 + 1);
             g.setColor(new Color(0xFFFFFF));
-            g.drawString("Best Time: " + scoreToString(highScore), Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2, 350);
+            g.drawString("Best Time: " +  ScoreUtils.scoreToString(highScore), Game.GAME_WINDOW_WIDTH / 2 - fontSizePair.getKey() / 2, 350);
         }
 
         buttons.Draw(g);
@@ -116,30 +118,6 @@ public class WinMenu extends Menu {
 
     public void setScore(int score) {
         this.score = score;
-    }
-
-    private String scoreToString(int theScore) {
-        int miliseconds = (int) (((theScore % 60) / 60.0) * 100);
-        int seconds = theScore / 60;
-        int minutes = seconds / 60;
-        seconds = seconds % 60;
-        String milisecondsString = "" + miliseconds;
-        String secondsString = "" + seconds;
-        String minutesString = "" + minutes;
-        if (milisecondsString.length() == 1) {
-            milisecondsString = "00" + milisecondsString;
-        } else {
-            if (milisecondsString.length() == 2)
-                milisecondsString = "0" + milisecondsString;
-        }
-        if (secondsString.length() < 2) {
-            secondsString = "0" + secondsString;
-        }
-        if (minutesString.length() < 2) {
-            minutesString = "0" + minutesString;
-        }
-
-        return minutesString + ":" + secondsString + ":" + milisecondsString;
     }
 
     public ButtonCollection getButtons() {

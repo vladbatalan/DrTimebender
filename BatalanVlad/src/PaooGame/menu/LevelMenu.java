@@ -5,6 +5,7 @@ import PaooGame.gameWindow.button.ButtonCollection;
 import PaooGame.gameWindow.button.MyButton;
 import PaooGame.gameWindow.button.buttonTypes.LevelButton;
 import PaooGame.gameWindow.button.buttonTypes.ReturnMainMenuButton;
+import PaooGame.gameWindow.utils.FontUtils;
 import PaooGame.levels.*;
 import javafx.util.Pair;
 
@@ -35,7 +36,7 @@ public class LevelMenu extends Menu{
         levelStringArray[2] = new Pair(new Level2(), "Level 2");
         levelStringArray[3] = new Pair(new Level3(), "Level 3");
 
-        System.out.println("The number of max available levels received from database is " + maxAvailableLevels);
+        // System.out.println("The number of max available levels received from database is " + maxAvailableLevels);
 
         for(int index = 0; index < numberOfLevels; index ++){
             lockedState[index] = index > maxAvailableLevels;
@@ -73,13 +74,13 @@ public class LevelMenu extends Menu{
     public void Draw(Graphics g){
         Font usedFont = new Font("arial", Font.BOLD, 50);
         g.setFont(usedFont);
-        Pair<Integer, Integer> fontSizePair = this.getFontSize(g, usedFont, "Dr. TimeBender");
+        Pair<Integer, Integer> fontSizePair = FontUtils.getFontSize(usedFont, g, "Dr. TimeBender");
         g.setColor(Color.white);
         g.drawString("Dr. TimeBender", Game.GAME_WINDOW_WIDTH/2 - fontSizePair.getKey()/2, 80 );
 
         usedFont = new Font("arial", Font.PLAIN, 20);
         g.setFont(usedFont);
-        fontSizePair = this.getFontSize(g, usedFont, "Level Selection Menu");
+        fontSizePair =  FontUtils.getFontSize(usedFont, g, "Level Selection Menu");
         g.setColor(Color.white);
         g.drawString("Level Selection Menu",Game.GAME_WINDOW_WIDTH/2 - fontSizePair.getKey()/2, 110 );
 

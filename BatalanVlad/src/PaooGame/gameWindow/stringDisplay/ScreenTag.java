@@ -4,7 +4,9 @@ import PaooGame.Game;
 import PaooGame.actionTimers.ITimerInterupter;
 import PaooGame.gameObjects.ToBeUpdatedConstantly;
 import PaooGame.gameWindow.camera.GameCamera;
+import PaooGame.gameWindow.utils.FontUtils;
 import PaooGame.physics.PointVector;
+import javafx.util.Pair;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -140,19 +142,10 @@ public class ScreenTag implements ToBeUpdatedConstantly {
             Font font = new Font("arial", Font.BOLD, fontSize);
 
             // get metrics from the graphics
-            FontMetrics metrics = g.getFontMetrics(font);
-            // get the height of a line of text in this
-            // font and render context
-            int hgt = metrics.getHeight();
-            // get the advance of my text in this font
-            // and render context
-            int adv = metrics.stringWidth(content);
-            // calculate the size of a box to hold the
-            // text with some padding.
-            Dimension size = new Dimension(adv, hgt);
+            Pair<Integer, Integer> sizes = FontUtils.getFontSize(font, g, content);
 
-            int fontWidth = size.width;
-            int fontHeight = size.height;
+            int fontWidth = sizes.getKey();
+            int fontHeight = sizes.getValue();
 
             //System.out.println("Screen tag drawn at time = " + timer);
             PointVector drawPosition = new PointVector(centerPosition);

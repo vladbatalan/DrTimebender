@@ -5,6 +5,7 @@ import PaooGame.gameWindow.button.ButtonCollection;
 import PaooGame.gameWindow.button.MyButton;
 import PaooGame.gameWindow.button.buttonTypes.ReturnMainMenuButton;
 import PaooGame.gameWindow.button.buttonTypes.StartGameButton;
+import PaooGame.gameWindow.utils.FontUtils;
 import javafx.util.Pair;
 
 import java.awt.*;
@@ -44,7 +45,7 @@ public class NewProfileMenu extends Menu{
     public void Draw(Graphics g){
         Font titleFont = new Font("arial", Font.PLAIN, 40);
 
-        Pair<Integer, Integer> fontSize = this.getFontSize(g, titleFont, "Choose your name:");
+        Pair<Integer, Integer> fontSize =  FontUtils.getFontSize(titleFont, g, "Choose your name:");
         g.setFont(titleFont);
         g.setColor(Color.black);
         g.drawString("Choose your name:",Game.GAME_WINDOW_WIDTH/2 - fontSize.getKey()/2+2, 180+2 );
@@ -53,7 +54,7 @@ public class NewProfileMenu extends Menu{
 
 
         Font profileFont = new Font("arial", Font.BOLD, 30);
-        fontSize = this.getFontSize(g, profileFont, profileName);
+        fontSize =  FontUtils.getFontSize(profileFont, g, profileName);
         g.setFont(profileFont);
         g.setColor(Color.white);
         g.fillRect(Game.GAME_WINDOW_WIDTH/2 - 400/2, 250-fontSize.getValue(), 400, fontSize.getValue() + 10);
@@ -65,7 +66,7 @@ public class NewProfileMenu extends Menu{
 
 
         Font errorFont = new Font("arial", Font.BOLD, 20);
-        fontSize = this.getFontSize(g, errorFont, errorString);
+        fontSize =  FontUtils.getFontSize(errorFont, g, errorString);
         g.setFont(errorFont);
         g.setColor(Color.black);
         g.drawString(errorString,Game.GAME_WINDOW_WIDTH/2 - fontSize.getKey()/2 + 1, 400 + 1);

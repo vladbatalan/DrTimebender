@@ -4,6 +4,7 @@ import PaooGame.Game;
 import PaooGame.gameWindow.button.ButtonCollection;
 import PaooGame.gameWindow.button.MyButton;
 import PaooGame.gameWindow.button.buttonTypes.ReturnMainMenuButton;
+import PaooGame.gameWindow.utils.FontUtils;
 import javafx.util.Pair;
 
 import java.awt.*;
@@ -29,13 +30,13 @@ public class HelpMenu extends Menu{
     public void Draw(Graphics g){
         Font usedFont = new Font("arial", Font.BOLD, 50);
         g.setFont(usedFont);
-        Pair<Integer, Integer> fontSizePair = this.getFontSize(g, usedFont, "Dr. TimeBender");
+        Pair<Integer, Integer> fontSizePair = FontUtils.getFontSize(usedFont, g,"Dr. TimeBender");
         g.setColor(Color.white);
         g.drawString("Dr. TimeBender", Game.GAME_WINDOW_WIDTH/2 - fontSizePair.getKey()/2, 80 );
 
         usedFont = new Font("arial", Font.PLAIN, 30);
         g.setFont(usedFont);
-        fontSizePair = this.getFontSize(g, usedFont, "Help");
+        fontSizePair = FontUtils.getFontSize(usedFont, g, "Help");
         g.setColor(Color.white);
         g.drawString("Help",Game.GAME_WINDOW_WIDTH/2 - fontSizePair.getKey()/2, 110 );
 
@@ -65,7 +66,7 @@ public class HelpMenu extends Menu{
         };
 
         for(int index = 0; index < rows.length; index ++){
-            fontSizePair = this.getFontSize(g, usedFont, rows[index]);
+            fontSizePair = FontUtils.getFontSize(usedFont, g, rows[index]);
             g.drawString(rows[index],Game.GAME_WINDOW_WIDTH/2 - fontSizePair.getKey()/2, rowStartY + index * rowSpaces);
         }
         buttons.Draw(g);

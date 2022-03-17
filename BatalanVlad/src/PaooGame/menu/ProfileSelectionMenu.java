@@ -5,6 +5,7 @@ import PaooGame.gameWindow.button.ButtonCollection;
 import PaooGame.gameWindow.button.MyButton;
 import PaooGame.gameWindow.button.buttonTypes.ProfileSelectButton;
 import PaooGame.gameWindow.button.buttonTypes.ReturnMainMenuButton;
+import PaooGame.gameWindow.utils.FontUtils;
 import javafx.util.Pair;
 
 import java.awt.*;
@@ -64,7 +65,7 @@ public class ProfileSelectionMenu extends Menu {
 
     public void Draw(Graphics g) {
         Font mainFont = new Font("arial", Font.BOLD, 40);
-        Pair<Integer, Integer> fontSize = this.getFontSize(g, mainFont, "Select Profile");
+        Pair<Integer, Integer> fontSize =  FontUtils.getFontSize(mainFont, g, "Select Profile");
         g.setFont(mainFont);
         g.setColor(Color.black);
         g.drawString("Select Profile", Game.GAME_WINDOW_WIDTH / 2 - fontSize.getKey() / 2 + 2, 80 + 2);
