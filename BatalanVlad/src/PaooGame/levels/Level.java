@@ -55,14 +55,12 @@ public abstract class Level {
     public Level(){
         buttons.AddElement(new RestartGameButton(
                 new Rectangle(-5, 550, 130, 25),
-                "Restart Level",
-                new Point()
+                "Restart Level"
                 ));
 
         buttons.AddElement(new ReturnFromGameToMainMenuButton(
                 new Rectangle(700, 550, 105, 25),
-                "Menu",
-                new Point()
+                "Menu"
         ));
     }
 

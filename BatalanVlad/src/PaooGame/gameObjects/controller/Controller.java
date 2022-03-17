@@ -4,9 +4,13 @@ import PaooGame.gameObjects.mobileObjects.MobileObject;
 
 import java.util.ArrayList;
 
+/**
+ * Class responsible for handling the set of movements made by a player or an old instance.
+ * The execution of a command depends on the internal time in which it was executed.
+ */
 public class Controller {
-    private ArrayList<ICommand> commandList = new ArrayList<>();
-    private ArrayList<ICommand> executing = new ArrayList<>();
+    private final ArrayList<ICommand> commandList = new ArrayList<>();
+    private final ArrayList<ICommand> executing = new ArrayList<>();
     private int commandIndex = 0;
 
     public void addCommand(ICommand command) {
@@ -14,28 +18,43 @@ public class Controller {
     }
 
     public void execute(int executionTime, MobileObject mobile) {
-        // add commands to execution list
-        while (commandIndex < commandList.size() &&
-                commandList.get(commandIndex).getStartExecutionTime() <= executionTime &&
-                    commandList.get(commandIndex).getStopExecutionTime() >= executionTime){
-            executing.add(commandList.get(commandIndex));
-            commandIndex ++;
+
+        // The execution list are the commands that need to be executed in order of their index
+        while (commandIndex < commandList.size())
+        {
+            // Get the current command
+            ICommand current = commandList.get(commandIndex);
+
+            // Only if execution time is between current interval
+            if(current.getStartExecutionTime() <= executionTime && current.getStopExecutionTime() >= executionTime) {
+
+                // Add the command
+                executing.add(current);
+                commandIndex++;
+            }
+            else{
+                break;
+            }
         }
 
+        // Execute the commands and then remove them from list
         ArrayList<ICommand> removeFromExecution = new ArrayList<>();
-        // foreach executing command, do the execution type
         for(ICommand current : executing){
-            // single execution treatment
+
+            // It is a single use command: Execute and then remove
             if(current.isSingleExecuted()){
                 current.execute(mobile);
                 removeFromExecution.add(current);
             }
+            // It is a command with start and end event action
             else{
-                // if it is still available execute
+
+                // Execution was not completed
                 if(current.getStopExecutionTime() > executionTime){
                     current.execute(mobile);
                 }
-                // else
+
+                // Execution was completed
                 else{
                     current.executeEnd(mobile);
                     removeFromExecution.add(current);
@@ -43,7 +62,7 @@ public class Controller {
             }
         }
 
-        // remove from executing the ones that finished
+        // Remove from executing the finished events
         for(ICommand remove : removeFromExecution){
             executing.remove(remove);
         }

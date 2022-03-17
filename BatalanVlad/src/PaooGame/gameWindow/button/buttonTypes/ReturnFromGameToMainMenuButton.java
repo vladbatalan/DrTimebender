@@ -16,6 +16,7 @@ public class ReturnFromGameToMainMenuButton extends MyButton {
     public ReturnFromGameToMainMenuButton(Rectangle buttonBody, String buttonText){
         super(buttonBody, buttonText);
         this.type = ButtonType.ReturnMainMenuButton;
+        initButtonStats();
     }
 
     public ReturnFromGameToMainMenuButton(Rectangle buttonBody, String buttonText, Point textPosition){

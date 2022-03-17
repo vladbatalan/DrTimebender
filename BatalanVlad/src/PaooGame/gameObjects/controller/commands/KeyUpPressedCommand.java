@@ -2,6 +2,7 @@ package PaooGame.gameObjects.controller.commands;
 
 import PaooGame.gameObjects.controller.ICommand;
 import PaooGame.gameObjects.mobileObjects.MobileObject;
+import PaooGame.physics.enums.Actions;
 
 public class KeyUpPressedCommand implements ICommand {
     private int startTime;
@@ -26,7 +27,7 @@ public class KeyUpPressedCommand implements ICommand {
         mobile.Jump();
     }
     public void executeEnd(MobileObject mobile) {
-        mobile.getBody().getActions()[2] = false;
+        mobile.getBody().getActions()[Actions.JUMP.getValue()] = false;
     }
 
     public String getCommandToken() {

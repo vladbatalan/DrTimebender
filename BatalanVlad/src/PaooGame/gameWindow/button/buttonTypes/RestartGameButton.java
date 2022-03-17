@@ -16,6 +16,7 @@ public class RestartGameButton extends MyButton {
     public RestartGameButton(Rectangle buttonBody, String buttonText){
         super(buttonBody, buttonText);
         this.type = ButtonType.RestartGameButton;
+        initButtonStats();
     }
 
     public RestartGameButton(Rectangle buttonBody, String buttonText, Point textPosition) {

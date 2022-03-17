@@ -2,6 +2,7 @@ package PaooGame.gameObjects.controller.commands;
 
 import PaooGame.gameObjects.controller.ICommand;
 import PaooGame.gameObjects.mobileObjects.MobileObject;
+import PaooGame.physics.enums.Actions;
 
 
 public class KeyRightPressedCommand implements ICommand {
@@ -27,7 +28,7 @@ public class KeyRightPressedCommand implements ICommand {
         mobile.MoveRight();
     }
     public void executeEnd(MobileObject mobile) {
-        mobile.getBody().getActions()[1] = false;
+        mobile.getBody().getActions()[Actions.MOVE_RIGHT.getValue()] = false;
         mobile.Stand();
     }
 

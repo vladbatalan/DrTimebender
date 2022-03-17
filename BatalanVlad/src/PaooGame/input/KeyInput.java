@@ -4,14 +4,17 @@ import PaooGame.Game;
 import PaooGame.GameStates;
 import PaooGame.gameObjects.controller.ICommand;
 import PaooGame.gameObjects.controller.commands.*;
+import PaooGame.gameObjects.mobileObjects.MobileObject;
+import PaooGame.levels.Level;
 import PaooGame.levels.LevelFlagsSystem;
+import PaooGame.physics.enums.Actions;
 
+import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class KeyInput extends KeyAdapter {
     private Game game;
-    private boolean[] moves = {false, false, false}; // left, Jump, Right
     public KeyInput(Game game){
         this.game = game;
     }
@@ -19,37 +22,39 @@ public class KeyInput extends KeyAdapter {
     public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
         if(Game.gameState == GameStates.GAME && game.getPlayer() != null && LevelFlagsSystem.enablePlayerControl) {
+
+            int gameCurrentTime = Game.currentLevel.getGameTimer().getCurrentTime();
+            MobileObject player = game.getPlayer();
+            Level currentLevel = Game.currentLevel;
+
             if(key == KeyEvent.VK_C){
-                System.out.println(Game.currentLevel.getControllerBuilder());
+                System.out.println(currentLevel.getControllerBuilder());
             }
             if (key == KeyEvent.VK_UP) {
-                moves[1] = true;
                 // move the player
-                game.getPlayer().Jump();
+                player.Jump();
 
                 // save command to controller
-                ICommand newCommand = new KeyUpPressedCommand(Game.currentLevel.getGameTimer().getCurrentTime());
-                Game.currentLevel.getControllerBuilder().insertCommand(newCommand);
+                ICommand newCommand = new KeyUpPressedCommand(gameCurrentTime);
+                currentLevel.getControllerBuilder().insertCommand(newCommand);
 
                 //System.out.println("KeyUpPressedCommand");
             }
             if (key == KeyEvent.VK_RIGHT) {
-                moves[2] = true;
-                game.getPlayer().MoveRight();
+                player.MoveRight();
 
                 // save command to controller
-                ICommand newCommand = new KeyRightPressedCommand(Game.currentLevel.getGameTimer().getCurrentTime());
-                Game.currentLevel.getControllerBuilder().insertCommand(newCommand);
+                ICommand newCommand = new KeyRightPressedCommand(gameCurrentTime);
+                currentLevel.getControllerBuilder().insertCommand(newCommand);
 
                 //System.out.println("KeyRightPressedCommand");
             }
             if (key == KeyEvent.VK_LEFT) {
-                moves[0] = true;
-                game.getPlayer().MoveLeft();
+                player.MoveLeft();
 
                 // save command to controller
-                ICommand newCommand = new KeyLeftPressedCommand(Game.currentLevel.getGameTimer().getCurrentTime());
-                Game.currentLevel.getControllerBuilder().insertCommand(newCommand);
+                ICommand newCommand = new KeyLeftPressedCommand(gameCurrentTime);
+                currentLevel.getControllerBuilder().insertCommand(newCommand);
 
                 //System.out.println("KeyLeftPressedCommand");
             }
@@ -57,26 +62,26 @@ public class KeyInput extends KeyAdapter {
                 // works only in 2 cases:
                 if(LevelFlagsSystem.playerOnTimeMachine && !LevelFlagsSystem.isOnReset){
                     // save command to controller
-                    ICommand newCommand = new KeySpacePressedOnTimeMachineCommand(Game.currentLevel.getGameTimer().getCurrentTime());
-                    Game.currentLevel.getControllerBuilder().insertCommand(newCommand);
+                    ICommand newCommand = new KeySpacePressedOnTimeMachineCommand(gameCurrentTime);
+                    currentLevel.getControllerBuilder().insertCommand(newCommand);
 
                     // add new copy of player
-                    Game.currentLevel.addOldInstance();
-                    Game.currentLevel.resetLevel();
+                    currentLevel.addOldInstance();
+                    currentLevel.resetLevel();
 
                     //System.out.println("SpaceTimePressedCommand");
                 }
 
                 if(LevelFlagsSystem.playerOnGoal){
                     // check if the current door is open
-                    if(Game.currentLevel.getGameObjective().getActiveState()){
+                    if(currentLevel.getGameObjective().getActiveState()){
                         // save command to controller
-                        ICommand newCommand = new KeySpacePressedOnTGoal(Game.currentLevel.getGameTimer().getCurrentTime());
-                        Game.currentLevel.getControllerBuilder().insertCommand(newCommand);
+                        ICommand newCommand = new KeySpacePressedOnTGoal(gameCurrentTime);
+                        currentLevel.getControllerBuilder().insertCommand(newCommand);
 
                         // This is considered to be the win condition of a game
                         // The level win condition is called
-                        Game.currentLevel.LevelWinConditionAchieved();
+                        currentLevel.LevelWinConditionAchieved();
                     }
                 }
 
@@ -104,34 +109,36 @@ public class KeyInput extends KeyAdapter {
         int key = e.getKeyCode();
 
         if(Game.gameState == GameStates.GAME && game.getPlayer() != null && LevelFlagsSystem.enablePlayerControl) {
+
+            int gameCurrentTime = Game.currentLevel.getGameTimer().getCurrentTime();
+            MobileObject player = game.getPlayer();
+            Level currentLevel = Game.currentLevel;
+
             if (key == KeyEvent.VK_UP) {
-                moves[1] = false;
-                game.getPlayer().getBody().getActions()[2] = false;
+                player.getBody().getActions()[Actions.JUMP.getValue()] = false;
 
                 // save command to controller
-                ICommand newCommand = new KeyUpReleasedCommand(Game.currentLevel.getGameTimer().getCurrentTime());
-                Game.currentLevel.getControllerBuilder().insertCommand(newCommand);
+                ICommand newCommand = new KeyUpReleasedCommand(gameCurrentTime);
+                currentLevel.getControllerBuilder().insertCommand(newCommand);
                 //System.out.println("KeyUpReleasedCommand");
             }
             if (key == KeyEvent.VK_RIGHT) {
-                moves[2] = false;
-                game.getPlayer().getBody().getActions()[1] = false;
-                game.getPlayer().Stand();
+                player.getBody().getActions()[Actions.MOVE_RIGHT.getValue()] = false;
+                player.Stand();
 
                 // save command to controller
-                ICommand newCommand = new KeyRightReleasedCommand(Game.currentLevel.getGameTimer().getCurrentTime());
-                Game.currentLevel.getControllerBuilder().insertCommand(newCommand);
+                ICommand newCommand = new KeyRightReleasedCommand(gameCurrentTime);
+                currentLevel.getControllerBuilder().insertCommand(newCommand);
 
                 //System.out.println("KeyRightReleasedCommand");
             }
             if (key == KeyEvent.VK_LEFT) {
-                moves[0] = false;
-                game.getPlayer().getBody().getActions()[0] = false;
-                game.getPlayer().Stand();
+                player.getBody().getActions()[Actions.MOVE_LEFT.getValue()] = false;
+                player.Stand();
 
                 // save command to controller
-                ICommand newCommand = new KeyLeftReleasedCommand(Game.currentLevel.getGameTimer().getCurrentTime());
-                Game.currentLevel.getControllerBuilder().insertCommand(newCommand);
+                ICommand newCommand = new KeyLeftReleasedCommand(gameCurrentTime);
+                currentLevel.getControllerBuilder().insertCommand(newCommand);
 
                 //System.out.println("KeyLeftReleasedCommand");
             }
