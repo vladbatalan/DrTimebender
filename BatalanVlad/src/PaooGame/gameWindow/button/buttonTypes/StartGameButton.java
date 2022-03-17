@@ -15,6 +15,12 @@ public class StartGameButton extends MyButton {
     public StartGameButton(){
         this.type = ButtonType.StartGameButton;
     }
+
+    public StartGameButton(Rectangle buttonBody, String buttonText){
+        super(buttonBody, buttonText);
+        this.type = ButtonType.StartGameButton;
+    }
+
     public StartGameButton(Rectangle buttonBody, String buttonText, Point textPosition){
         this.buttonBody = buttonBody;
         this.buttonText = buttonText;

@@ -12,6 +12,10 @@ public class NextLevelButton extends MyButton {
     public NextLevelButton(){
         this.type = ButtonType.NextLevelButton;
     }
+    public NextLevelButton(Rectangle buttonBody, String buttonText){
+        super(buttonBody, buttonText);
+        this.type = ButtonType.NextLevelButton;
+    }
     public NextLevelButton(Rectangle buttonBody, String buttonText, Point textPosition){
         this.buttonBody = buttonBody;
         this.buttonText = buttonText;
@@ -25,7 +29,6 @@ public class NextLevelButton extends MyButton {
         super(buttonBody, buttonText,textPosition, backgroundColor, edgeColor, textColor, padding, buttonFont);
         this.type = ButtonType.NextLevelButton;
     }
-
 
 
     public void ButtonPressed() {

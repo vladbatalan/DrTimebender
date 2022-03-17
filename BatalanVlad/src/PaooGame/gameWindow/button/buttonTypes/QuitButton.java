@@ -10,6 +10,12 @@ public class QuitButton extends MyButton {
     public QuitButton(){
         this.type = ButtonType.QuitButton;
     }
+
+    public QuitButton(Rectangle buttonBody, String buttonText){
+        super(buttonBody, buttonText);
+        this.type = ButtonType.QuitButton;
+    }
+
     public QuitButton(Rectangle buttonBody, String buttonText, Point textPosition){
         this.buttonBody = buttonBody;
         this.buttonText = buttonText;

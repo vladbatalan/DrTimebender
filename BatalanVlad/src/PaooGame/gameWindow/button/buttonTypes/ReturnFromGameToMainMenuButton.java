@@ -13,6 +13,11 @@ public class ReturnFromGameToMainMenuButton extends MyButton {
         this.type = ButtonType.ReturnMainMenuButton;
         initButtonStats();
     }
+    public ReturnFromGameToMainMenuButton(Rectangle buttonBody, String buttonText){
+        super(buttonBody, buttonText);
+        this.type = ButtonType.ReturnMainMenuButton;
+    }
+
     public ReturnFromGameToMainMenuButton(Rectangle buttonBody, String buttonText, Point textPosition){
         this.buttonBody = buttonBody;
         this.buttonText = buttonText;

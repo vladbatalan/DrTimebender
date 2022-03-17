@@ -83,7 +83,7 @@ public class DelayedActionTimer implements ToBeUpdatedConstantly, IActionTimer {
     }
 
     @Override
-    public void addTimerIntreruptor(ITimerInterupter timerInterupter) {
+    public void addTimerInterupter(ITimerInterupter timerInterupter) {
         interupters.add(timerInterupter);
     }
 

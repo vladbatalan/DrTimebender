@@ -35,8 +35,7 @@ public class WinMenu extends Menu {
 
         MyButton restartLevelButton = new ResetLevelOnWinButton(
                 new Rectangle(distanceToLeft, distanceToTop, buttonWidth, buttonHeight),
-                "Restart Level",
-                new Point()
+                "Restart Level"
         );
         //restartLevelButton.setBackgroundColor(new Color(0x090D58));
         restartLevelButton.setBackgroundColor(new Color(0x0056D6));
@@ -46,8 +45,7 @@ public class WinMenu extends Menu {
 
         MyButton nextLevelButton = new NextLevelButton(
                 new Rectangle(distanceToLeft + widthUnit, distanceToTop, buttonWidth, buttonHeight),
-                "Next Level",
-                new Point()
+                "Next Level"
         );
         //nextLevelButton.setBackgroundColor(new Color(0x090D58));
         nextLevelButton.setBackgroundColor(new Color(0x0056D6));
@@ -60,8 +58,7 @@ public class WinMenu extends Menu {
 
         MyButton returnMenu = new ReturnMainMenuButton(
                 new Rectangle(Game.GAME_WINDOW_WIDTH / 2 - 75, Game.GAME_WINDOW_HEIGHT - 100, 145, 40),
-                "Back to Menu",
-                new Point()
+                "Back to Menu"
         );
         buttons.AddElement(returnMenu);
     }

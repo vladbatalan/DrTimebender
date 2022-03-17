@@ -12,6 +12,13 @@ public class ResetLevelOnWinButton extends MyButton {
     public ResetLevelOnWinButton(){
         this.type = ButtonType.RestartGameButton;
     }
+
+    public ResetLevelOnWinButton(Rectangle buttonBody, String buttonText){
+        super(buttonBody, buttonText);
+        this.type = ButtonType.RestartGameButton;
+    }
+
+
     public ResetLevelOnWinButton(Rectangle buttonBody, String buttonText, Point textPosition){
         this.buttonBody = buttonBody;
         this.buttonText = buttonText;

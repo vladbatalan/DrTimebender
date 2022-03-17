@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public abstract class GameObject {
     protected Body body = null;
-    protected ObjectID id;
+    public ObjectID id;
     protected AnimationCollection animation;
     protected boolean isMobile = false;
     protected int width;

@@ -1,9 +1,10 @@
-package PaooGame.gameObjects;
+package PaooGame.gameObjects.handler;
 
+import PaooGame.gameObjects.ObjectID;
 import PaooGame.gameObjects.mobileObjects.MobileObject;
 import PaooGame.gameObjects.mobileObjects.OldPlayerInstance;
 import PaooGame.gameObjects.mobileObjects.Player;
-import PaooGame.gameObjects.objectCollisionHandler.ObjectCollisionHandler;
+import PaooGame.gameObjects.handler.ObjectCollisionHandler;
 import PaooGame.gameObjects.stillObjects.StillObject;
 import PaooGame.gameObjects.stillObjects.TimeMachine;
 import PaooGame.gameObjects.stillObjects.TwoPanScale;

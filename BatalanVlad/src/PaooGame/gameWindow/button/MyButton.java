@@ -32,6 +32,17 @@ public abstract class MyButton {
         textPosition = new Point(0,0);
     }
 
+    public MyButton(Rectangle buttonBody, String buttonText){
+        this.buttonBody = buttonBody;
+        this.buttonText = buttonText;
+        buttonFont = new Font("arial", Font.BOLD, 20);
+        backgroundColor = new Color(0,0,0,0);
+        edgeColor = Color.white;
+        textColor = Color.white;
+        padding = 10;
+        textPosition = new Point(0,0);
+    }
+
     public MyButton(Rectangle buttonBody, String buttonText, Point textPosition, Color backgroundColor, Color edgeColor, Color textColor, Integer padding, Font buttonFont){
         this.buttonBody = buttonBody;
         this.buttonText = buttonText;

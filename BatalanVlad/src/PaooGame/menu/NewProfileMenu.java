@@ -27,14 +27,12 @@ public class NewProfileMenu extends Menu{
 
         MyButton startGame = new StartGameButton(
                 new Rectangle(distanceToLeft-buttonWidth/2, distanceToTop, buttonWidth, buttonHeight),
-                "Start Game",
-                new Point()
+                "Start Game"
         );
 
         MyButton returnMenu = new ReturnMainMenuButton(
                 new Rectangle(distanceToLeft-buttonWidth/2 - 15 , Game.GAME_WINDOW_HEIGHT - 100 , buttonWidth + 30, buttonHeight),
-                "Back to Menu",
-                new Point()
+                "Back to Menu"
 
         );
 

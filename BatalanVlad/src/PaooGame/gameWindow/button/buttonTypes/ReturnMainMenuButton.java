@@ -12,6 +12,13 @@ public class ReturnMainMenuButton extends MyButton {
     public ReturnMainMenuButton(){
         this.type = ButtonType.ReturnMainMenuButton;
     }
+
+
+    public ReturnMainMenuButton(Rectangle buttonBody, String buttonText){
+        super(buttonBody, buttonText);
+        this.type = ButtonType.ReturnMainMenuButton;
+    }
+
     public ReturnMainMenuButton(Rectangle buttonBody, String buttonText, Point textPosition){
         this.buttonBody = buttonBody;
         this.buttonText = buttonText;

@@ -1,4 +1,4 @@
-package PaooGame.gameObjects.objectCollisionHandler;
+package PaooGame.gameObjects.handler;
 
 import PaooGame.gameObjects.GameObject;
 import PaooGame.gameObjects.mobileObjects.MobileObject;

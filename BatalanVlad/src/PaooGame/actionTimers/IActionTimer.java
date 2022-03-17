@@ -4,6 +4,6 @@ import PaooGame.actionTimers.actions.IAction;
 
 public interface IActionTimer {
     void startTimer();
-    void addTimerIntreruptor(ITimerInterupter timerInterupter);
+    void addTimerInterupter(ITimerInterupter timerInterupter);
     IAction getAction();
 }

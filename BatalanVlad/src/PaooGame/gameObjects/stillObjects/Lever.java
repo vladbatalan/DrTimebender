@@ -7,7 +7,7 @@ import PaooGame.actionTimers.actions.IAction;
 import PaooGame.actionTimers.DelayedActionTimer;
 import PaooGame.actionTimers.IActionTimer;
 import PaooGame.actionTimers.timeInterupters.GameStateGameIntrerupter;
-import PaooGame.gameObjects.GameObjectHandler;
+import PaooGame.gameObjects.handler.GameObjectHandler;
 import PaooGame.gameObjects.ISwitch;
 import PaooGame.gameObjects.ISwitchable;
 import PaooGame.gameObjects.ObjectID;
@@ -105,7 +105,7 @@ public class Lever extends StillObject implements ISwitch {
         // produce open at delay
         IAction turnOnAction = new DelayTurnOn(affected, myCommand);
         IActionTimer turnOnActionTimer = new DelayedActionTimer(turnOnAction, turnOn.getTimeUntilDisappear());
-        turnOnActionTimer.addTimerIntreruptor(new GameStateGameIntrerupter());
+        turnOnActionTimer.addTimerInterupter(new GameStateGameIntrerupter());
         turnOnActionTimer.startTimer();
     }
 
@@ -117,7 +117,7 @@ public class Lever extends StillObject implements ISwitch {
         // produce open at delay
         IAction turnOffAction = new DelayTurnOff(affected, myCommand);
         IActionTimer turnOffActionTimer = new DelayedActionTimer(turnOffAction, turnOff.getTimeUntilDisappear());
-        turnOffActionTimer.addTimerIntreruptor(new GameStateGameIntrerupter());
+        turnOffActionTimer.addTimerInterupter(new GameStateGameIntrerupter());
         turnOffActionTimer.startTimer();
     }
 

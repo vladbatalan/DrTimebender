@@ -7,7 +7,7 @@ import PaooGame.actionTimers.IActionTimer;
 import PaooGame.actionTimers.PeriodicFiniteActionTimer;
 import PaooGame.actionTimers.timeInterupters.GameStateGameIntrerupter;
 import PaooGame.gameObjects.GameObject;
-import PaooGame.gameObjects.GameObjectHandler;
+import PaooGame.gameObjects.handler.GameObjectHandler;
 import PaooGame.gameObjects.ObjectID;
 import PaooGame.gameObjects.controller.Controller;
 import PaooGame.gameObjects.controller.ControllerBuilder;
@@ -137,7 +137,7 @@ public abstract class Level {
         //apply BlackFadeIn
         IAction fadeInAction = new FadeInColorAction(Color.black, 1, 120, camera);
         IActionTimer fadeInEffect = new PeriodicFiniteActionTimer(fadeInAction, 1, 120);
-        fadeInEffect.addTimerIntreruptor(new GameStateGameIntrerupter());
+        fadeInEffect.addTimerInterupter(new GameStateGameIntrerupter());
         fadeInEffect.startTimer();
 
         IAction resetManagementAction = new DelaySetResetFalseFlagAction(this);
@@ -196,8 +196,8 @@ public abstract class Level {
             IActionTimer resetLevel = new DelayedActionTimer(resetLevelOnDelay, 239);
 
             //interuptors
-            fadeOutEffect.addTimerIntreruptor(new GameStateGameIntrerupter());
-            resetLevel.addTimerIntreruptor(new GameStateGameIntrerupter());
+            fadeOutEffect.addTimerInterupter(new GameStateGameIntrerupter());
+            resetLevel.addTimerInterupter(new GameStateGameIntrerupter());
 
             LevelFlagsSystem.isLevelRunning = false;
             fadeOutEffect.startTimer();

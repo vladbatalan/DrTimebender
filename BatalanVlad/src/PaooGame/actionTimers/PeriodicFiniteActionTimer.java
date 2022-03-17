@@ -89,7 +89,7 @@ public class PeriodicFiniteActionTimer implements ToBeUpdatedConstantly, IAction
     }
 
     @Override
-    public void addTimerIntreruptor(ITimerInterupter timerInterupter) {
+    public void addTimerInterupter(ITimerInterupter timerInterupter) {
         interupters.add(timerInterupter);
     }
     @Override

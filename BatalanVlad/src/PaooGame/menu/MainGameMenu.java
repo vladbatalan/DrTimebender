@@ -23,14 +23,12 @@ public class MainGameMenu extends Menu {
 
         MyButton newGameButton = new NewGameButton(
                 new Rectangle(distanceToLeft, distanceToTop, buttonWidth, buttonHeight),
-                "Start New Game",
-                new Point()
+                "Start New Game"
         );
 
         MyButton loadGameButton = new LoadGameButton(
                 new Rectangle(distanceToLeft, distanceToTop + buttonSpacer, buttonWidth, buttonHeight),
-                "Load Game",
-                new Point()
+                "Load Game"
         );
         //MyButton createMapButton = new CreateCustomMapButton(
         //        new Rectangle(distanceToLeft, distanceToTop + 2*buttonSpacer, buttonWidth, buttonHeight),
@@ -39,13 +37,11 @@ public class MainGameMenu extends Menu {
         //);
         MyButton helpButton = new HelpButton(
                 new Rectangle(distanceToLeft, distanceToTop + 2 * buttonSpacer, buttonWidth, buttonHeight),
-                "Help",
-                new Point()
+                "Help"
         );
         MyButton quitButton = new QuitButton(
                 new Rectangle(distanceToLeft, distanceToTop + 3 * buttonSpacer, buttonWidth, buttonHeight),
-                "Quit Game",
-                new Point()
+                "Quit Game"
         );
         buttons.AddElement(newGameButton);
         buttons.AddElement(loadGameButton);

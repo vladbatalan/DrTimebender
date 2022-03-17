@@ -21,6 +21,11 @@ public class LevelButton extends MyButton {
         this.type = ButtonType.LevelButton;
         this.btnLevel = btnLevel;
     }
+    public LevelButton(Rectangle buttonBody, String buttonText, Level btnLevel){
+        super(buttonBody, buttonText);
+        this.btnLevel = btnLevel;
+        this.type = ButtonType.LoadGameButton;
+    }
 
     public LevelButton(Rectangle buttonBody, String buttonText, Point textPosition, Level btnLevel){
         this.buttonBody = buttonBody;

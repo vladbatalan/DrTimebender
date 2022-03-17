@@ -7,13 +7,14 @@ import PaooGame.actionTimers.actions.IAction;
 import PaooGame.actionTimers.DelayedActionTimer;
 import PaooGame.actionTimers.IActionTimer;
 import PaooGame.actionTimers.timeInterupters.GameStateGameIntrerupter;
-import PaooGame.gameObjects.GameObjectHandler;
+import PaooGame.gameObjects.handler.GameObjectHandler;
 import PaooGame.gameObjects.ISwitch;
 import PaooGame.gameObjects.ISwitchable;
 import PaooGame.gameObjects.ObjectID;
 import PaooGame.gameObjects.effectObjects.TurnOffObjectEffect;
 import PaooGame.gameObjects.effectObjects.TurnOnObjectEffect;
 import PaooGame.gameObjects.mobileObjects.MobileObject;
+import PaooGame.gameWindow.utils.FontUtils;
 import PaooGame.graphics.animations.animationCollections.PushBlueButtonType1AnimationCollection;
 import PaooGame.graphics.animations.animationCollections.PushGreenButtonType1AnimationCollection;
 import PaooGame.graphics.animations.animationCollections.PushRedButtonType1AnimationCollection;
@@ -21,6 +22,7 @@ import PaooGame.graphics.animations.animationCollections.PushYellowButtonType1An
 import PaooGame.physics.Body;
 import PaooGame.physics.PointVector;
 import PaooGame.tiles.Map;
+import javafx.util.Pair;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -73,20 +75,8 @@ public class PushButton extends StillObject implements ISwitch {
         if(!descriptionString.isEmpty()) {
             //calculate first the position of the text
             Font font = new Font("arial", Font.BOLD, 20);
-            // get metrics from the graphics
-            FontMetrics metrics = g.getFontMetrics(font);
-            // get the height of a line of text in this
-            // font and render context
-            int hgt = metrics.getHeight();
-            // get the advance of my text in this font
-            // and render context
-            int adv = metrics.stringWidth(descriptionString);
-            // calculate the size of a box to hold the
-            // text with some padding.
-            Dimension size = new Dimension(adv, hgt);
-
-            int fontWidth = size.width;
-            int fontHeight = size.height;
+            Pair<Integer, Integer> fontPair = FontUtils.getFontSize(font, g, descriptionString);
+            int fontWidth = fontPair.getKey();
 
             PointVector centered = new PointVector(body.getPosition().getX() + body.getBodyWidth()/2 - fontWidth/3, body.getPosition().getY()+body.getBodyHeight()+20);
             g.setColor(Color.white);
@@ -146,7 +136,7 @@ public class PushButton extends StillObject implements ISwitch {
         // produce open at delay
         IAction turnOnAction = new DelayTurnOn(affected, myCommand);
         IActionTimer turnOnActionTimer = new DelayedActionTimer(turnOnAction, turnOn.getTimeUntilDisappear());
-        turnOnActionTimer.addTimerIntreruptor(new GameStateGameIntrerupter());
+        turnOnActionTimer.addTimerInterupter(new GameStateGameIntrerupter());
         turnOnActionTimer.startTimer();
     }
 
@@ -158,7 +148,7 @@ public class PushButton extends StillObject implements ISwitch {
         // produce open at delay
         IAction turnOffAction = new DelayTurnOff(affected, myCommand);
         IActionTimer turnOffActionTimer = new DelayedActionTimer(turnOffAction, turnOff.getTimeUntilDisappear());
-        turnOffActionTimer.addTimerIntreruptor(new GameStateGameIntrerupter());
+        turnOffActionTimer.addTimerInterupter(new GameStateGameIntrerupter());
         turnOffActionTimer.startTimer();
     }
 

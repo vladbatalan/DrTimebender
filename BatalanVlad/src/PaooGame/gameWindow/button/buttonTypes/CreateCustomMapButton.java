@@ -12,12 +12,18 @@ public class CreateCustomMapButton extends MyButton {
     public CreateCustomMapButton(){
         this.type = ButtonType.CreateCustomMapButton;
     }
+    public CreateCustomMapButton(Rectangle buttonBody, String buttonText){
+        super(buttonBody, buttonText);
+        this.type = ButtonType.CreateCustomMapButton;
+    }
+
     public CreateCustomMapButton(Rectangle buttonBody, String buttonText, Point textPosition){
         this.buttonBody = buttonBody;
         this.buttonText = buttonText;
         this.textPosition = textPosition;
         this.type = ButtonType.CreateCustomMapButton;
     }
+
 
 
     public CreateCustomMapButton(Rectangle buttonBody, String buttonText, Point textPosition, Color backgroundColor, Color edgeColor, Color textColor, Integer padding, Font buttonFont)

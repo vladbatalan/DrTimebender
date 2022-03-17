@@ -27,8 +27,7 @@ public class ProfileSelectionMenu extends Menu {
 
         MyButton returnMenu = new ReturnMainMenuButton(
                 new Rectangle(Game.GAME_WINDOW_WIDTH / 2 - 75, Game.GAME_WINDOW_HEIGHT - 100, 145, 40),
-                "Back to Menu",
-                new Point()
+                "Back to Menu"
         );
         buttons.AddElement(returnMenu);
 

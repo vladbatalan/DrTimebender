@@ -1,7 +1,7 @@
 package PaooGame.gameObjects.stillObjects;
 
 import PaooGame.Game;
-import PaooGame.gameObjects.GameObjectHandler;
+import PaooGame.gameObjects.handler.GameObjectHandler;
 import PaooGame.gameObjects.ISwitchable;
 import PaooGame.gameObjects.ObjectID;
 import PaooGame.gameObjects.mobileObjects.MobileObject;
