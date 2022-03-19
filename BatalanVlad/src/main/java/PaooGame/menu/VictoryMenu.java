@@ -1,11 +1,11 @@
 package PaooGame.menu;
 
 import PaooGame.Game;
-import PaooGame.gameWindow.button.ButtonCollection;
-import PaooGame.gameWindow.button.MyButton;
-import PaooGame.gameWindow.button.buttonTypes.ReturnMainMenuButton;
-import PaooGame.gameWindow.utils.FontUtils;
-import PaooGame.gameWindow.utils.ScoreUtils;
+import PaooGame.graphics.gameWindow.button.ButtonCollection;
+import PaooGame.graphics.gameWindow.button.MyButton;
+import PaooGame.graphics.gameWindow.button.buttonTypes.ReturnMainMenuButton;
+import PaooGame.graphics.gameWindow.utils.FontUtils;
+import PaooGame.graphics.gameWindow.utils.ScoreUtils;
 import javafx.util.Pair;
 
 import java.awt.*;

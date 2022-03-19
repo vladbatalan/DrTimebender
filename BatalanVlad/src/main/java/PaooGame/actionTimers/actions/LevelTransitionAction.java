@@ -2,7 +2,7 @@ package PaooGame.actionTimers.actions;
 
 import PaooGame.Game;
 import PaooGame.GameStates;
-import PaooGame.gameWindow.timer.Timer;
+import PaooGame.graphics.gameWindow.timer.Timer;
 
 import java.awt.*;
 

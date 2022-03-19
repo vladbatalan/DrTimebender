@@ -1,7 +1,7 @@
 package PaooGame.actionTimers.actions;
 
 import PaooGame.Game;
-import PaooGame.gameWindow.camera.GameCamera;
+import PaooGame.graphics.gameWindow.camera.GameCamera;
 
 import java.awt.*;
 

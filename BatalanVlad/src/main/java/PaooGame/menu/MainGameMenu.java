@@ -1,11 +1,11 @@
 package PaooGame.menu;
 
-import PaooGame.gameWindow.button.ButtonCollection;
-import PaooGame.gameWindow.button.MyButton;
-import PaooGame.gameWindow.button.buttonTypes.HelpButton;
-import PaooGame.gameWindow.button.buttonTypes.LoadGameButton;
-import PaooGame.gameWindow.button.buttonTypes.NewGameButton;
-import PaooGame.gameWindow.button.buttonTypes.QuitButton;
+import PaooGame.graphics.gameWindow.button.ButtonCollection;
+import PaooGame.graphics.gameWindow.button.MyButton;
+import PaooGame.graphics.gameWindow.button.buttonTypes.HelpButton;
+import PaooGame.graphics.gameWindow.button.buttonTypes.LoadGameButton;
+import PaooGame.graphics.gameWindow.button.buttonTypes.NewGameButton;
+import PaooGame.graphics.gameWindow.button.buttonTypes.QuitButton;
 
 import java.awt.*;
 

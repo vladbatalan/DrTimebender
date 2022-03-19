@@ -3,7 +3,7 @@ package PaooGame;
 import PaooGame.database.DatabaseSingleton;
 import PaooGame.gameObjects.ToBeUpdatedConstantly;
 import PaooGame.gameObjects.mobileObjects.Player;
-import PaooGame.gameWindow.GameWindow;
+import PaooGame.graphics.gameWindow.GameWindow;
 import PaooGame.graphics.Assets;
 import PaooGame.input.KeyInput;
 import PaooGame.input.MouseInput;

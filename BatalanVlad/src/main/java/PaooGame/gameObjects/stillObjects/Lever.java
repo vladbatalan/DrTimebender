@@ -4,7 +4,7 @@ import PaooGame.Game;
 import PaooGame.actionTimers.actions.DelayTurnOff;
 import PaooGame.actionTimers.actions.DelayTurnOn;
 import PaooGame.actionTimers.actions.IAction;
-import PaooGame.actionTimers.DelayedActionTimer;
+import PaooGame.actionTimers.timer.DelayedActionTimer;
 import PaooGame.actionTimers.IActionTimer;
 import PaooGame.actionTimers.timeInterupters.GameStateGameIntrerupter;
 import PaooGame.gameObjects.handler.GameObjectHandler;

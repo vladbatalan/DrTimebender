@@ -1,7 +1,7 @@
 package PaooGame.tiles;
 
 import PaooGame.Game;
-import PaooGame.gameWindow.camera.GameCamera;
+import PaooGame.graphics.gameWindow.camera.GameCamera;
 import PaooGame.graphics.ImageLoader;
 import PaooGame.physics.PointVector;
 import PaooGame.tiles.factory.TileFactory;

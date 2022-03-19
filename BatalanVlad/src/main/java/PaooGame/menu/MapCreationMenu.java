@@ -1,8 +1,8 @@
 package PaooGame.menu;
 
-import PaooGame.gameWindow.button.ButtonCollection;
-import PaooGame.gameWindow.button.MyButton;
-import PaooGame.gameWindow.button.buttonTypes.*;
+import PaooGame.graphics.gameWindow.button.ButtonCollection;
+import PaooGame.graphics.gameWindow.button.MyButton;
+import PaooGame.graphics.gameWindow.button.buttonTypes.*;
 
 import java.awt.*;
 
