@@ -43,11 +43,11 @@ public class ReturnFromGameToMainMenuButton extends MyButton {
         padding = 5;
     }
 
-    public void ButtonPressed(Game game) {
-        game.gameState = GameStates.MENU;
-        game.currentLevel.getGameTimer().stopTimer();
-        game.currentLevel.getGameTimer().hideTimer();
-        game.currentLevel = null;
+    public void ButtonPressed() {
+        Game.gameState = GameStates.MENU;
+        Game.currentLevel.getGameTimer().stopTimer();
+        Game.currentLevel.getGameTimer().hideTimer();
+        Game.currentLevel = null;
 
     }
 }

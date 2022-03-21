@@ -74,12 +74,12 @@ public class LevelButton extends MyButton {
     }
 
 
-    public void ButtonPressed(Game game) {
+    public void ButtonPressed() {
         // System.out.println(btnLevel.getClass().getName() + " button pressed!");
 
         if (!lockedState) {
-            game.setCurrentLevel(btnLevel);
-            game.gameState = GameStates.GAME;
+            Game.setCurrentLevel(btnLevel);
+            Game.gameState = GameStates.GAME;
         } else {
             System.out.println("Level is not locked yet!");
         }

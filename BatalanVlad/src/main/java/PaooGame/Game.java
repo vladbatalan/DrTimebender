@@ -29,27 +29,27 @@ public class Game implements Runnable
     /**
      * The variable that describes the state of the game.
      */
-    private boolean runState;
+    private boolean        runState;
 
     /**
      * The main thread of the game
      */
-    private Thread gameThread;
+    private Thread          gameThread;
 
     /**
      * This is the singleton database object used to store levels.
      */
-    public DatabaseSingleton database = DatabaseSingleton.getInstance();
+    public static DatabaseSingleton database = DatabaseSingleton.getInstance();
 
     /**
      * The id of the current player
      */
-    public int userId;
+    public static int userId;
 
     /**
      * The state of the game
      */
-    public GameStates gameState = GameStates.MENU;
+    public static GameStates gameState = GameStates.MENU;
 
     /**
      * The width of the screen
@@ -57,26 +57,24 @@ public class Game implements Runnable
     public static Integer GAME_WINDOW_WIDTH = 800;
     public static Integer GAME_WINDOW_HEIGHT = 600;
 
-    public float CURRENT_FRAME_TIME = 0;
 
+    public static MainGameMenu mainMenu = new MainGameMenu();
+    public static MapCreationMenu mapCreation = new MapCreationMenu();
+    public static LevelMenu levelMenu = new LevelMenu();
+    public static WinMenu winMenu = new WinMenu();
+    public static NewProfileMenu newProfileMenu = new NewProfileMenu();
+    public static ProfileSelectionMenu profileSelectionMenu = new ProfileSelectionMenu();
+    public static HelpMenu helpMenu = new HelpMenu();
+    public static VictoryMenu victoryMenu = new VictoryMenu();
 
-    public MainGameMenu mainMenu = new MainGameMenu();
-    public MapCreationMenu mapCreation = new MapCreationMenu();
-    public LevelMenu levelMenu = new LevelMenu(this);
-    public WinMenu winMenu = new WinMenu();
-    public NewProfileMenu newProfileMenu = new NewProfileMenu();
-    public ProfileSelectionMenu profileSelectionMenu = new ProfileSelectionMenu();
-    public HelpMenu helpMenu = new HelpMenu();
-    public VictoryMenu victoryMenu = new VictoryMenu();
+    public static Level currentLevel;
 
-    public Level currentLevel;
+    public static ArrayList<ToBeUpdatedConstantly> updateList = new ArrayList<>();
+    public static ArrayList<ToBeUpdatedConstantly> removeFromUpdateList = new ArrayList<>();
 
-    public ArrayList<ToBeUpdatedConstantly> updateList = new ArrayList<>();
-    public ArrayList<ToBeUpdatedConstantly> removeFromUpdateList = new ArrayList<>();
-
-    public Game(String title)
+    public Game(String title, int width, int height)
     {
-        gameWindow = new GameWindow(title, GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
+        gameWindow = new GameWindow(title, width, height);
         runState = false;
     }
 
@@ -86,18 +84,16 @@ public class Game implements Runnable
     private void InitGame()
     {
 
-        // Create main window
-        // TODO: If is the cli run type don't create window
         gameWindow = new GameWindow("Dr. TimeBender", GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
         gameWindow.BuildGameWindow();
         Assets.Init();
 
-        // Listen to mouse and keyboard
-        // TODO: If is the cli, we don't need listeners like this
         gameWindow.GetCanvas().addMouseListener(new MouseInput(this));
         gameWindow.GetCanvas().addMouseMotionListener(new MouseInput(this));
         gameWindow.GetJFrame().addKeyListener(new KeyInput(this));
     }
+
+    public static float CURRENT_FRAME_TIME = 0;
 
     /**
      * Method responsible with the main loop of the game.
@@ -113,8 +109,6 @@ public class Game implements Runnable
         // The current time
         long curentTime;
 
-        // Frames per second can be ajusted
-        // TODO: each run can be processed at a step
         final int framesPerSecond   = 60;
         final double timeFrame      = 1000000000.0 / framesPerSecond;
 
@@ -122,20 +116,14 @@ public class Game implements Runnable
         while (runState)
         {
 
-            // Update the current frame time
             curentTime = System.nanoTime();
             CURRENT_FRAME_TIME = (float)((curentTime - oldTime)/timeFrame);
 
-
-            // If a frame has passed, step into game
             if((curentTime - oldTime) > timeFrame)
             {
+
                 Update();
-
-                // TODO: If the game runs into cli mode, don't draw
                 Draw();
-
-                // Update the time
                 oldTime = curentTime;
             }
 
@@ -199,8 +187,6 @@ public class Game implements Runnable
 
         removeFromUpdateList.clear();
 
-        // We delegate the update to the level
-        // Update handler which deals with all interactions
         if(gameState == GameStates.GAME)
             currentLevel.Update();
     }
@@ -259,12 +245,12 @@ public class Game implements Runnable
         return currentLevel.getPlayer();
     }
 
-    public void setCurrentLevel(Level newLevel){
+    public static void setCurrentLevel(Level newLevel){
         currentLevel = newLevel;
         currentLevel.InitLevel(); // this is going to start the level
     }
 
-    public Menu getCurrentMenu(){
+    public static Menu getCurrentMenu(){
         switch (gameState){
             case MENU:
                 return mainMenu;

@@ -17,12 +17,11 @@ public class PeriodicFiniteActionTimer implements ToBeUpdatedConstantly, IAction
     private Boolean canExecuteUpdate = false;
     private Boolean canExecuteDraw = false;
     private Boolean isTimerOn = false;
-    private Game game;
 
     //interupters
     private ArrayList<ITimerInterupter> interupters = new ArrayList<>();
 
-    public PeriodicFiniteActionTimer(IAction myAction, int periodTicks, int deadline, Game game){
+    public PeriodicFiniteActionTimer(IAction myAction, int periodTicks, int deadline){
         this.myAction = myAction;
         this.periodTicks = periodTicks;
         this.deadline = deadline;
@@ -38,7 +37,7 @@ public class PeriodicFiniteActionTimer implements ToBeUpdatedConstantly, IAction
                     noInteruption = false;
             if (!noInteruption) {
                 //System.out.println("Periodic tick removel called! Contained action = " + myAction.toString());
-                game.removeFromUpdateList.add(this);
+                Game.removeFromUpdateList.add(this);
                 internTimer = 0;
                 canExecuteDraw = false;
                 canExecuteUpdate = false;
@@ -55,7 +54,7 @@ public class PeriodicFiniteActionTimer implements ToBeUpdatedConstantly, IAction
             if (internTimer == deadline) {
                 //stop the action
                 //System.out.println("Periodic tick removel called! Contained action = " + myAction.toString());
-                game.removeFromUpdateList.add(this);
+                Game.removeFromUpdateList.add(this);
                 isTimerOn = false;
                 internTimer = 0;
                 canExecuteDraw = false;
@@ -87,7 +86,7 @@ public class PeriodicFiniteActionTimer implements ToBeUpdatedConstantly, IAction
             canExecuteDraw = false;
             canExecuteUpdate = false;
             isTimerOn = true;
-            game.updateList.add(this);
+            Game.updateList.add(this);
         }
     }
 

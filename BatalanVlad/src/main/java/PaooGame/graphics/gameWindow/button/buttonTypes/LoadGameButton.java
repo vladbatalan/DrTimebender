@@ -33,9 +33,9 @@ public class LoadGameButton extends MyButton {
 
 
 
-    public void ButtonPressed(Game game) {
-        game.profileSelectionMenu.getButtons().ClearButtons();
-        game.profileSelectionMenu.InitMenu();
-        game.gameState = GameStates.PROFILE_SELECTION_MENU;
+    public void ButtonPressed() {
+        Game.profileSelectionMenu.getButtons().ClearButtons();
+        Game.profileSelectionMenu.InitMenu();
+        Game.gameState = GameStates.PROFILE_SELECTION_MENU;
     }
 }

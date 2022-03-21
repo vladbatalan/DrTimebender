@@ -34,7 +34,7 @@ public class CreateCustomMapButton extends MyButton {
 
 
 
-    public void ButtonPressed(Game game) {
-        game.gameState = GameStates.MAP_CREATION;
+    public void ButtonPressed() {
+        Game.gameState = GameStates.MAP_CREATION;
     }
 }

@@ -1,6 +1,5 @@
 package PaooGame.levels;
 
-import PaooGame.Game;
 import PaooGame.gameObjects.stillObjects.*;
 import PaooGame.physics.PointVector;
 import PaooGame.tiles.Map;
@@ -9,10 +8,6 @@ import PaooGame.tiles.Tile;
 import java.awt.*;
 
 public class Level3 extends Level {
-    public Level3(Game game) {
-        super(game);
-    }
-
     @Override
     public void InitLevel() {
         // set the next level

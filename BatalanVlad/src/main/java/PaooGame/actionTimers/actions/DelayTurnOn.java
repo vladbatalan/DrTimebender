@@ -5,8 +5,8 @@ import PaooGame.gameObjects.ISwitchable;
 import java.awt.*;
 
 public class DelayTurnOn implements IAction {
-    private final ISwitchable turnedObj;
-    private final String myCommand;
+    private ISwitchable turnedObj;
+    private String myCommand;
 
     public DelayTurnOn(ISwitchable turnedObj){
         this.turnedObj = turnedObj;

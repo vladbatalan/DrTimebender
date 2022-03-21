@@ -1,6 +1,5 @@
 package PaooGame.graphics.gameWindow.button.buttonTypes;
 
-import PaooGame.Game;
 import PaooGame.graphics.gameWindow.button.ButtonType;
 import PaooGame.graphics.gameWindow.button.MyButton;
 
@@ -33,7 +32,7 @@ public class QuitButton extends MyButton {
 
 
 
-    public void ButtonPressed(Game game) {
+    public void ButtonPressed() {
         System.exit(0);
     }
 }

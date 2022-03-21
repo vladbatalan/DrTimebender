@@ -5,7 +5,7 @@ import PaooGame.levels.Level;
 import java.awt.*;
 
 public class DelaySetResetFalseFlagAction implements IAction {
-    private final Level myLevel;
+    private Level myLevel;
 
     public DelaySetResetFalseFlagAction(Level myLevel){
         this.myLevel = myLevel;

@@ -1,6 +1,5 @@
 package PaooGame.levels;
 
-import PaooGame.Game;
 import PaooGame.gameObjects.stillObjects.Lever;
 import PaooGame.gameObjects.stillObjects.Objective;
 import PaooGame.gameObjects.stillObjects.TimeMachine;
@@ -11,13 +10,9 @@ import PaooGame.tiles.Tile;
 
 public class Level0 extends Level {
 
-    public Level0(Game game) {
-        super(game);
-    }
-
     public void InitLevel() {
         // set the next level
-        nextLevel = new Level1(game);
+        nextLevel = new Level1();
 
         // ###################### Here we display first the specifics of the Level ############################
         // The name of the level

@@ -31,16 +31,16 @@ public class NextLevelButton extends MyButton {
     }
 
 
-    public void ButtonPressed(Game game) {
+    public void ButtonPressed() {
         // If this is not the last level
-        if(game.currentLevel.getNextLevel() != null){
-            game.currentLevel = game.currentLevel.getNextLevel();
-            game.currentLevel.InitLevel();
-            game.gameState = GameStates.GAME;
+        if(Game.currentLevel.getNextLevel() != null){
+            Game.currentLevel = Game.currentLevel.getNextLevel();
+            Game.currentLevel.InitLevel();
+            Game.gameState = GameStates.GAME;
         }
         // This is last level
         else{
-            game.gameState = GameStates.VICTORY_MENU;
+            Game.gameState = GameStates.VICTORY_MENU;
         }
 
     }

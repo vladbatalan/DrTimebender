@@ -10,7 +10,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class MouseInput implements MouseListener, MouseMotionListener {
-    private final Game game;
+    private Game game;
 
     public  MouseInput(Game game){
         this.game = game;
@@ -23,14 +23,14 @@ public class MouseInput implements MouseListener, MouseMotionListener {
         int mousePositionY = e.getY();
 
         if(!mouseInputPause) {
-            Menu currentMenu = game.getCurrentMenu();
+            Menu currentMenu = Game.getCurrentMenu();
             if(currentMenu != null){
                 currentMenu.getButtons().CheckMousePress(new Point(mousePositionX, mousePositionY));
             }
         }
 
-        if(game.gameState == GameStates.GAME){
-            game.currentLevel.getButtons().CheckMousePress(new Point(mousePositionX, mousePositionY));
+        if(Game.gameState == GameStates.GAME){
+            Game.currentLevel.getButtons().CheckMousePress(new Point(mousePositionX, mousePositionY));
         }
     }
 
