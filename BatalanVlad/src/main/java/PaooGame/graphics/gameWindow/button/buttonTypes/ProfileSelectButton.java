@@ -36,10 +36,10 @@ public class ProfileSelectButton extends MyButton {
         this.type = ButtonType.ProfileSelectButton;
     }
 
-    public void ButtonPressed() {
-        Game.userId = userId;
-        Game.levelMenu.setMaxAvailableLevels(Game.database.CheckLevelsCompleted(userId));
-        Game.gameState = GameStates.LEVEL_MENU;
+    public void ButtonPressed(Game game) {
+        game.userId = userId;
+        game.levelMenu.setMaxAvailableLevels(game.database.CheckLevelsCompleted(userId));
+        game.gameState = GameStates.LEVEL_MENU;
         MouseInput.mouseInputPause = true;
 
         MouseInputPauseFlagOn mouseInputPauseFlagOn = new MouseInputPauseFlagOn();

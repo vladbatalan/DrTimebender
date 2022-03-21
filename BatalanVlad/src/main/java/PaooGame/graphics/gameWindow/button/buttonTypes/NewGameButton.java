@@ -29,7 +29,7 @@ public class NewGameButton extends MyButton {
         this.type = ButtonType.NewGameButton;
     }
 
-    public void ButtonPressed() {
-        Game.gameState = GameStates.NEW_PROFILE_MENU;
+    public void ButtonPressed(Game game) {
+        game.gameState = GameStates.NEW_PROFILE_MENU;
     }
 }

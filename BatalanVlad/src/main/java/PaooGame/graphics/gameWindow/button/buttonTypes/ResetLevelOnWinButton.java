@@ -35,9 +35,9 @@ public class ResetLevelOnWinButton extends MyButton {
 
 
 
-    public void ButtonPressed() {
-        Game.gameState = GameStates.GAME;
-        Game.currentLevel.getHandler().clearOldInstances();
-        Game.currentLevel.resetLevel();
+    public void ButtonPressed(Game game) {
+        game.gameState = GameStates.GAME;
+        game.currentLevel.getHandler().clearOldInstances();
+        game.currentLevel.resetLevel();
     }
 }

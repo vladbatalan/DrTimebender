@@ -33,7 +33,7 @@ public class HelpButton extends MyButton {
 
 
 
-    public void ButtonPressed() {
-        Game.gameState = GameStates.HELP_MENU;
+    public void ButtonPressed(Game game) {
+        game.gameState = GameStates.HELP_MENU;
     }
 }

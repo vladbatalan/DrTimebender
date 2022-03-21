@@ -33,7 +33,7 @@ public class ReturnMainMenuButton extends MyButton {
         this.type = ButtonType.ReturnMainMenuButton;
     }
 
-    public void ButtonPressed() {
-        Game.gameState = GameStates.MENU;
+    public void ButtonPressed(Game game) {
+        game.gameState = GameStates.MENU;
     }
 }

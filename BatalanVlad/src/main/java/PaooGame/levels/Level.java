@@ -27,6 +27,7 @@ import PaooGame.tiles.Map;
 
 import java.awt.*;
 
+
 public abstract class Level {
     protected Level nextLevel;
     protected ScreenTag mainScreenTag;
@@ -43,6 +44,7 @@ public abstract class Level {
     protected GameObjectHandler handler = new GameObjectHandler();
 
     protected ControllerBuilder myControllerBuilder;
+    protected Game game;
 
     //camera
     protected GameCamera camera;
@@ -52,7 +54,7 @@ public abstract class Level {
     //protected Boolean isOnReset = false;
 
     //constructor
-    public Level(){
+    public Level(Game game){
         buttons.AddElement(new RestartGameButton(
                 new Rectangle(-5, 550, 130, 25),
                 "Restart Level"
@@ -62,6 +64,8 @@ public abstract class Level {
                 new Rectangle(700, 550, 105, 25),
                 "Menu"
         ));
+
+        this.game = game;
     }
 
     //Update and Draw basic guidelines
@@ -264,7 +268,7 @@ public abstract class Level {
         IAction fadeOutAction = new FadeOutColorAction(Color.black, 1, 120, camera);
         IActionTimer fadeOutEffect = new PeriodicFiniteActionTimer(fadeOutAction, 1, 120);
 
-        IAction levelTransitionAction = new LevelTransitionAction();
+        IAction levelTransitionAction = new LevelTransitionAction(game);
         IActionTimer levelTransitionEffect = new DelayedActionTimer(levelTransitionAction, 120);
 
         fadeOutEffect.startTimer();

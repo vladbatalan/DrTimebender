@@ -16,11 +16,12 @@ public class DelayedActionTimer implements ToBeUpdatedConstantly, IActionTimer {
     private Boolean canExecuteUpdate = false;
     private Boolean canExecuteDraw = false;
     private Boolean timerOn = false;
+    private Game game;
 
     //interupters
     private ArrayList<ITimerInterupter> interupters = new ArrayList<>();
 
-    public DelayedActionTimer(IAction myAction, int delayTicks){
+    public DelayedActionTimer(IAction myAction, int delayTicks, Game game){
         this.myAction = myAction;
         this.delayTicks = delayTicks;
     }
@@ -34,7 +35,7 @@ public class DelayedActionTimer implements ToBeUpdatedConstantly, IActionTimer {
                 noInteruption = false;
         if (!noInteruption) {
             //System.out.println("Delay tick removel called! Contained action = " + myAction.toString());
-            Game.removeFromUpdateList.add(this);
+            game.removeFromUpdateList.add(this);
             internTimer = 0;
             canExecuteDraw = false;
             canExecuteUpdate = false;
@@ -50,7 +51,7 @@ public class DelayedActionTimer implements ToBeUpdatedConstantly, IActionTimer {
         }
         if(internTimer > delayTicks){
             //System.out.println("Delay tick removel called! Contained action = " + myAction.toString());
-            Game.removeFromUpdateList.add(this);
+            game.removeFromUpdateList.add(this);
             internTimer = 0;
             canExecuteDraw = false;
             canExecuteUpdate = false;
@@ -80,7 +81,7 @@ public class DelayedActionTimer implements ToBeUpdatedConstantly, IActionTimer {
             canExecuteDraw = false;
             canExecuteUpdate = false;
             timerOn = true;
-            Game.updateList.add(this);
+            game.updateList.add(this);
         }
     }
 

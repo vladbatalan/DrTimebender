@@ -7,25 +7,28 @@ import PaooGame.graphics.gameWindow.timer.Timer;
 import java.awt.*;
 
 public class LevelTransitionAction implements IAction {
-    public LevelTransitionAction(){
+    private final Game game;
+
+    public LevelTransitionAction(Game game){
+        this.game = game;
     }
 
     @Override
     public void executeUpdate() {
-        Timer theTimer = Game.currentLevel.getGameTimer();
+        Timer theTimer = game.currentLevel.getGameTimer();
         theTimer.hideTimer();
 
         // set the time obtained by completing the level
-        Game.winMenu.setScore(theTimer.getCurrentTime());
+        game.winMenu.setScore(theTimer.getCurrentTime());
 
         // set the highscore for the current user
-        Game.winMenu.setHighScore(Game.database.GetHighScore(Game.currentLevel.getLevelCode(), Game.userId));
+        game.winMenu.setHighScore(game.database.GetHighScore(game.currentLevel.getLevelCode(), game.userId));
 
         // add level completion to the table
-        Game.database.InsertCompletedLevel(Game.currentLevel.getLevelCode(), Game.userId, theTimer.getCurrentTime());
+        game.database.InsertCompletedLevel(game.currentLevel.getLevelCode(), game.userId, theTimer.getCurrentTime());
 
         //System.out.println("You win the level with the score: " + theTimer.getCurrentTime());
-        Game.gameState = GameStates.WIN_MENU;
+        game.gameState = GameStates.WIN_MENU;
     }
 
     @Override

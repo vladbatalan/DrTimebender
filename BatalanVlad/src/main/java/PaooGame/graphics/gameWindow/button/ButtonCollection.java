@@ -1,5 +1,7 @@
 package PaooGame.graphics.gameWindow.button;
 
+import PaooGame.Game;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -13,11 +15,11 @@ public class ButtonCollection {
         }
     }
 
-    public boolean CheckMousePress(Point p){
+    public boolean CheckMousePress(Point p, Game game){
         boolean ok = false;
         for(MyButton btn : buttonCollection){
             if(btn.isOnHover(p)){
-                btn.ButtonPressed();
+                btn.ButtonPressed(game);
                 ok = true;
             }
         }

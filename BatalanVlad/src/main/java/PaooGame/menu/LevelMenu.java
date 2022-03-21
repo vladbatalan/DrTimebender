@@ -13,8 +13,9 @@ import java.awt.*;
 
 public class LevelMenu extends Menu{
     private int maxAvailableLevels = 0;
+    private Game game;
 
-    public LevelMenu(){
+    public LevelMenu(Game game){
         InitMenu();
     }
 
@@ -31,10 +32,10 @@ public class LevelMenu extends Menu{
 
         Boolean[] lockedState = new Boolean[numberOfLevels];
         Pair<Level, String>[] levelStringArray = new Pair[numberOfLevels];
-        levelStringArray[0] = new Pair(new Level0(), "Level 0");
-        levelStringArray[1] = new Pair(new Level1(), "Level 1");
-        levelStringArray[2] = new Pair(new Level2(), "Level 2");
-        levelStringArray[3] = new Pair(new Level3(), "Level 3");
+        levelStringArray[0] = new Pair(new Level0(game), "Level 0");
+        levelStringArray[1] = new Pair(new Level1(game), "Level 1");
+        levelStringArray[2] = new Pair(new Level2(game), "Level 2");
+        levelStringArray[3] = new Pair(new Level3(game), "Level 3");
 
         // System.out.println("The number of max available levels received from database is " + maxAvailableLevels);
 

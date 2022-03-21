@@ -42,11 +42,11 @@ public class RestartGameButton extends MyButton {
         padding = 5;
     }
 
-    public void ButtonPressed() {
-        if (Game.currentLevel.getLevelRunningState() && !Game.currentLevel.getOnResetState()) {
+    public void ButtonPressed(Game game) {
+        if (game.currentLevel.getLevelRunningState() && !game.currentLevel.getOnResetState()) {
 
-            Game.currentLevel.getHandler().clearOldInstances();
-            Game.currentLevel.resetLevel();
+            game.currentLevel.getHandler().clearOldInstances();
+            game.currentLevel.resetLevel();
         }
     }
 }

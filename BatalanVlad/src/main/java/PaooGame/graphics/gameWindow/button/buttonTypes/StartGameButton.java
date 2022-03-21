@@ -35,25 +35,25 @@ public class StartGameButton extends MyButton {
         this.type = ButtonType.StartGameButton;
     }
 
-    public void ButtonPressed() {
+    public void ButtonPressed(Game game) {
         // database comunication to be added
-        String profileName = Game.newProfileMenu.getProfileName();
+        String profileName = game.newProfileMenu.getProfileName();
 
         if(profileName.length() == 0){
-            Game.newProfileMenu.setErrorString("The name must be completed!");
+            game.newProfileMenu.setErrorString("The name must be completed!");
             return;
         }
 
-        int user_id = Game.database.InsertNewProfile(profileName);
+        int user_id = game.database.InsertNewProfile(profileName);
 
         if(user_id == -1){
-            Game.newProfileMenu.setErrorString("Name already exists!");
+            game.newProfileMenu.setErrorString("Name already exists!");
             return;
         }
 
-        Game.userId = user_id;
-        Game.newProfileMenu.setErrorString("");
-        Game.setCurrentLevel(new Level0());
-        Game.gameState = GameStates.GAME;
+        game.userId = user_id;
+        game.newProfileMenu.setErrorString("");
+        game.setCurrentLevel(new Level0(game));
+        game.gameState = GameStates.GAME;
     }
 }

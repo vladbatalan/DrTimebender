@@ -1,6 +1,7 @@
 package PaooGame.graphics.gameWindow.button;
 //import com.sun.corba.se.impl.orbutil.graph.Graph;
 
+import PaooGame.Game;
 import PaooGame.graphics.gameWindow.camera.GameCamera;
 
 import java.awt.*;
@@ -81,7 +82,7 @@ public abstract class MyButton {
         g.drawString(buttonText, newButtonX + padding, newButtonY + buttonBody.height - padding);
     }
 
-    public abstract void ButtonPressed();
+    public abstract void ButtonPressed(Game game);
 
 
     public Rectangle getButtonBody() {
