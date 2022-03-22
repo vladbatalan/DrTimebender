@@ -58,6 +58,12 @@ public class Game implements Runnable
     public static Integer GAME_WINDOW_HEIGHT = 600;
 
 
+    /**
+     * The flag that states if the game runs on no graphics mode
+     */
+    public static boolean GraphicsMode;
+
+    // All the menus from the game are initialized as static instances
     public static MainGameMenu mainMenu = new MainGameMenu();
     public static MapCreationMenu mapCreation = new MapCreationMenu();
     public static LevelMenu levelMenu = new LevelMenu();
@@ -67,14 +73,16 @@ public class Game implements Runnable
     public static HelpMenu helpMenu = new HelpMenu();
     public static VictoryMenu victoryMenu = new VictoryMenu();
 
+    // The current level of the game
     public static Level currentLevel;
 
+    // These lists are used for updating the timers and delays
     public static ArrayList<ToBeUpdatedConstantly> updateList = new ArrayList<>();
     public static ArrayList<ToBeUpdatedConstantly> removeFromUpdateList = new ArrayList<>();
 
-    public Game(String title, int width, int height)
+    public Game(boolean GraphicsMode)
     {
-        gameWindow = new GameWindow(title, width, height);
+        Game.GraphicsMode = GraphicsMode;
         runState = false;
     }
 
@@ -83,14 +91,17 @@ public class Game implements Runnable
      */
     private void InitGame()
     {
+        // Only if the game runs on graphics mode
+        if(GraphicsMode) {
+            gameWindow = new GameWindow("Dr. TimeBender", GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
+            gameWindow.BuildGameWindow();
 
-        gameWindow = new GameWindow("Dr. TimeBender", GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
-        gameWindow.BuildGameWindow();
+            gameWindow.GetCanvas().addMouseListener(new MouseInput(this));
+            gameWindow.GetCanvas().addMouseMotionListener(new MouseInput(this));
+            gameWindow.GetJFrame().addKeyListener(new KeyInput(this));
+        }
+
         Assets.Init();
-
-        gameWindow.GetCanvas().addMouseListener(new MouseInput(this));
-        gameWindow.GetCanvas().addMouseMotionListener(new MouseInput(this));
-        gameWindow.GetJFrame().addKeyListener(new KeyInput(this));
     }
 
     public static float CURRENT_FRAME_TIME = 0;
@@ -123,7 +134,9 @@ public class Game implements Runnable
             {
 
                 Update();
-                Draw();
+                // Use the draw command only if there are graphics
+                if(GraphicsMode)
+                    Draw();
                 oldTime = curentTime;
             }
 
@@ -170,15 +183,17 @@ public class Game implements Runnable
      */
     private void Update()
     {
-        gameWindow.GetJFrame().requestFocus();
+        // Only if Graphics mode is enabled
+        if(GraphicsMode) {
+            gameWindow.GetJFrame().requestFocus();
+        }
+
 
         // This instruction must not be changed due to concurrency problems
         // During the execution, the updateList changes it's size
         for(int index = 0; index < updateList.size(); index ++){
-
             ToBeUpdatedConstantly update = updateList.get(index);
             update.Update();
-
         }
 
         for(ToBeUpdatedConstantly update : removeFromUpdateList) {

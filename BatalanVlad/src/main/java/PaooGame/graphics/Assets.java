@@ -24,7 +24,6 @@ public class Assets
      */
     public static void Init()
     {
-        //Pentru jocul meu
         SpriteSheet mapSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/Tiles/MapTiles.png"));
         platformBox = new BufferedImage[4];
         platformBox[0] = mapSheet.crop(1, 3, SpriteSheet.tileWidth, SpriteSheet.tileHeight);

@@ -41,6 +41,7 @@ public class KeyInput extends KeyAdapter {
                 //System.out.println("KeyUpPressedCommand");
             }
             if (key == KeyEvent.VK_RIGHT) {
+
                 player.MoveRight();
 
                 // save command to controller
@@ -50,6 +51,7 @@ public class KeyInput extends KeyAdapter {
                 //System.out.println("KeyRightPressedCommand");
             }
             if (key == KeyEvent.VK_LEFT) {
+
                 player.MoveLeft();
 
                 // save command to controller

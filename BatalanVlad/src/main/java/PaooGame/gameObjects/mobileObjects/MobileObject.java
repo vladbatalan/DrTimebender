@@ -1,6 +1,7 @@
 package PaooGame.gameObjects.mobileObjects;
 
 import PaooGame.gameObjects.GameObject;
+import PaooGame.physics.enums.Actions;
 
 import java.awt.*;
 
@@ -16,10 +17,12 @@ public abstract class MobileObject extends GameObject {
     }
 
     public void MoveLeft() {
+        body.getActions()[Actions.MOVE_RIGHT.getValue()] = false;
         body.MoveLeft();
     }
 
     public void MoveRight() {
+        body.getActions()[Actions.MOVE_LEFT.getValue()] = false;
         body.MoveRight();
     }
 

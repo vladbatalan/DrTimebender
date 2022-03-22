@@ -15,9 +15,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class GameObjectHandler {
-    private ArrayList<MobileObject> mobileObjects;
-    private ArrayList<StillObject> stillObjects;
-    private ArrayList<OldPlayerInstance> oldInstances;
+    private final ArrayList<MobileObject> mobileObjects;
+    private final ArrayList<StillObject> stillObjects;
+    private final ArrayList<OldPlayerInstance> oldInstances;
     //The player will be on MobileObjectList
 
     public GameObjectHandler() {
@@ -158,6 +158,11 @@ public class GameObjectHandler {
     public void clearOldInstances() {
         oldInstances.clear();
     }
+    public void clearAll() {
+        oldInstances.clear();
+        mobileObjects.clear();
+        stillObjects.clear();
+    }
 
     public ArrayList<StillObject> getStillObjects() {
         return stillObjects;
@@ -169,9 +174,5 @@ public class GameObjectHandler {
 
     public ArrayList<OldPlayerInstance> getOldInstances() {
         return oldInstances;
-    }
-
-    public int getNumberOfOldInstances() {
-        return oldInstances.size();
     }
 }
